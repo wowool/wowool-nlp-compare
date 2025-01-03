@@ -3,8 +3,8 @@
 This tool allows us to compare different nlp engines with the wowool engine.
 
 ## Setup
-  
-  pip install -r wowool-requirements.txt
+
+    pip install -r wowool-requirements.txt
 
 
 ## Spacy vs Wowool
@@ -12,8 +12,8 @@ This tool allows us to compare different nlp engines with the wowool engine.
   
 ### Setup
 
-  pip install spacy
-  python -m spacy download en_core_web_sm
+    pip install spacy
+    python -m spacy download en_core_web_sm
   
 ### Comparing
 
@@ -29,8 +29,8 @@ This command will generate 2 file: **wowool-vs-spacy-tbl.txt** and **wowool-vs-s
 ## Stanza vs Wowool
 
 ### Setup
-  
-  pip install stanza
+
+    pip install stanza
 
 ### Comparing
 
