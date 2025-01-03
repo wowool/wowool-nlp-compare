@@ -584,7 +584,7 @@ def cleanup_result_files(nlp_engine: str):
     ]
     for fn in cleanup:
         Path(fn).unlink(missing_ok=True)
-
+    Path(f"wowool-vs-{nlp_engine}-tbl.txt").write_text("")
 
 def compare(nlp_engine: str, language: str, pipeline: str, annotations: str, file: str):
 

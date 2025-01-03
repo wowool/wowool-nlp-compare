@@ -98,6 +98,31 @@ But it clear from the first sentence that it is a Person.
 
 #### Spacy demo sample data.
 
+We are testing the sample sentences in the site of Displacy
+
+In this first sentence, the references to *the company* and *him* are lost in spacy.
+
+    When Sebastian Thrun started working on self-driving cars at Google in 2007 few people outside of the company took him seriously.
+
+|   beg |   end | uri_wow   | text_wow        | uri_spacy.diff   | text_spacy.diff   |
+|-------|-------|-----------|-----------------|------------------|-------------------|
+|     5 |    20 | PERSON    | Sebastian Thrun | PERSON           | Sebastian Thrun   |
+|    61 |    67 | ORG       | Google          | ORG              | Google            |
+|    71 |    75 | CARDINAL  | 2007            | DATE             | 2007              |
+|    98 |   109 | ORG       | Google          | **Missing**      |                   |
+|   115 |   118 | PERSON    | Sebastian Thrun | **Missing**      |                   |
+
+
+The reference to *Thrun*, who is mentioned in the previous sentence, is lost and the name is wrongly identified as a location. Spacy is also missing *Udacity* as a company, whereas it is clearly identified as a startup.
+
+    " said Thrun, now the co-founder and CEO of online higher education startup Udacity, in an interview with Recode earlier this week.
+
+|   beg |   end | uri_wow     | text_wow        | uri_spacy.diff   | text_spacy.diff   |
+|-------|-------|-------------|-----------------|------------------|-------------------|
+|   270 |   275 | PERSON      | Sebastian Thrun | GPE              | Thrun             |
+|   339 |   346 | ORG         | Udacity         | **Missing**      |                   |
+|   369 |   375 | ORG         | Recode          | ORG              | Recode            |
+|   376 |   393 | **Missing** |                 | DATE             | earlier this week |
 
 
 ## Stanza vs Wowool
