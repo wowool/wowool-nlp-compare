@@ -63,8 +63,9 @@ def get_next_valid_idx(offset_data, offset_data_len, idx):
 
 class FileHandler:
     def __init__(self, name):
-        self.name = name
-        self.fh = open(self.name, "w")
+        self.fn = Path(name)
+        self.name = self.fn.name
+        self.fh = open(self.fn, "w")
         self.lines_ = None
         self.rows = []
 
@@ -80,7 +81,7 @@ class FileHandler:
     @property
     def lines(self):
         if self.lines_ is None:
-            with open(self.name) as fh:
+            with open(self.fn) as fh:
                 self.lines_ = fh.readlines()
         return self.lines_
 
@@ -348,6 +349,7 @@ def print_tabulate(wow_, other_):
         tabel_data.append(item)
 
     if tabel_data:
+        # print(*tabel_data, sep="\n")
         print(tabulate(tabel_data, headers="keys", tablefmt="github"))
 
 
@@ -424,7 +426,7 @@ def print_md_table(offset_data: list[CmpItem], nlp_name: str):
             else:
                 # print("=b , != e")
                 if lhs.source == "wow":
-                    wow_.add_row(lhs.uri, lhs.text, lhs.begin_offset, lhs.end_offset)
+                    wow_.add_row(lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text)
                     other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
                 else:
                     wow_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
@@ -522,7 +524,11 @@ def process(id, wowool_pipeline, nlp, concept_filter, map_table):
     except Error as ex:
         print(ex)
 
-    # print(other_data)
+    # print("------------other---------------------")
+    # print(*other_.data, sep="\n")
+    # print("------------wowool---------------------")
+    # print(*wowool_.data, sep="\n")
+    # print("---------------------------------")
     # print(wowool_data)
     offset_data = other_.data
     offset_data.extend(wowool_.data)
