@@ -95,6 +95,11 @@ But it clear from the first sentence that it is a Person.
 |-------|-------|-----------|------------------|------------------|-------------------|
 |    50 |    59 | PERSON    | Miyaktama Mitshu | ORG              | Miyaktama         |
 
+
+#### Spacy demo sample data.
+
+
+
 ## Stanza vs Wowool
 
 ### Setup
