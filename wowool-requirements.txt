@@ -1,0 +1,3 @@
+wowool-lxware-domain-english-entity
+wowool_sdk
+tabulate

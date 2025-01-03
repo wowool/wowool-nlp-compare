@@ -1,7 +1,6 @@
 __pycache__
 env
 .vscode
-wowool-requirements.txt
 wowool-vs-spacy-diff.txt
 wowool-vs-spacy-tbl.txt
 *.diff
