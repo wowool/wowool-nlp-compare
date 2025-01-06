@@ -205,7 +205,7 @@ As we can see spacy is wrongly tagging **George Washington** as a location and m
 
     python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/person_conjecture.txt
 
-Stanza is doing better the spacy in this case, but still lozes the reference to * Miyaktama Mitshu*.
+Stanza is doing better the spacy in this case, but still looses the reference to *Miyaktama Mitshu*.
 
 `Mr. Miyaktama Mitshu is a very successful person.`
 
@@ -226,7 +226,7 @@ Stanza is doing better the spacy in this case, but still lozes the reference to 
 ╰─❯ python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/companies.txt
 wowool is 96.824 faster than stanza
 
-In this case stanza split the name *Sebastian Thrun* in two Person, where it is just one. They are missing `Google` and `him` 
+In this case stanza split the name *Sebastian Thrun* in two Person, where it is just one. They are missing `Google` as *the company* and `Sebastian Thrun` as *him* 
 
 `When Sebastian Thrun started working on self-driving cars at Google in 2007 few people outside of the company took him seriously.`
 
@@ -240,7 +240,7 @@ In this case stanza split the name *Sebastian Thrun* in two Person, where it is 
 |    98 |   109 | ORG         | Google          | **Missing**  |               |
 |   115 |   118 | PERSON      | Sebastian Thrun | **Missing**  |               |
 
-Here they do capture `Udacity` but are wrongly assinging Recode as a **WORK_OF_ART**
+Here they do capture *Udacity* but are wrongly assinging *Recode* as a **WORK_OF_ART**
 
 `" said Thrun, now the co-founder and CEO of online higher education startup Udacity, in an interview with Recode earlier this week.`
 
@@ -255,13 +255,13 @@ Here they do capture `Udacity` but are wrongly assinging Recode as a **WORK_OF_A
 
 In this project, we compared various Natural Language Processing (NLP) models to evaluate their performance on different tasks. The key findings are as follows:
 
-Afther lowering our range of annotation and removing the attribute information that is part of the annotations like (sector, gender, postion, headquarters, key_people and many more )
+Afther lowering our range of annotation and removing the attribute information that is part of the annotations like (sector, gender, position, headquarters, key_people and more )
 
 
-* **Speed**: Wowool has similar speed as Spacy but returning much richer information. but Wowool has a much faster starup time. Stanza the very slow in comparizon, startup speed and processing speed, sometime up to 100 time slower.
+* **Speed**: Wowool has similar speed as Spacy but returns much richer information. Wowool has a much faster startup time. Stanza is very slow in comparison, both startup and processing speed, sometimes up to 100 time slower.
 
 
-* **Accurary**: It is very clear that Wowool knows about language and tackels all the linguistic issues that machine learning engine cannot tackel, like anaphora, conjecture, hyphenation, instantance, name references and many more. 
+* **Accurary**: It is very clear that Wowool knows about language and tackles all the linguistic issues that machine learning engine cannot tackle, like anaphora, conjecture, hyphenation, instances, name references and more. 
 
 
 ### Resource Utilization
