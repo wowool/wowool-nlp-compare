@@ -46,6 +46,7 @@ entity_mapping_table = {
     "en": {
         "Sentence": "Sentence",
         "Person": "PERSON",
+        "Position": "Position",
         "Company": "ORGANIZATION",
         "Organization": "ORGANIZATION",
         "Publisher": "ORGANIZATION",
@@ -89,7 +90,6 @@ class NLPGoogle:
     def get_compare_data(self, other_, doc):
 
         for entity in doc.entities:
-            print(entity)
             uri = language_v1.Entity.Type(entity.type).name
             for mention in entity.mentions:
                 try:

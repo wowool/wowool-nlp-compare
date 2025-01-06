@@ -1,0 +1,74 @@
+{
+    "document": {
+        "content": "Georgia Smith work in Antwerpen. Georgia is nice, she does a lot.",
+        "languageCode": "en",
+        "type": "PLAIN_TEXT"
+    }
+}
+
+{
+    "entities": [
+        {
+            "name": "Antwerpen",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Antwerpen",
+                        "beginOffset": -1
+                    },
+                    "type": "PROPER",
+                    "probability": 0.812
+                }
+            ]
+        },
+        {
+            "name": "Georgia",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Georgia",
+                        "beginOffset": -1
+                    },
+                    "type": "PROPER",
+                    "probability": 0.519
+                }
+            ]
+        },
+        {
+            "name": "Georgia Smith",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Georgia Smith",
+                        "beginOffset": -1
+                    },
+                    "type": "PROPER",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "lot",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "lot",
+                        "beginOffset": -1
+                    },
+                    "type": "COMMON",
+                    "probability": 0.781
+                }
+            ]
+        }
+    ],
+    "languageCode": "en",
+    "languageSupported": true
+}

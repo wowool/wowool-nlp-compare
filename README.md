@@ -260,8 +260,8 @@ Stanza is doing better the spacy in this case, but still looses the reference to
 
 #### Spacy demo sample data.
 
-╰─❯ python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/companies.txt
-wowool is 96.824 faster than stanza
+    python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/companies.txt
+
 
 In this case stanza split the name *Sebastian Thrun* in two Person, where it is just one. They are missing `Google` as *the company* and `Sebastian Thrun` as *him* 
 
@@ -287,6 +287,138 @@ Here they do capture *Udacity* but are wrongly assinging *Recode* as a **WORK_OF
 |   339 |   346 | ORG         | Udacity         | ORG          | Udacity           |
 |   369 |   375 | ORG         | Recode          | WORK_OF_ART  | Recode            |
 
+
+## Google vs Wowool
+
+#### Anaphora
+
+    python3 -m nlp_compare -e google -l english -p "english,entity" -f tests/data/anaphora.txt
+
+
+`John Dow and Mary Smith went to work at EyeOnText.`
+
+|   beg |   end | uri_wow      | text_wow   | uri_google   | text_google   |
+|-------|-------|--------------|------------|--------------|---------------|
+|     0 |     8 | PERSON       | John Dow   | PERSON       | John Dow      |
+|    13 |    23 | PERSON       | Mary Smith | PERSON       | Mary Smith    |
+|    40 |    49 | ORGANIZATION | EyeOnText  | OTHER        | EyeOnText     |
+
+
+`She works for the it company but he only cleans there.`
+
+|   beg |   end | uri_wow      | text_wow   | uri_google   | text_google   |
+|-------|-------|--------------|------------|--------------|---------------|
+|    51 |    54 | PERSON       | Mary Smith | **Missing**  |               |
+|    65 |    79 | ORGANIZATION | EyeOnText  | **Missing**  |               |
+|    69 |    79 | **Missing**  |            | ORGANIZATION | it company    |
+|    84 |    86 | PERSON       | John Dow   | **Missing**  |               |
+
+Total:  Time: google  : 0.303 Counter({'PERSON': 2, 'OTHER': 1, 'ORGANIZATION': 1})
+Total:  Time: Wowool  : 0.009 Counter({'PERSON': 4, 'ORGANIZATION': 2})
+
+#### Wrong tagging
+
+    python3 -m nlp_compare -e google -l english -p "english,entity" -f tests/data/person_wrong_names.txt
+
+`John Smith, the George Washington law professor and Eugene Fidell, a longtime Washington lawyer.`
+
+|   beg |   end | uri_wow     | text_wow      | uri_google   | text_google       |
+|-------|-------|-------------|---------------|--------------|-------------------|
+|     0 |    10 | PERSON      | John Smith    | PERSON       | John Smith        |
+|    16 |    33 | **Missing** |               | PERSON       | George Washington |
+|    23 |    33 | LOCATION    | Washington    | **Missing**  |                   |
+|    34 |    47 | **Missing** |               | ~~PERSON~~   | law professor     |
+|    38 |    47 | Position    | professor     | **Missing**  |                   |
+|    52 |    65 | PERSON      | Eugene Fidell | PERSON       | Eugene Fidell     |
+|    78 |    88 | LOCATION    | Washington    | LOCATION     | Washington        |
+|    78 |    88 | GPE         | Washington    | **Missing**  |                   |
+|    89 |    95 | Position    | lawyer        | ~~PERSON~~       | lawyer            |
+
+
+`He worked with the president George Washington.`
+
+|   beg |   end | uri_wow   | text_wow          | uri_google   | text_google       |
+|-------|-------|-----------|-------------------|--------------|-------------------|
+|    97 |    99 | PERSON    | John Smith        | **Missing**  |                   |
+|   116 |   125 | Position  | president         | ~~PERSON~~   | president         |
+|   126 |   143 | PERSON    | George Washington | PERSON       | George Washington |
+|   133 |   143 | LOCATION  | Washington        | **Missing**  |                   |
+
+Total:  Time: google  : 0.306 Counter({'PERSON': 7, 'LOCATION': 1})
+Total:  Time: Wowool  : 0.017 Counter({'PERSON': 4, 'LOCATION': 3, 'Position': 3, 'GPE': 1})
+
+#### Conjecture
+
+
+    python3 -m nlp_compare -e google -l english -p "english,entity" -f tests/data/person_conjecture.txt
+
+`Mr. Miyaktama Mitshu is a very successful person.`
+
+|   beg |   end | uri_wow     | text_wow         | uri_google   | text_google      |
+|-------|-------|-------------|------------------|--------------|------------------|
+|     0 |     3 | **Missing** |                  | ~~PERSON~~   | Mr.              |
+|     4 |    20 | PERSON      | Miyaktama Mitshu | PERSON       | Miyaktama Mitshu |
+|    42 |    48 | **Missing** |                  | PERSON       | person           |
+
+
+`Miyaktama is a very good leader.`
+
+|   beg |   end | uri_wow     | text_wow         | uri_google   | text_google   |
+|-------|-------|-------------|------------------|--------------|---------------|
+|    50 |    59 | PERSON      | Miyaktama Mitshu | PERSON       | Miyaktama     |
+|    75 |    81 | **Missing** |                  | ~~PERSON~~       | leader        |
+
+Total:  Time: google  : 0.815 Counter({'PERSON': 5})
+Total:  Time: Wowool  : 0.007 Counter({'PERSON': 2})
+
+#### Spacy demo sample data.
+
+    python3 -m nlp_compare -e google -l english -p "english,entity" -f tests/data/companies.txt
+
+`When Sebastian Thrun started working on self-driving cars at Google in 2007 few people outside of the company took him seriously.`
+
+|   beg |   end | uri_wow      | text_wow        | uri_google   | text_google       |
+|-------|-------|--------------|-----------------|--------------|-------------------|
+|     5 |    20 | PERSON       | Sebastian Thrun | PERSON       | Sebastian Thrun   |
+|    40 |    57 | **Missing**  |                 | OTHER        | self-driving cars |
+|    61 |    67 | ORGANIZATION | Google          | ORGANIZATION | Google            |
+|    71 |    75 | **Missing**  |                 | DATE         | 2007              |
+|    71 |    75 | CARDINAL     | 2007            | NUMBER       | 2007              |
+|    80 |    86 | **Missing**  |                 | ~~PERSON~~   | people            |
+|    98 |   109 | ORGANIZATION | Google          | **Missing**  |                   |
+|   102 |   109 | **Missing**  |                 | ORGANIZATION | company           |
+|   115 |   118 | PERSON       | Sebastian Thrun | **Missing**  |                   |
+
+
+`“I can tell you very senior CEOs of major American car companies would shake my hand and turn away because I wasn't worth talking to.`
+
+|   beg |   end | uri_wow     | text_wow   | uri_google   | text_google   |
+|-------|-------|-------------|------------|--------------|---------------|
+|   151 |   162 | Position    | CEO        | **Missing**  |               |
+|   160 |   164 | **Missing** |            | PERSON       | CEOs          |
+|   172 |   180 | NORP        | American   | **Missing**  |               |
+|   174 |   182 | **Missing** |            | ~~LOCATION~~     | American      |
+|   183 |   196 | **Missing** |            | ~~ORGANIZATION~~ | car companies |
+|   212 |   216 | **Missing** |            | OTHER        | hand          |
+
+
+`" said Thrun, now the co-founder and CEO of online higher education startup Udacity, in an interview with Recode earlier this week.`
+
+|   beg |   end | uri_wow      | text_wow        | uri_google   | text_google              |
+|-------|-------|--------------|-----------------|--------------|--------------------------|
+|   270 |   275 | PERSON       | Sebastian Thrun | **Missing**  |                          |
+|   272 |   277 | **Missing**  |                 | ~~PERSON~~     | Thrun                    |
+|   285 |   295 | Position     | co - founder    | **Missing**  |                          |
+|   287 |   297 | **Missing**  |                 | ~~PERSON~~     | co-founder               |
+|   300 |   303 | Position     | CEO             | **Missing**  |                          |
+|   302 |   305 | **Missing**  |                 | ~~PERSON~~     | CEO                      |
+|   316 |   340 | **Missing**  |                 | ORGANIZATION | higher education startup |
+|   339 |   346 | ORGANIZATION | Udacity         | ORGANIZATION | Udacity                  |
+|   369 |   375 | ORGANIZATION | Recode          | **Missing**  |                          |
+|   371 |   375 | **Missing**  |                 | OTHER        | Recode                   |
+
+Total:  Time: google  : 0.759 Counter({'PERSON': 6, 'ORGANIZATION': 5, 'OTHER': 3, 'LOCATION': 1, 'EVENT': 1, 'DATE': 1, 'NUMBER': 1})
+Total:  Time: Wowool  : 0.025 Counter({'ORGANIZATION': 4, 'PERSON': 3, 'Position': 3, 'NORP': 1})
 
 ## Findings
 
