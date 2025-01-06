@@ -1,4 +1,3 @@
-import argparse
 from pathlib import Path
 from wowool.native.core import PipeLine
 from wowool.error import Error
@@ -8,11 +7,9 @@ from collections import Counter
 import time
 from functools import cmp_to_key
 from dataclasses import dataclass, field
-from nlp_compare.mapping_tables import entity_mapping_table
 from nlp_compare.nlp_engine import get_nlp_engine
 from nlp_compare.cmp_objects import CmpItem
 from logging import getLogger
-from nlp_compare.log import initialize_logging_level
 from tabulate import tabulate
 
 MISSING = "**Missing**"
@@ -27,9 +24,6 @@ class NlpData:
     time: float = 0
     counter: Counter = field(default_factory=Counter)
     data: list[CmpItem] = field(default_factory=list)
-
-
-compare_data = {"wowool": NlpData("wowool")}
 
 
 class ConceptFilter:
@@ -449,6 +443,7 @@ def sort_by_offset(lhs: CmpItem, rhs: CmpItem):
 
 
 def process(id, wowool_pipeline, nlp, concept_filter, map_table):
+    compare_data = {"wowool": NlpData("wowool")}
     text = id.text
     if nlp.name not in compare_data:
         compare_data[nlp.name] = NlpData(nlp.name)
@@ -588,7 +583,7 @@ def compare(
     cleanup_result_files(nlp_engine)
 
     wowool_pipeline, nlp = get_nlp_engines(nlp_engine, language, pipeline, **kwargs)
-    map_table = get_mapping_table(language)
+    map_table = nlp.get_mapping_table()
     concept_filter = get_wowool_annotation_filter(annotations, map_table)
 
     files = [fn for fn in Factory.glob(Path(file))]

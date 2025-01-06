@@ -27,4 +27,12 @@ def parse_arguments():
 if __name__ == "__main__":
     initialize_logging_level()
     kwargs = dict(parse_arguments()._get_kwargs())
-    compare(**kwargs)
+    if kwargs["nlp_engine"] == "all":
+        from nlp_compare.nlp_engine import all_nlp_engines
+
+        kwargs.pop("nlp_engine")
+        for nlp_engine in all_nlp_engines:
+            compare(nlp_engine=nlp_engine, **kwargs)
+
+    else:
+        compare(**kwargs)

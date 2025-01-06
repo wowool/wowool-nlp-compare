@@ -34,3 +34,6 @@ def get_nlp_engine(nlp_engine, language, **kwargs):
         return NLPStanza(short_form, **kwargs)
 
     raise ValueError(f"Unknown nlp engine {nlp_engine}")
+
+
+all_nlp_engines = ["spacy", "stanza"]
