@@ -64,7 +64,7 @@ def get_next_valid_idx(offset_data, offset_data_len, idx):
 class FileHandler:
     def __init__(self, name):
         self.fn = Path(name)
-        self.name = self.fn.name
+        self.name = self.fn.stem
         self.fh = open(self.fn, "w")
         self.lines_ = None
         self.rows = []
@@ -360,12 +360,6 @@ def print_md_table(offset_data: list[CmpItem], nlp_name: str):
     wow_, other_ = cmp_info["wow"], cmp_info[nlp_name]
 
     idx = 0
-    literal = "literal"
-
-    # for k, item in cmp_info.items():
-    #     item.write(f"{'='*30} {'='*30}\n")
-    #     item.write(f"{k:^30} {literal:^30}\n")
-    #     item.write(f"{'='*30} {'='*30}\n")
 
     while idx < size_offset_data:
 
@@ -376,7 +370,7 @@ def print_md_table(offset_data: list[CmpItem], nlp_name: str):
             print_tabulate(wow_, other_)
             wow_.rows.clear()
             other_.rows.clear()
-            print(f"\n\n    {lhs.text}\n")
+            print(f"\n\n`{lhs.text}`\n")
             idx += 1
             continue
 
@@ -524,12 +518,6 @@ def process(id, wowool_pipeline, nlp, concept_filter, map_table):
     except Error as ex:
         print(ex)
 
-    # print("------------other---------------------")
-    # print(*other_.data, sep="\n")
-    # print("------------wowool---------------------")
-    # print(*wowool_.data, sep="\n")
-    # print("---------------------------------")
-    # print(wowool_data)
     offset_data = other_.data
     offset_data.extend(wowool_.data)
 
@@ -592,6 +580,7 @@ def cleanup_result_files(nlp_engine: str):
         Path(fn).unlink(missing_ok=True)
     Path(f"wowool-vs-{nlp_engine}-tbl.txt").write_text("")
 
+
 def compare(nlp_engine: str, language: str, pipeline: str, annotations: str, file: str):
 
     cleanup_result_files(nlp_engine)
@@ -600,6 +589,10 @@ def compare(nlp_engine: str, language: str, pipeline: str, annotations: str, fil
     map_table = get_mapping_table(language)
     concept_filter = get_wowool_annotation_filter(annotations, map_table)
 
-    for ip in Factory.glob(Path(file)):
-        logger.info(f"process: {ip.id}")
-        process(ip, wowool_pipeline, nlp, concept_filter, map_table)
+    files = [fn for fn in Factory.glob(Path(file))]
+    if files:
+        for ip in files:
+            logger.info(f"process: {ip.id}")
+            process(ip, wowool_pipeline, nlp, concept_filter, map_table)
+    else:
+        raise ValueError(f"File {file} not found")

@@ -18,9 +18,6 @@ def parse_arguments():
         "--annotations",
         help="All will display all of them. Otherwise we will lower our self to Spacy",
     )
-    parser.add_argument(
-        "-s", "--show", default=False, help="name of the source", action="store_true"
-    )
 
     args = parser.parse_args()
     return args
@@ -29,9 +26,4 @@ def parse_arguments():
 if __name__ == "__main__":
     initialize_logging_level()
     kwargs = dict(parse_arguments()._get_kwargs())
-    show = kwargs.pop("show")
-
     compare(**kwargs)
-    if show:
-        data = Path(f"wowool-vs-{kwargs['nlp_engine']}-tbl.txt").read_text()
-        print(data)
