@@ -10,7 +10,7 @@ class NLPStanza:
     name: str = "stanza"
     engine: Any | None = None
 
-    def __post_init__(self):
+    def __post_init__(self, **kwargs):
         stanza.download(self.language_short_form)
         self.engine = stanza.Pipeline(self.language_short_form)
 

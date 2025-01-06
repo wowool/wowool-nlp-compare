@@ -12,7 +12,7 @@ class NLPEngine:
         return self.engine(text)
 
 
-def get_nlp_engine(nlp_engine, language):
+def get_nlp_engine(nlp_engine, language, **kwargs):
 
     if len(language) > 2:
         short_form = language_map[language]
@@ -23,7 +23,7 @@ def get_nlp_engine(nlp_engine, language):
         try:
             from nlp_compare.nlp_spacy import NLPSpacy
 
-            return NLPSpacy(short_form)
+            return NLPSpacy(short_form, **kwargs)
         except ImportError:
             raise ImportError(
                 "Please install spacy and the corresponding language model"
@@ -31,6 +31,6 @@ def get_nlp_engine(nlp_engine, language):
     elif nlp_engine == "stanza":
         from nlp_compare.nlp_stanza import NLPStanza
 
-        return NLPStanza(short_form)
+        return NLPStanza(short_form, **kwargs)
 
     raise ValueError(f"Unknown nlp engine {nlp_engine}")
