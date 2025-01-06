@@ -24,6 +24,8 @@ class NlpData:
     time: float = 0
     counter: Counter = field(default_factory=Counter)
     data: list[CmpItem] = field(default_factory=list)
+    tt_time: float = 0
+    tt_counter: Counter = field(default_factory=Counter)
 
 
 class ConceptFilter:
@@ -442,8 +444,8 @@ def sort_by_offset(lhs: CmpItem, rhs: CmpItem):
     return lhs.begin_offset - rhs.begin_offset
 
 
-def process(id, wowool_pipeline, nlp, concept_filter, map_table):
-    compare_data = {"wowool": NlpData("wowool")}
+def process(compare_data, id, wowool_pipeline, nlp, concept_filter, map_table):
+
     text = id.text
     if nlp.name not in compare_data:
         compare_data[nlp.name] = NlpData(nlp.name)
@@ -576,6 +578,13 @@ def cleanup_result_files(nlp_engine: str):
     Path(f"wowool-vs-{nlp_engine}-tbl.txt").write_text("")
 
 
+def clear_intermediate_results(compare_data):
+    for engine, data in compare_data.items():
+        data.data.clear()
+        data.counter.clear()
+        data.time = 0
+
+
 def compare(
     nlp_engine: str, language: str, pipeline: str, annotations: str, file: str, **kwargs
 ):
@@ -585,11 +594,34 @@ def compare(
     wowool_pipeline, nlp = get_nlp_engines(nlp_engine, language, pipeline, **kwargs)
     map_table = nlp.get_mapping_table()
     concept_filter = get_wowool_annotation_filter(annotations, map_table)
-
-    files = [fn for fn in Factory.glob(Path(file))]
+    files = []
+    for fn in file:
+        files.extend([fn for fn in Factory.glob(Path(fn))])
     if files:
+        compare_data = {"wowool": NlpData("wowool")}
         for ip in files:
-            logger.info(f"process: {ip.id}")
-            process(ip, wowool_pipeline, nlp, concept_filter, map_table)
+            logger.info(f"Process: {ip.id}")
+            clear_intermediate_results(compare_data)
+            process(compare_data, ip, wowool_pipeline, nlp, concept_filter, map_table)
+            for engine, data in compare_data.items():
+                data.tt_time += data.time
+                data.tt_counter.update(data.counter)
+
+        other_ = compare_data[nlp.name]
+        wowool_ = compare_data["wowool"]
+        print(
+            f"""\nTOTAL: Processing time of {other_.name}: {other_.tt_time:.3f} {other_.tt_counter}"""
+        )
+        print(
+            f"""TOTAL: Processing time of wowool: {wowool_.tt_time:.3f} {wowool_.tt_counter}"""
+        )
+        word = "faster than" if wowool_.tt_time < other_.tt_time else "slower than"
+        faster = round(((other_.tt_time / wowool_.tt_time) - 1), 1)
+
+        if faster == 0:
+            print(f"""wowool is is as fast as {other_.name}""")
+        else:
+            print(f"""wowool is {faster:.3f} {word} {other_.name}""")
+
     else:
         raise ValueError(f"File {file} not found")
