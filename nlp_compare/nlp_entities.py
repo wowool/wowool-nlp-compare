@@ -529,9 +529,9 @@ def process(id, wowool_pipeline, nlp, concept_filter, map_table):
     word = "faster" if wowool_.time < other_.time else "slower"
     print(f"""wowool is {other_.time/wowool_.time:.3f} {word} than {other_.name}""")
 
-    print_diff(offset_data, nlp.name)
     print_rst_table(offset_data, nlp.name)
     print_md_table(offset_data, nlp.name)
+    print_diff(offset_data, nlp.name)
 
     with open(f"wowool-vs-{nlp.name}-diff.txt", "a") as wfh:
         subprocess.run(["diff", "-y", "wowool.diff", f"{nlp.name}.diff"], stdout=wfh)
