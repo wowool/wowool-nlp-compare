@@ -521,10 +521,15 @@ def process(compare_data, id, wowool_pipeline, nlp, concept_filter, map_table):
     offset_data = sorted(offset_data, key=cmp_to_key(sort_by_offset))
     # for item in offset_data:
     #     print(item)
-    print(f"""Processing time of {other_.name}: {other_.time:.3f} {other_.counter}""")
-    print(f"""Processing time of wowool: {wowool_.time:.3f} {wowool_.counter}""")
-    word = "faster" if wowool_.time < other_.time else "slower"
-    print(f"""wowool is {other_.time/wowool_.time:.3f} {word} than {other_.name}""")
+
+    print_timing_results(
+        "",
+        wowool_.time,
+        other_.name,
+        other_.time,
+        wowool_.counter,
+        other_.counter,
+    )
 
     print_rst_table(offset_data, nlp.name)
     print_md_table(offset_data, nlp.name)
@@ -554,10 +559,6 @@ def get_nlp_engines(nlp_engine: str, language, pipeline: str, **kwargs):
     return wowool_pipeline, nlp
 
 
-def get_mapping_table(language: str):
-    return entity_mapping_table[language]
-
-
 def get_wowool_annotation_filter(annotations, map_table):
     if annotations:
         filter_table = set(annotations.split(","))
@@ -585,6 +586,20 @@ def clear_intermediate_results(compare_data):
         data.time = 0
 
 
+def print_timing_results(
+    prefix, wowool_time, other_name, other_time, wowool_counter, other_counter
+):
+    print(f"""\n{prefix} Time: {other_name: <8}: {other_time:.3f} {other_counter}""")
+    print(f"""{prefix} Time: {'Wowool':<8}: {wowool_time:.3f} {wowool_counter}""")
+    word = "faster than" if wowool_time < other_time else "slower than"
+    faster = round(abs((other_time / wowool_time) - 1), 1)
+
+    if faster == 0:
+        print(f""" Wowool is is as fast as {other_name}""")
+    else:
+        print(f""" Wowool is {faster:.3f} {word} {other_name}""")
+
+
 def compare(
     nlp_engine: str, language: str, pipeline: str, annotations: str, file: str, **kwargs
 ):
@@ -609,19 +624,14 @@ def compare(
 
         other_ = compare_data[nlp.name]
         wowool_ = compare_data["wowool"]
-        print(
-            f"""\nTOTAL: Processing time of {other_.name}: {other_.tt_time:.3f} {other_.tt_counter}"""
+        print_timing_results(
+            "Total: ",
+            wowool_.tt_time,
+            other_.name,
+            other_.tt_time,
+            wowool_.tt_counter,
+            other_.tt_counter,
         )
-        print(
-            f"""TOTAL: Processing time of wowool: {wowool_.tt_time:.3f} {wowool_.tt_counter}"""
-        )
-        word = "faster than" if wowool_.tt_time < other_.tt_time else "slower than"
-        faster = round(((other_.tt_time / wowool_.tt_time) - 1), 1)
-
-        if faster == 0:
-            print(f"""wowool is is as fast as {other_.name}""")
-        else:
-            print(f"""wowool is {faster:.3f} {word} {other_.name}""")
 
     else:
         raise ValueError(f"File {file} not found")
