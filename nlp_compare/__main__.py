@@ -13,6 +13,7 @@ def parse_arguments():
     parser.add_argument("-e", "--nlp_engine", help="npl_engine (spacy)", required=True)
     parser.add_argument("-l", "--language", help="input language", required=True)
     parser.add_argument("-p", "--pipeline", help="input pipeline", required=True)
+    parser.add_argument("-m", "--model", help="input model")
     parser.add_argument(
         "-a",
         "--annotations",

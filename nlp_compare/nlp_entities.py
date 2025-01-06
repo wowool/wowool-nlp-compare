@@ -537,7 +537,7 @@ def process(id, wowool_pipeline, nlp, concept_filter, map_table):
         subprocess.run(["diff", "-y", "wowool.diff", f"{nlp.name}.diff"], stdout=wfh)
 
 
-def get_nlp_engines(nlp_engine: str, language, pipeline: str):
+def get_nlp_engines(nlp_engine: str, language, pipeline: str, **kwargs):
     """warming up the engines"""
 
     start = time.time()
@@ -548,7 +548,7 @@ def get_nlp_engines(nlp_engine: str, language, pipeline: str):
     logger.info(f"wowool startup time: {startup_time:.3f}")
 
     start = time.time()
-    nlp = get_nlp_engine(nlp_engine, language)
+    nlp = get_nlp_engine(nlp_engine, language, **kwargs)
     nlp("test")
     end = time.time()
     startup_time = end - start
@@ -581,11 +581,13 @@ def cleanup_result_files(nlp_engine: str):
     Path(f"wowool-vs-{nlp_engine}-tbl.txt").write_text("")
 
 
-def compare(nlp_engine: str, language: str, pipeline: str, annotations: str, file: str):
+def compare(
+    nlp_engine: str, language: str, pipeline: str, annotations: str, file: str, **kwargs
+):
 
     cleanup_result_files(nlp_engine)
 
-    wowool_pipeline, nlp = get_nlp_engines(nlp_engine, language, pipeline)
+    wowool_pipeline, nlp = get_nlp_engines(nlp_engine, language, pipeline, **kwargs)
     map_table = get_mapping_table(language)
     concept_filter = get_wowool_annotation_filter(annotations, map_table)
 
