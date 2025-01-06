@@ -91,11 +91,17 @@ class NLPGoogle:
 
         for entity in doc.entities:
             uri = language_v1.Entity.Type(entity.type).name
+            # print(entity)
+            first_mention = None
             for mention in entity.mentions:
+
                 try:
                     begin_offset = mention.text.begin_offset
                 except AttributeError:
                     begin_offset = 0
+
+                if first_mention is None:
+                    first_mention = mention.text.content
 
                 other_.data.append(
                     CmpItem(
@@ -103,7 +109,7 @@ class NLPGoogle:
                         begin_offset + len(mention.text.content),
                         self.name,
                         uri,
-                        mention.text.content,
+                        first_mention,
                     )
                 )
                 other_.counter[uri] += 1
