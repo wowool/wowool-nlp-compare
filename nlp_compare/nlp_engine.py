@@ -33,6 +33,11 @@ def get_nlp_engine(nlp_engine, language, **kwargs):
 
         return NLPStanza(short_form, **kwargs)
 
+    elif nlp_engine == "google":
+        from nlp_compare.nlp_google import NLPGoogle
+
+        return NLPGoogle(short_form, **kwargs)
+
     raise ValueError(f"Unknown nlp engine {nlp_engine}")
 
 

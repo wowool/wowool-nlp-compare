@@ -288,19 +288,48 @@ Here they do capture *Udacity* but are wrongly assinging *Recode* as a **WORK_OF
 |   369 |   375 | ORG         | Recode          | WORK_OF_ART  | Recode            |
 
 
-## Conclusions
+## Findings
 
 In this project, we compared various Natural Language Processing (NLP) models to evaluate their performance on different tasks. The key findings are as follows:
 
 Afther lowering our range of annotation and removing the attribute information that is part of the annotations like (sector, gender, position, headquarters, key_people and more )
 
+### Speed
 
-* **Speed**: Wowool has similar speed as Spacy but returns much richer information. Wowool has a much faster startup time. Stanza is very slow in comparison, both startup and processing speed, sometimes up to 100 time slower.
+Wowool has similar speed as Spacy but returns much richer information. Wowool has a much faster startup time. Stanza is very slow in comparison, both startup and processing speed, sometimes up to 100 time slower.
 
 
-* **Accurary**: It is very clear that Wowool knows about language and tackles all the linguistic issues that machine learning engine cannot tackle, like anaphora, conjecture, hyphenation, instances, name references and more. 
+### Accurary
+
+It is very clear that Wowool knows about language and tackles all the linguistic issues that machine learning engine cannot tackle, like anaphora, conjecture, hyphenation, instances, name references and more. 
+
+
+* Wowool: **PERSON**: 3250, **ORG**: 2836,
+* Spacy: **PERSON**: 1652, **ORG**: 2357,
+* Stanza: **PERSON**: 1716, **ORG**: 1479,
 
 
 ### Resource Utilization
+
+Size on disk:
+
+|  name  |      model     | size in Mb |  Max text     |
+|--------|----------------|:----------:|---------------|
+| wowool | english-entity | 14         |               |
+| spacy  | n_core_web_sm  | 15         | <1Mb          |
+| stanza | en             | 1100       |               |
+
+
+Memory:
+
+* Wowool uses 600M to process 1M
+* Sapcy We get a message:
+
+    Text of length 1132067 exceeds maximum of 1000000. The parser and NER models require roughly 1GB of temporary memory per 100,000 characters in the input.
+
+* Stanza uses a max of 2G
+
+In short spacy does not handle big file, and stanza looks like it handels big file but it took forever (718 sec) to process 1 Mb file, and it use 11 threads to process it !, while wowool was done in (24sec) using 1 thread. 
+
 
 

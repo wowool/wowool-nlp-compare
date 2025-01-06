@@ -457,7 +457,6 @@ def process(compare_data, id, wowool_pipeline, nlp, concept_filter, map_table):
     doc = nlp(text)
     end = time.time()
     other_.time += end - start
-
     nlp.get_compare_data(other_, doc)
 
     try:
