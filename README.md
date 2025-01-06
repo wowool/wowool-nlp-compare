@@ -77,6 +77,23 @@ As we can see spacy is wrongly tagging **the George Washington** missing **John 
 |   126 |   143 | PERSON    | George Washington | PERSON           | George Washington |
 |   133 |   143 | LOC       | Washington        | **Missing**      |                   |
 
+The first instance is correct, but in the second sentence *Georgia* is tagged as a location (**GPE**) 
+
+`Georgia Smith work in Antwerpen.`
+
+|   beg |   end | uri_wow     | text_wow      | uri_spacy   | text_spacy    |
+|-------|-------|-------------|---------------|-------------|---------------|
+|     0 |    13 | PERSON      | Georgia Smith | PERSON      | Georgia Smith |
+|    22 |    31 | **Missing** |               | GPE         | Antwerpen     |
+
+
+`Georgia is nice, she does a lot.`
+
+|   beg |   end | uri_wow   | text_wow      | uri_spacy   | text_spacy   |
+|-------|-------|-----------|---------------|-------------|--------------|
+|    33 |    40 | PERSON    | Georgia Smith | GPE         | Georgia      |
+|    33 |    40 | LOC       | Georgia       | **Missing** |              |
+|    50 |    53 | PERSON    | Georgia Smith | **Missing** |              |
 
 #### Conjecture
 
@@ -199,6 +216,26 @@ As we can see spacy is wrongly tagging **George Washington** as a location and m
 |    97 |    99 | PERSON    | John Smith        | **Missing**  |                   |
 |   126 |   143 | PERSON    | George Washington | PERSON       | George Washington |
 |   133 |   143 | LOC       | Washington        | **Missing**  |                   |
+
+
+
+The first instance is correct, but in the second sentence *Georgia* is tagged as a location (**GPE**) 
+
+`Georgia Smith work in Antwerpen.`
+
+|   beg |   end | uri_wow     | text_wow      | uri_stanza   | text_stanza   |
+|-------|-------|-------------|---------------|--------------|---------------|
+|     0 |    13 | PERSON      | Georgia Smith | PERSON       | Georgia Smith |
+|    22 |    31 | **Missing** |               | GPE          | Antwerpen     |
+
+
+`Georgia is nice, she does a lot.`
+
+|   beg |   end | uri_wow   | text_wow      | uri_stanza   | text_stanza   |
+|-------|-------|-----------|---------------|--------------|---------------|
+|    33 |    40 | PERSON    | Georgia Smith | GPE          | Georgia       |
+|    33 |    40 | LOC       | Georgia       | **Missing**  |               |
+|    50 |    53 | PERSON    | Georgia Smith | **Missing**  |               |
 
 #### Conjecture
 
