@@ -12,7 +12,7 @@ entity_mapping_table = {
         "MoneyAmount": "MONEY",
         "Event": "EVENT",
     },
-    "ducth": {
+    "dutch": {
         "Person": "PER",
         "Company": "ORG",
         "Organization": "ORG",
