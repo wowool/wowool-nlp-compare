@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import Any
 import spacy
 from nlp_compare.cmp_objects import CmpItem
@@ -12,7 +11,7 @@ class NLPSpacy:
     def __init__(self, language_short_form: str, **kwargs):
         try:
             self.language_short_form = language_short_form
-            if "model" in kwargs:
+            if "model" in kwargs and kwargs["model"]:
                 self.engine = spacy.load(kwargs["model"])
             else:
                 self.engine = spacy.load(f"{self.language_short_form}_core_web_sm")

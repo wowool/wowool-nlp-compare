@@ -1,16 +1,15 @@
-from dataclasses import dataclass
 from typing import Any
 import stanza
 from nlp_compare.cmp_objects import CmpItem
 
 
-@dataclass
 class NLPStanza:
     language_short_form: str
     name: str = "stanza"
     engine: Any | None = None
 
-    def __post_init__(self, **kwargs):
+    def __init__(self, language_short_form, **kwargs):
+        self.language_short_form = language_short_form
         stanza.download(self.language_short_form)
         self.engine = stanza.Pipeline(self.language_short_form)
 
