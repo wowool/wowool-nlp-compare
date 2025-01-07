@@ -459,6 +459,25 @@ Total:  Time: Wowool  : 0.007 Counter({'PERSON': 2})
 Total:  Time: google  : 0.759 Counter({'PERSON': 6, 'ORGANIZATION': 5, 'OTHER': 3, 'LOCATION': 1, 'EVENT': 1, 'DATE': 1, 'NUMBER': 1})
 Total:  Time: Wowool  : 0.025 Counter({'ORGANIZATION': 4, 'PERSON': 3, 'Position': 3, 'NORP': 1})
 
+#### Hyphenation
+
+    python3 -m nlp_compare -e google -l english -p "english,entity" -f tests/data/hyphenation.txt
+
+Google does find these entities, but the literal has not been resoved and they are confused with the street. *Renecarel street* as they find *Rene* and *street*
+
+    I've worked in Ant-
+    werp in the Rene-
+    carel street which is close to Riviren-
+    hof Park.
+
+|   beg |   end | uri_wow     | text_wow         | uri_google   | text_google       |
+|-------|-------|-------------|------------------|--------------|-------------------|
+|    15 |    24 | GPE         | Antwerp                 | LOCATION     | Ant-\nwerp |
+|    32 |    50 | LOCATION    | Renecarel street | **Missing**  |                   |
+|    32 |    36 | **Missing** |                  | ~~PERSON~~   | Rene              |
+|    44 |    50 | **Missing** |                  | LOCATION     | street            |
+|    69 |    86 | LOCATION    | Rivirenhof Park  | LOCATION     | Riviren-\nhof Park|
+
 ## Findings
 
 In this project, we compared various Natural Language Processing (NLP) models to evaluate their performance on different tasks. The key findings are as follows:
