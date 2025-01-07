@@ -723,7 +723,7 @@ def compare(
 
     cc = CompareContext()
     cleanup_result_files(nlp_engine)
-    exculde_fn = Path("en_exculde.txt")
+    exculde_fn = Path(f"config/{language}_exculde.txt")
     if exculde_fn.exists():
         with exculde_fn.open() as fh:
             cc.exclude_missing = set()
