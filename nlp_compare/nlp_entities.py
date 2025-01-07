@@ -351,35 +351,42 @@ class CompareContext:
         for ll, rl in zip(wow_.rows, other_.rows):
 
             if ll.begin_offset == rl.begin_offset and ll.end_offset == rl.end_offset:
-                if ll.literal and (
-                    ll.literal in self.exclude_missing
-                    or (rl.text == ll.literal and rl.uri == ll.uri)
+                if (
+                    ll.literal
+                    and self.exclude_missing
+                    and (
+                        ll.literal in self.exclude_missing
+                        or (rl.text == ll.literal and rl.uri == ll.uri)
+                    )
                 ):
                     continue
                 if ll.uri == MISSING:
                     item = {
                         f"uri_{other_.name}": rl.uri,
                         f"text_{other_.name}": rl.text,
+                        f"literal_{other_.name}": rl.literal if rl.literal else "",
                         "sentence": sentence_text,
                     }
                     wow_.missing.append(item)
                 elif rl.uri == MISSING:
-                    if rl.text in self.exclude_missing:
+                    if self.exclude_missing and rl.text in self.exclude_missing:
                         continue
                     item = {
                         "uri_wow": ll.uri,
                         "text_wow": ll.text,
+                        "literal_wow": ll.literal if ll.literal else "",
                         "sentence": sentence_text,
                     }
                     other_.missing.append(item)
                 else:
-                    # if ll.uri != rl.uri:
-                    item = {
-                        "uri_wow": f"{ll.uri}!={rl.uri}({other_.name})",
-                        f"text_{other_.name}": rl.text,
-                        "sentence": sentence_text,
-                    }
-                    wow_.missing.append(item)
+                    if ll.uri != rl.uri:
+                        item = {
+                            f"uri_{other_.name}": f"{ll.uri}({wow_.name})!={rl.uri}",
+                            f"text_{other_.name}": rl.text,
+                            f"literal_{other_.name}": rl.literal if rl.literal else "",
+                            "sentence": sentence_text,
+                        }
+                        wow_.missing.append(item)
 
     def print_tabulate(self, wow_: FileHandler, other_: FileHandler):
 
