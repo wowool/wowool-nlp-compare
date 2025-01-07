@@ -11,6 +11,7 @@ from nlp_compare.nlp_engine import get_nlp_engine
 from nlp_compare.cmp_objects import CmpItem
 from logging import getLogger
 from tabulate import tabulate
+from nlp_compare.concept_filter import ConceptFilter
 
 MISSING = "**Missing**"
 
@@ -26,25 +27,11 @@ class NlpData:
     data: list[CmpItem] = field(default_factory=list)
     tt_time: float = 0
     tt_counter: Counter = field(default_factory=Counter)
+    missing: list[CmpItem] = field(default_factory=list)
+    rows: list = field(default_factory=list)
 
-
-class ConceptFilter:
-    def __init__(self, filter_table):
-        self.filter_table = filter_table
-        self.cmp_all = "all" in filter_table
-
-    def __call__(self, c):
-        if self.cmp_all:
-            if c.uri == "Sentence":
-                return False
-            return True
-        return c.uri in self.filter_table
-
-
-# sentence = "I didn't worked on Thursday morning . Arthur didn't feel very good"
-# sentence1 = """I worked on Thursday morning . Arthur didn't feel very good"""
-# nltk.download('punkt')
-# nltk.download('averaged_perceptron_tagger')
+    def add_row(self, uri, begin_offset, end_offset, text: str | None = None):
+        self.rows.append([uri, begin_offset, end_offset, text])
 
 
 def get_next_valid_idx(offset_data, offset_data_len, idx):
@@ -63,13 +50,9 @@ class FileHandler:
         self.name = self.fn.stem
         self.fh = open(self.fn, "w")
         self.lines_ = None
-        self.rows = []
 
     def write(self, data):
         self.fh.write(data)
-
-    def add_row(self, uri, begin_offset, end_offset, text: str | None = None):
-        self.rows.append([uri, begin_offset, end_offset, text])
 
     def close(self):
         self.fh.close()
@@ -84,7 +67,7 @@ class FileHandler:
 
 def get_filehandels(name: str):
     return {
-        "wow": FileHandler("wowool.diff"),
+        "wowool": FileHandler("wowool.diff"),
         name: FileHandler(f"{name}.diff"),
     }
 
@@ -93,7 +76,7 @@ def print_diff(offset_data: list[CmpItem], nlp_name: str):
 
     size_offset_data = len(offset_data)
     cmp_info = get_filehandels(nlp_name)
-    wow_, other_ = cmp_info["wow"], cmp_info[nlp_name]
+    wow_, other_ = cmp_info["wowool"], cmp_info[nlp_name]
 
     idx = 0
     for k, item in cmp_info.items():
@@ -120,7 +103,7 @@ def print_diff(offset_data: list[CmpItem], nlp_name: str):
                 f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
             )
             # check to write to the other side
-            if "wow" == lhs.source:
+            if "wowool" == lhs.source:
                 other_.write(
                     f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {MISSING:<30}\n"
                 )
@@ -146,7 +129,7 @@ def print_diff(offset_data: list[CmpItem], nlp_name: str):
                     )
                     idx = idx + 2
                 else:
-                    if lhs.source == "wow":
+                    if lhs.source == "wowool":
                         wow_.write(
                             f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
                         )
@@ -163,7 +146,7 @@ def print_diff(offset_data: list[CmpItem], nlp_name: str):
                     idx += 1
             else:
                 # print("=b , != e")
-                if lhs.source == "wow":
+                if lhs.source == "wowool":
                     wow_.write(
                         f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
                     )
@@ -179,7 +162,7 @@ def print_diff(offset_data: list[CmpItem], nlp_name: str):
                     )
                 idx += 1
         elif lhs.begin_offset < rhs.begin_offset:
-            if lhs.source == "wow":
+            if lhs.source == "wowool":
                 wow_.write(
                     f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
                 )
@@ -205,7 +188,7 @@ def print_rst_table(offset_data: list[CmpItem], nlp_name: str):
 
     size_offset_data = len(offset_data)
     cmp_info = get_filehandels(nlp_name)
-    wow_, other_ = cmp_info["wow"], cmp_info[nlp_name]
+    wow_, other_ = cmp_info["wowool"], cmp_info[nlp_name]
 
     idx = 0
     literal = "literal"
@@ -236,7 +219,7 @@ def print_rst_table(offset_data: list[CmpItem], nlp_name: str):
                 f"{lhs.uri:<30} ({lhs.begin_offset:<3},{lhs.end_offset:<3}) :{lhs.text}\n"
             )
             # check to write to the other side
-            if "wow" == lhs.source:
+            if "wowool" == lhs.source:
                 other_.write(
                     f"{MISSING:<30} ({lhs.begin_offset:<3},{lhs.end_offset:<3})\n"
                 )
@@ -262,7 +245,7 @@ def print_rst_table(offset_data: list[CmpItem], nlp_name: str):
                     )
                     idx = idx + 2
                 else:
-                    if lhs.source == "wow":
+                    if lhs.source == "wowool":
                         wow_.write(
                             f"{lhs.uri:<30} ({lhs.begin_offset:<3},{lhs.end_offset:<3}) :{lhs.text}\n"
                         )
@@ -279,7 +262,7 @@ def print_rst_table(offset_data: list[CmpItem], nlp_name: str):
                     idx += 1
             else:
                 # print("=b , != e")
-                if lhs.source == "wow":
+                if lhs.source == "wowool":
                     wow_.write(
                         f"{lhs.uri:<30}:{lhs.text} ({lhs.begin_offset:<3},{lhs.end_offset:<3}) \n"
                     )
@@ -295,7 +278,7 @@ def print_rst_table(offset_data: list[CmpItem], nlp_name: str):
                     )
                 idx += 1
         elif lhs.begin_offset < rhs.begin_offset:
-            if lhs.source == "wow":
+            if lhs.source == "wowool":
                 wow_.write(
                     f"{lhs.uri:<30} ({lhs.begin_offset:<3},{lhs.end_offset:<3}) :{lhs.text}\n"
                 )
@@ -330,7 +313,21 @@ def print_rst_table(offset_data: list[CmpItem], nlp_name: str):
             wfh.write(rl)
 
 
-def print_tabulate(wow_, other_):
+def write_missing_entities(sentence_text, wow_, other_):
+    if sentence_text == None:
+        return
+    for ll, rl in zip(wow_.rows, other_.rows):
+
+        if ll[1] == rl[1] and ll[2] == rl[2] and ll[0] == MISSING:
+            item = {
+                f"uri_{other_.name}": rl[0],
+                f"text_{other_.name}": rl[3],
+                "sentence": sentence_text,
+            }
+            wow_.missing.append(item)
+
+
+def print_tabulate(wow_: FileHandler, other_: FileHandler):
 
     tabel_data = []
     for ll, rl in zip(wow_.rows, other_.rows):
@@ -349,14 +346,15 @@ def print_tabulate(wow_, other_):
         print(tabulate(tabel_data, headers="keys", tablefmt="github"))
 
 
-def print_md_table(offset_data: list[CmpItem], nlp_name: str):
+def print_md_table(compare_data, offset_data: list[CmpItem], nlp_name: str):
 
     size_offset_data = len(offset_data)
-    cmp_info = get_filehandels(nlp_name)
-    wow_, other_ = cmp_info["wow"], cmp_info[nlp_name]
+    # cmp_info = get_filehandels(nlp_name)
+    cmp_info = compare_data
+    wow_, other_ = compare_data["wowool"], compare_data[nlp_name]
 
     idx = 0
-
+    previous_sentence = None
     while idx < size_offset_data:
 
         # ic(offset_data[idx])
@@ -364,8 +362,11 @@ def print_md_table(offset_data: list[CmpItem], nlp_name: str):
 
         if lhs.uri == "Sentence":
             print_tabulate(wow_, other_)
+            write_missing_entities(previous_sentence, wow_, other_)
+
             wow_.rows.clear()
             other_.rows.clear()
+            previous_sentence = lhs.text
             print(f"\n\n`{lhs.text}`\n")
             idx += 1
             continue
@@ -380,7 +381,7 @@ def print_md_table(offset_data: list[CmpItem], nlp_name: str):
                 lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text
             )
             # check to write to the other side
-            if "wow" == lhs.source:
+            if "wowool" == lhs.source:
                 other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
             else:
                 wow_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
@@ -402,7 +403,7 @@ def print_md_table(offset_data: list[CmpItem], nlp_name: str):
                     )
                     idx = idx + 2
                 else:
-                    if lhs.source == "wow":
+                    if lhs.source == "wowool":
                         wow_.add_row(
                             lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text
                         )
@@ -415,7 +416,7 @@ def print_md_table(offset_data: list[CmpItem], nlp_name: str):
                     idx += 1
             else:
                 # print("=b , != e")
-                if lhs.source == "wow":
+                if lhs.source == "wowool":
                     wow_.add_row(lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text)
                     other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
                 else:
@@ -423,7 +424,7 @@ def print_md_table(offset_data: list[CmpItem], nlp_name: str):
                     other_.add_row(lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text)
                 idx += 1
         elif lhs.begin_offset < rhs.begin_offset:
-            if lhs.source == "wow":
+            if lhs.source == "wowool":
                 wow_.add_row(lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text)
                 other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
             else:
@@ -434,6 +435,7 @@ def print_md_table(offset_data: list[CmpItem], nlp_name: str):
             assert False, "Can we realy get here ?????"
 
     print_tabulate(wow_, other_)
+    write_missing_entities(previous_sentence, wow_, other_)
     # for k, item in cmp_info.items():
     #     item.write(f"{'='*30} {'='*30}\n")
 
@@ -444,7 +446,9 @@ def sort_by_offset(lhs: CmpItem, rhs: CmpItem):
     return lhs.begin_offset - rhs.begin_offset
 
 
-def process(compare_data, id, wowool_pipeline, nlp, concept_filter, map_table):
+def compare_entities(
+    compare_data, id, wowool_pipeline, nlp, concept_filter: ConceptFilter, map_table
+):
 
     text = id.text
     if nlp.name not in compare_data:
@@ -457,7 +461,7 @@ def process(compare_data, id, wowool_pipeline, nlp, concept_filter, map_table):
     doc = nlp(text)
     end = time.time()
     other_.time += end - start
-    nlp.get_compare_data(other_, doc)
+    nlp.get_compare_data(other_, doc, concept_filter)
 
     try:
         start = time.time()
@@ -469,19 +473,19 @@ def process(compare_data, id, wowool_pipeline, nlp, concept_filter, map_table):
             for annotation in sentence:
                 if annotation.is_token:
                     token = annotation
-                    if token.has_pos("Num"):
+                    if token.has_pos("Num") and concept_filter("CARDINAL"):
                         uri = "CARDINAL"
                         wowool_.data.append(
                             CmpItem(
                                 annotation.begin_offset,
                                 annotation.end_offset,
-                                "wow",
+                                "wowool",
                                 uri,
                                 token.literal,
                             )
                         )
 
-                if annotation.is_concept and concept_filter(annotation):
+                if annotation.is_concept and concept_filter(annotation.uri):
                     concept = annotation
                     uri = (
                         map_table[concept.uri]
@@ -494,7 +498,7 @@ def process(compare_data, id, wowool_pipeline, nlp, concept_filter, map_table):
                             CmpItem(
                                 annotation.begin_offset,
                                 annotation.end_offset,
-                                "wow",
+                                "wowool",
                                 uri,
                                 concept.canonical,
                             )
@@ -505,7 +509,7 @@ def process(compare_data, id, wowool_pipeline, nlp, concept_filter, map_table):
                             CmpItem(
                                 annotation.begin_offset,
                                 annotation.end_offset,
-                                "wow",
+                                "wowool",
                                 uri,
                                 sentence.text,
                             )
@@ -531,7 +535,7 @@ def process(compare_data, id, wowool_pipeline, nlp, concept_filter, map_table):
     )
 
     print_rst_table(offset_data, nlp.name)
-    print_md_table(offset_data, nlp.name)
+    print_md_table(compare_data, offset_data, nlp.name)
     print_diff(offset_data, nlp.name)
 
     with open(f"wowool-vs-{nlp.name}-diff.txt", "a") as wfh:
@@ -559,10 +563,17 @@ def get_nlp_engines(nlp_engine: str, language, pipeline: str, **kwargs):
 
 
 def get_wowool_annotation_filter(annotations, map_table):
+    filter_table = set()
     if annotations:
-        filter_table = set(annotations.split(","))
+        annotations_ = annotations.split(",")
     else:
-        filter_table = set(map_table.keys())
+        annotations_ = map_table.keys()
+
+    for annotation in annotations_:
+        if annotation in map_table:
+            filter_table.add(map_table[annotation])
+        filter_table.add(annotation)
+
     return ConceptFilter(filter_table)
 
 
@@ -616,7 +627,9 @@ def compare(
         for ip in files:
             logger.info(f"Process: {ip.id}")
             clear_intermediate_results(compare_data)
-            process(compare_data, ip, wowool_pipeline, nlp, concept_filter, map_table)
+            compare_entities(
+                compare_data, ip, wowool_pipeline, nlp, concept_filter, map_table
+            )
             for engine, data in compare_data.items():
                 data.tt_time += data.time
                 data.tt_counter.update(data.counter)
@@ -631,6 +644,17 @@ def compare(
             wowool_.tt_counter,
             other_.tt_counter,
         )
+
+        if wowool_.missing:
+            print("Missing entities")
+            import csv
+
+            with open("missing.csv", "w") as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=wowool_.missing[0].keys())
+                writer.writeheader()
+                writer.writerows(wowool_.missing)
+
+            # print(tabulate(wowool_.missing, headers="keys", tablefmt="github"))
 
     else:
         raise ValueError(f"File {file} not found")

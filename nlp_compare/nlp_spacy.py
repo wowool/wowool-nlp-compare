@@ -1,7 +1,7 @@
 from typing import Any
 import spacy
 from nlp_compare.cmp_objects import CmpItem
-
+from nlp_compare.concept_filter import ConceptFilter
 
 entity_mapping_table = {
     "es": {
@@ -95,8 +95,8 @@ try:\npython -m spacy download {self.model_mame} """
     def __call__(self, text):
         return self.engine(text)
 
-    def get_compare_data(self, other_, doc):
-        for entity in doc.ents:
+    def get_compare_data(self, other_, doc, concept_filter: ConceptFilter):
+        for entity in [entity for entity in doc.ents if concept_filter(entity.label_)]:
             uri = entity.label_
             other_.data.append(
                 CmpItem(entity.start_char, entity.end_char, self.name, uri, entity.text)

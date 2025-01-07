@@ -1,6 +1,7 @@
 from typing import Any
 import stanza
 from nlp_compare.cmp_objects import CmpItem
+from nlp_compare.concept_filter import ConceptFilter
 
 entity_mapping_table = {
     "es": {
@@ -78,8 +79,10 @@ class NLPStanza:
     def __call__(self, text):
         return self.engine(text)
 
-    def get_compare_data(self, other_, doc):
-        for entity in doc.entities:
+    def get_compare_data(self, other_, doc, concept_filter: ConceptFilter):
+        for entity in [
+            entity for entity in doc.entities if concept_filter(entity.type)
+        ]:
             uri = entity.type
             other_.data.append(
                 CmpItem(entity.start_char, entity.end_char, self.name, uri, entity.text)
