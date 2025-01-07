@@ -12,11 +12,21 @@ from nlp_compare.cmp_objects import CmpItem
 from logging import getLogger
 from tabulate import tabulate
 from nlp_compare.concept_filter import ConceptFilter
+import csv
 
 MISSING = "**Missing**"
 
 
 logger = getLogger("nlp_engine")
+
+
+@dataclass
+class RowData:
+    uri: str
+    begin_offset: int
+    end_offset: int
+    text: str | None = None
+    literal: str | None = None
 
 
 @dataclass
@@ -28,10 +38,17 @@ class NlpData:
     tt_time: float = 0
     tt_counter: Counter = field(default_factory=Counter)
     missing: list[CmpItem] = field(default_factory=list)
-    rows: list = field(default_factory=list)
+    rows: list[RowData] = field(default_factory=list)
 
-    def add_row(self, uri, begin_offset, end_offset, text: str | None = None):
-        self.rows.append([uri, begin_offset, end_offset, text])
+    def add_row(
+        self,
+        uri,
+        begin_offset,
+        end_offset,
+        text: str | None = None,
+        literal: str | None = None,
+    ):
+        self.rows.append(RowData(uri, begin_offset, end_offset, text, literal))
 
 
 def get_next_valid_idx(offset_data, offset_data_len, idx):
@@ -312,130 +329,6 @@ def print_rst_table(offset_data: list[CmpItem], nlp_name: str):
                 line_length += 1
             wfh.write(rl)
 
-
-def write_missing_entities(sentence_text, wow_, other_):
-    if sentence_text == None:
-        return
-    for ll, rl in zip(wow_.rows, other_.rows):
-
-        if ll[1] == rl[1] and ll[2] == rl[2] and ll[0] == MISSING:
-            item = {
-                f"uri_{other_.name}": rl[0],
-                f"text_{other_.name}": rl[3],
-                "sentence": sentence_text,
-            }
-            wow_.missing.append(item)
-
-
-def print_tabulate(wow_: FileHandler, other_: FileHandler):
-
-    tabel_data = []
-    for ll, rl in zip(wow_.rows, other_.rows):
-        item = {
-            "beg": ll[1],
-            "end": ll[2],
-            "uri_wow": ll[0],
-            "text_wow": ll[3],
-            f"uri_{other_.name}": rl[0],
-            f"text_{other_.name}": rl[3],
-        }
-        tabel_data.append(item)
-
-    if tabel_data:
-        # print(*tabel_data, sep="\n")
-        print(tabulate(tabel_data, headers="keys", tablefmt="github"))
-
-
-def print_md_table(compare_data, offset_data: list[CmpItem], nlp_name: str):
-
-    size_offset_data = len(offset_data)
-    # cmp_info = get_filehandels(nlp_name)
-    cmp_info = compare_data
-    wow_, other_ = compare_data["wowool"], compare_data[nlp_name]
-
-    idx = 0
-    previous_sentence = None
-    while idx < size_offset_data:
-
-        # ic(offset_data[idx])
-        lhs = offset_data[idx]
-
-        if lhs.uri == "Sentence":
-            print_tabulate(wow_, other_)
-            write_missing_entities(previous_sentence, wow_, other_)
-
-            wow_.rows.clear()
-            other_.rows.clear()
-            previous_sentence = lhs.text
-            print(f"\n\n`{lhs.text}`\n")
-            idx += 1
-            continue
-
-        if lhs.begin_offset == None:
-            idx += 1
-            continue
-
-        nidx = get_next_valid_idx(offset_data, size_offset_data, idx)
-        if nidx >= size_offset_data or nidx == -1:
-            cmp_info[lhs.source].add_row(
-                lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text
-            )
-            # check to write to the other side
-            if "wowool" == lhs.source:
-                other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
-            else:
-                wow_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
-            break
-
-        rhs = offset_data[nidx]
-
-        # check begin offsets.
-        # if args.verbose:
-        #     ic(lhs, rhs)
-        if lhs.begin_offset == rhs.begin_offset:
-            if lhs.end_offset == rhs.end_offset:
-                if lhs.source != rhs.source:
-                    cmp_info[lhs.source].add_row(
-                        lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text
-                    )
-                    cmp_info[rhs.source].add_row(
-                        rhs.uri, rhs.begin_offset, rhs.end_offset, rhs.text
-                    )
-                    idx = idx + 2
-                else:
-                    if lhs.source == "wowool":
-                        wow_.add_row(
-                            lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text
-                        )
-                        other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
-                    else:
-                        wow_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
-                        other_.add_row(
-                            lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text
-                        )
-                    idx += 1
-            else:
-                # print("=b , != e")
-                if lhs.source == "wowool":
-                    wow_.add_row(lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text)
-                    other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
-                else:
-                    wow_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
-                    other_.add_row(lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text)
-                idx += 1
-        elif lhs.begin_offset < rhs.begin_offset:
-            if lhs.source == "wowool":
-                wow_.add_row(lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text)
-                other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
-            else:
-                wow_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
-                other_.add_row(lhs.uri, lhs.begin_offset, lhs.end_offset, lhs.text)
-            idx += 1
-        else:
-            assert False, "Can we realy get here ?????"
-
-    print_tabulate(wow_, other_)
-    write_missing_entities(previous_sentence, wow_, other_)
     # for k, item in cmp_info.items():
     #     item.write(f"{'='*30} {'='*30}\n")
 
@@ -446,100 +339,300 @@ def sort_by_offset(lhs: CmpItem, rhs: CmpItem):
     return lhs.begin_offset - rhs.begin_offset
 
 
-def compare_entities(
-    compare_data, id, wowool_pipeline, nlp, concept_filter: ConceptFilter, map_table
-):
+class CompareContext:
+    def __init__(self):
+        self.exclude_missing = None
 
-    text = id.text
-    if nlp.name not in compare_data:
-        compare_data[nlp.name] = NlpData(nlp.name)
+    def collect_missing_entities(
+        self, document_text, sentence_text, wow_: NlpData, other_: NlpData
+    ):
+        if sentence_text is None:
+            return
+        for ll, rl in zip(wow_.rows, other_.rows):
 
-    other_: NlpData = compare_data[nlp.name]
-    wowool_: NlpData = compare_data["wowool"]
+            if ll.begin_offset == rl.begin_offset and ll.end_offset == rl.end_offset:
+                if ll.literal and (
+                    ll.literal in self.exclude_missing
+                    or (rl.text == ll.literal and rl.uri == ll.uri)
+                ):
+                    continue
+                if ll.uri == MISSING:
+                    item = {
+                        f"uri_{other_.name}": rl.uri,
+                        f"text_{other_.name}": rl.text,
+                        "sentence": sentence_text,
+                    }
+                    wow_.missing.append(item)
+                elif rl.uri == MISSING:
+                    if rl.text in self.exclude_missing:
+                        continue
+                    item = {
+                        "uri_wow": ll.uri,
+                        "text_wow": ll.text,
+                        "sentence": sentence_text,
+                    }
+                    other_.missing.append(item)
+                else:
+                    # if ll.uri != rl.uri:
+                    item = {
+                        "uri_wow": f"{ll.uri}!={rl.uri}({other_.name})",
+                        f"text_{other_.name}": rl.text,
+                        "sentence": sentence_text,
+                    }
+                    wow_.missing.append(item)
 
-    start = time.time()
-    doc = nlp(text)
-    end = time.time()
-    other_.time += end - start
-    nlp.get_compare_data(other_, doc, concept_filter)
+    def print_tabulate(self, wow_: FileHandler, other_: FileHandler):
 
-    try:
-        start = time.time()
-        document = wowool_pipeline(id)
-        end = time.time()
-        wowool_.time += end - start
+        tabel_data = []
+        for ll, rl in zip(wow_.rows, other_.rows):
+            item = {
+                "beg": ll.begin_offset,
+                "end": ll.end_offset,
+                "uri_wow": ll.uri,
+                "text_wow": ll.text,
+                f"uri_{other_.name}": rl.uri,
+                f"text_{other_.name}": rl.text,
+            }
+            tabel_data.append(item)
 
-        for sentence in document.analysis:
-            for annotation in sentence:
-                if annotation.is_token:
-                    token = annotation
-                    if token.has_pos("Num") and concept_filter("CARDINAL"):
-                        uri = "CARDINAL"
-                        wowool_.data.append(
-                            CmpItem(
-                                annotation.begin_offset,
-                                annotation.end_offset,
-                                "wowool",
-                                uri,
-                                token.literal,
-                            )
+        if tabel_data:
+            # print(*tabel_data, sep="\n")
+            print(tabulate(tabel_data, headers="keys", tablefmt="github"))
+
+    def print_md_table(
+        self, document_text, compare_data, offset_data: list[CmpItem], nlp_name: str
+    ):
+
+        size_offset_data = len(offset_data)
+        # cmp_info = get_filehandels(nlp_name)
+        cmp_info = compare_data
+        wow_, other_ = compare_data["wowool"], compare_data[nlp_name]
+
+        idx = 0
+        previous_sentence = None
+        while idx < size_offset_data:
+
+            # ic(offset_data[idx])
+            lhs = offset_data[idx]
+
+            if lhs.uri == "Sentence":
+                self.print_tabulate(wow_, other_)
+                self.collect_missing_entities(
+                    document_text, previous_sentence, wow_, other_
+                )
+
+                wow_.rows.clear()
+                other_.rows.clear()
+                previous_sentence = lhs.text
+                print(f"\n\n`{lhs.text}`\n")
+                idx += 1
+                continue
+
+            if lhs.begin_offset == None:
+                idx += 1
+                continue
+
+            nidx = get_next_valid_idx(offset_data, size_offset_data, idx)
+            if nidx >= size_offset_data or nidx == -1:
+                cmp_info[lhs.source].add_row(
+                    lhs.uri,
+                    lhs.begin_offset,
+                    lhs.end_offset,
+                    lhs.text,
+                    literal=lhs.literal,
+                )
+                # check to write to the other side
+                if "wowool" == lhs.source:
+                    other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
+                else:
+                    wow_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
+                break
+
+            rhs = offset_data[nidx]
+
+            # check begin offsets.
+            # if args.verbose:
+            #     ic(lhs, rhs)
+            if lhs.begin_offset == rhs.begin_offset:
+                if lhs.end_offset == rhs.end_offset:
+                    if lhs.source != rhs.source:
+                        cmp_info[lhs.source].add_row(
+                            lhs.uri,
+                            lhs.begin_offset,
+                            lhs.end_offset,
+                            lhs.text,
+                            literal=lhs.literal,
                         )
-
-                if annotation.is_concept and concept_filter(annotation.uri):
-                    concept = annotation
-                    uri = (
-                        map_table[concept.uri]
-                        if concept.uri in map_table
-                        else concept.uri
-                    )
-
-                    if uri != "Sentence":
-                        wowool_.data.append(
-                            CmpItem(
-                                annotation.begin_offset,
-                                annotation.end_offset,
-                                "wowool",
-                                uri,
-                                concept.canonical,
-                            )
+                        cmp_info[rhs.source].add_row(
+                            rhs.uri,
+                            rhs.begin_offset,
+                            rhs.end_offset,
+                            rhs.text,
+                            literal=rhs.literal,
                         )
-                        wowool_.counter[uri] += 1
+                        idx = idx + 2
                     else:
-                        wowool_.data.append(
-                            CmpItem(
-                                annotation.begin_offset,
-                                annotation.end_offset,
-                                "wowool",
-                                uri,
-                                sentence.text,
+                        if lhs.source == "wowool":
+                            wow_.add_row(
+                                lhs.uri,
+                                lhs.begin_offset,
+                                lhs.end_offset,
+                                lhs.text,
+                                literal=lhs.literal,
                             )
+                            other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
+                        else:
+                            wow_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
+                            other_.add_row(
+                                lhs.uri,
+                                lhs.begin_offset,
+                                lhs.end_offset,
+                                lhs.text,
+                                literal=lhs.literal,
+                            )
+                        idx += 1
+                else:
+                    # print("=b , != e")
+                    if lhs.source == "wowool":
+                        wow_.add_row(
+                            lhs.uri,
+                            lhs.begin_offset,
+                            lhs.end_offset,
+                            lhs.text,
+                            literal=lhs.literal,
+                        )
+                        other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
+                    else:
+                        wow_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
+                        other_.add_row(
+                            lhs.uri,
+                            lhs.begin_offset,
+                            lhs.end_offset,
+                            lhs.text,
+                            literal=lhs.literal,
+                        )
+                    idx += 1
+            elif lhs.begin_offset < rhs.begin_offset:
+                if lhs.source == "wowool":
+                    wow_.add_row(
+                        lhs.uri,
+                        lhs.begin_offset,
+                        lhs.end_offset,
+                        lhs.text,
+                        literal=lhs.literal,
+                    )
+                    other_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
+                else:
+                    wow_.add_row(MISSING, lhs.begin_offset, lhs.end_offset)
+                    other_.add_row(
+                        lhs.uri,
+                        lhs.begin_offset,
+                        lhs.end_offset,
+                        lhs.text,
+                        literal=lhs.literal,
+                    )
+                idx += 1
+            else:
+                assert False, "Can we realy get here ?????"
+
+        self.print_tabulate(wow_, other_)
+        self.collect_missing_entities(document_text, previous_sentence, wow_, other_)
+
+    def compare_entities(
+        self,
+        compare_data,
+        input_provider,
+        wowool_pipeline,
+        nlp,
+        concept_filter: ConceptFilter,
+        map_table,
+    ):
+
+        text = input_provider.text
+        if nlp.name not in compare_data:
+            compare_data[nlp.name] = NlpData(nlp.name)
+
+        other_: NlpData = compare_data[nlp.name]
+        wowool_: NlpData = compare_data["wowool"]
+
+        start = time.time()
+        doc = nlp(text)
+        end = time.time()
+        other_.time += end - start
+        nlp.get_compare_data(other_, doc, concept_filter)
+
+        try:
+            start = time.time()
+            document = wowool_pipeline(input_provider)
+            end = time.time()
+            wowool_.time += end - start
+
+            for sentence in document.analysis:
+                for annotation in sentence:
+                    if annotation.is_token:
+                        token = annotation
+                        if token.has_pos("Num") and concept_filter("CARDINAL"):
+                            uri = "CARDINAL"
+                            wowool_.data.append(
+                                CmpItem(
+                                    annotation.begin_offset,
+                                    annotation.end_offset,
+                                    "wowool",
+                                    uri,
+                                    token.literal,
+                                )
+                            )
+
+                    if annotation.is_concept and concept_filter(annotation.uri):
+                        concept = annotation
+                        uri = (
+                            map_table[concept.uri]
+                            if concept.uri in map_table
+                            else concept.uri
                         )
 
-    except Error as ex:
-        print(ex)
+                        if uri != "Sentence":
+                            wowool_.data.append(
+                                CmpItem(
+                                    annotation.begin_offset,
+                                    annotation.end_offset,
+                                    "wowool",
+                                    uri,
+                                    concept.canonical,
+                                    literal=concept.literal,
+                                )
+                            )
+                            wowool_.counter[uri] += 1
+                        else:
+                            wowool_.data.append(
+                                CmpItem(
+                                    annotation.begin_offset,
+                                    annotation.end_offset,
+                                    "wowool",
+                                    uri,
+                                    sentence.text,
+                                )
+                            )
 
-    offset_data = other_.data
-    offset_data.extend(wowool_.data)
+        except Error as ex:
+            print(ex)
 
-    offset_data = sorted(offset_data, key=cmp_to_key(sort_by_offset))
-    # for item in offset_data:
-    #     print(item)
+        print_timing_results(
+            "", wowool_.time, other_.name, other_.time, wowool_.counter, other_.counter
+        )
 
-    print_timing_results(
-        "",
-        wowool_.time,
-        other_.name,
-        other_.time,
-        wowool_.counter,
-        other_.counter,
-    )
+        offset_data = other_.data
+        offset_data.extend(wowool_.data)
+        offset_data = sorted(offset_data, key=cmp_to_key(sort_by_offset))
 
-    print_rst_table(offset_data, nlp.name)
-    print_md_table(compare_data, offset_data, nlp.name)
-    print_diff(offset_data, nlp.name)
+        # print_rst_table(offset_data, nlp.name)
+        self.print_md_table(text, compare_data, offset_data, nlp.name)
+        print_diff(offset_data, nlp.name)
 
-    with open(f"wowool-vs-{nlp.name}-diff.txt", "a") as wfh:
-        subprocess.run(["diff", "-y", "wowool.diff", f"{nlp.name}.diff"], stdout=wfh)
+        with open(f"wowool-vs-{nlp.name}-diff.txt", "a") as wfh:
+            subprocess.run(
+                ["diff", "-y", "wowool.diff", f"{nlp.name}.diff"], stdout=wfh
+            )
 
 
 def get_nlp_engines(nlp_engine: str, language, pipeline: str, **kwargs):
@@ -610,11 +703,34 @@ def print_timing_results(
         print(f""" Wowool is {faster:.3f} {word} {other_name}""")
 
 
+def write_missing_entities(wowool_, other_):
+    with open("missing_in_wowool.csv", "w") as csvfile:
+        if wowool_.missing:
+            writer = csv.DictWriter(csvfile, fieldnames=wowool_.missing[0].keys())
+            writer.writeheader()
+            writer.writerows(wowool_.missing)
+
+    with open(f"missing_in_{other_.name}.csv", "w") as csvfile:
+        if other_.missing:
+            writer = csv.DictWriter(csvfile, fieldnames=other_.missing[0].keys())
+            writer.writeheader()
+            writer.writerows(other_.missing)
+
+
 def compare(
     nlp_engine: str, language: str, pipeline: str, annotations: str, file: str, **kwargs
 ):
 
+    cc = CompareContext()
     cleanup_result_files(nlp_engine)
+    exculde_fn = Path("en_exculde.txt")
+    if exculde_fn.exists():
+        with exculde_fn.open() as fh:
+            cc.exclude_missing = set()
+            for line in fh:
+                line = line.strip()
+                if line:
+                    cc.exclude_missing.add(line)
 
     wowool_pipeline, nlp = get_nlp_engines(nlp_engine, language, pipeline, **kwargs)
     map_table = nlp.get_mapping_table()
@@ -627,7 +743,7 @@ def compare(
         for ip in files:
             logger.info(f"Process: {ip.id}")
             clear_intermediate_results(compare_data)
-            compare_entities(
+            cc.compare_entities(
                 compare_data, ip, wowool_pipeline, nlp, concept_filter, map_table
             )
             for engine, data in compare_data.items():
@@ -645,16 +761,7 @@ def compare(
             other_.tt_counter,
         )
 
-        if wowool_.missing:
-            print("Missing entities")
-            import csv
-
-            with open("missing.csv", "w") as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=wowool_.missing[0].keys())
-                writer.writeheader()
-                writer.writerows(wowool_.missing)
-
-            # print(tabulate(wowool_.missing, headers="keys", tablefmt="github"))
+        write_missing_entities(wowool_, other_)
 
     else:
         raise ValueError(f"File {file} not found")

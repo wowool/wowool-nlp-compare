@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -8,3 +8,4 @@ class CmpItem:
     source: str
     uri: str
     text: str
+    literal: str | None = None
