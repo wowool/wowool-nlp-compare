@@ -2,6 +2,7 @@ from typing import Any
 import spacy
 from nlp_compare.cmp_objects import CmpItem
 from nlp_compare.concept_filter import ConceptFilter
+import re
 
 entity_mapping_table = {
     "es": {
@@ -66,6 +67,11 @@ entity_mapping_table = {
 }
 
 
+cleanup_table = {
+    "en": [[re.compile(r"'s"), ""]],
+}
+
+
 class NLPSpacy:
     language_short_form: str
     name: str = "spacy"
@@ -83,9 +89,10 @@ class NLPSpacy:
                 else "sm"
             )
             self.model_mame = f"{self.language_short_form}_{model_part}_{model_size}"
+
+        self.cleanup_table = cleanup_table.get(self.language_short_form, None)
         try:
             self.engine = spacy.load(self.model_mame)
-
         except OSError:
             raise ImportError(
                 f"""Please install spacy and the corresponding language model for {self.model_mame}
@@ -98,8 +105,19 @@ try:\npython -m spacy download {self.model_mame} """
     def get_compare_data(self, other_, doc, concept_filter: ConceptFilter):
         for entity in [entity for entity in doc.ents if concept_filter(entity.label_)]:
             uri = entity.label_
+            end_char = entity.end_char
+            entity_text = entity.text
+
+            if self.cleanup_table:
+                for pattern, replace in self.cleanup_table:
+                    entity_text_ = pattern.sub(replace, entity_text)
+                    if entity_text_ != entity_text:
+                        end_char -= len(entity_text) - len(entity_text_)
+                        entity_text = entity_text_
+                        break
+
             other_.data.append(
-                CmpItem(entity.start_char, entity.end_char, self.name, uri, entity.text)
+                CmpItem(entity.start_char, end_char, self.name, uri, entity_text)
             )
             other_.counter[uri] += 1
 

@@ -13,6 +13,7 @@ from logging import getLogger
 from tabulate import tabulate
 from nlp_compare.concept_filter import ConceptFilter
 import csv
+import re
 
 MISSING = "**Missing**"
 
@@ -355,12 +356,19 @@ class CompareContext:
                     ll.literal
                     and self.exclude_missing
                     and (
-                        ll.literal in self.exclude_missing
+                        self.exclude_missing.match(ll.literal)
                         or (rl.text == ll.literal and rl.uri == ll.uri)
                     )
                 ):
                     continue
                 if ll.uri == MISSING:
+                    if (
+                        self.exclude_missing
+                        and rl.text
+                        and self.exclude_missing.match(rl.text)
+                    ):
+                        continue
+
                     item = {
                         f"uri_{other_.name}": rl.uri,
                         f"text_{other_.name}": rl.text,
@@ -369,7 +377,11 @@ class CompareContext:
                     }
                     wow_.missing.append(item)
                 elif rl.uri == MISSING:
-                    if self.exclude_missing and rl.text in self.exclude_missing:
+                    if (
+                        self.exclude_missing
+                        and rl.text
+                        and self.exclude_missing.match(rl.text)
+                    ):
                         continue
                     item = {
                         "uri_wow": ll.uri,
@@ -733,11 +745,13 @@ def compare(
     exculde_fn = Path(f"config/{language}_exculde.txt")
     if exculde_fn.exists():
         with exculde_fn.open() as fh:
-            cc.exclude_missing = set()
+            exclude_missing = set()
             for line in fh:
                 line = line.strip()
                 if line:
-                    cc.exclude_missing.add(line)
+                    exclude_missing.add(line)
+            patterns = "|".join(exclude_missing)
+            cc.exclude_missing = re.compile(patterns)
 
     wowool_pipeline, nlp = get_nlp_engines(nlp_engine, language, pipeline, **kwargs)
     map_table = nlp.get_mapping_table()
