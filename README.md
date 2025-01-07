@@ -9,13 +9,15 @@ This tool allows us to compare different nlp engines with the wowool engine.
 
 ## Spacy vs Wowool
 
-  
+
 ### Setup
 
     pip install spacy
     python -m spacy download en_core_web_sm
   
 ### Comparing
+
+Notes: we used the `en_core_web_sm` to compare with wowool, but we noticed that using other models return incontensenies during the tests. As some of there own entities disapeared and other appierd in other models ! So we decided to stick to the one model.
 
 Using this command you will see the comparison between spacy and wowool in speed and accuracy.
 
@@ -143,6 +145,23 @@ The reference to *Thrun*, who is mentioned in the previous sentence, is lost and
 |   369 |   375 | ORG         | Recode          | ORG              | Recode            |
 |   376 |   393 | **Missing** |                 | DATE             | earlier this week |
 
+
+#### Hyphenation
+
+    python3 -m nlp_compare -e spacy -l english -p "english,entity" -f tests/data/hyphenation.txt
+
+As we see none of these entities are found. (Note this happens a lot with pdf documents that uses colums)
+
+    I've worked in Ant-
+    werp in the Rene-
+    carel street which is close to Riviren-
+    hof Park.
+
+|   beg |   end | uri_wow   | text_wow         | uri_spacy   | text_spacy   |
+|-------|-------|-----------|------------------|-------------|--------------|
+|    15 |    22 | GPE       | Antwerp          | **Missing** |              |
+|    32 |    50 | LOC       | Renecarel street | **Missing** |              |
+|    69 |    86 | LOC       | Rivirenhof Park  | **Missing** |              |
 
 ## Stanza vs Wowool
 
@@ -288,7 +307,27 @@ Here they do capture *Udacity* but are wrongly assinging *Recode* as a **WORK_OF
 |   369 |   375 | ORG         | Recode          | WORK_OF_ART  | Recode            |
 
 
+#### Hyphenation
+
+    python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/hyphenation.txt
+
+Stanza does find these entities, but the literal has not been resoved.
+
+    I've worked in Ant-
+    werp in the Rene-
+    carel street which is close to Riviren-
+    hof Park.
+
+|   beg |   end | uri_wow   | text_wow         | uri_stanza   | text_stanza        |
+|-------|-------|-----------|------------------|--------------|--------------------|
+|    15 |    22 | GPE       | Antwerp          | **Missing**  |                    |
+|    32 |    50 | LOC       | Renecarel street | FAC          | Rene-\ncarel street |
+|    69 |    86 | LOC       | Rivirenhof Park  | FAC          | Riviren-\nhof Park  |
+
+
 ## Google vs Wowool
+
+BUG: in GoogleAPI, if you entity is on offset 0 then the Rest api does not return a offset in the mention object. So either you need to add a space in front of you text, but then all your offset are off, or you need to add a hack into your code.
 
 #### Anaphora
 

@@ -72,7 +72,7 @@ class NLPSpacy:
         self.language_short_form = language_short_form
         model_part = "core_web" if self.language_short_form == "en" else "core_news"
         if "model" in kwargs and kwargs["model"]:
-            self.model_mame = spacy.load(kwargs["model"])
+            self.model_mame = kwargs["model"]
         else:
             model_size = (
                 kwargs["model_size"]
