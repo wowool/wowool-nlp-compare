@@ -4,6 +4,7 @@ from nlp_compare.cmp_objects import CmpItem
 
 entity_mapping_table = {
     "es": {
+        "Sentence": "Sentence",
         "Person": "PER",
         "Company": "ORG",
         "Organization": "ORG",
@@ -17,6 +18,7 @@ entity_mapping_table = {
         "Event": "EVENT",
     },
     "nl": {
+        "Sentence": "Sentence",
         "Person": "PER",
         "Company": "ORG",
         "Organization": "ORG",
@@ -29,6 +31,7 @@ entity_mapping_table = {
         "Event": "EVENT",
     },
     "de": {
+        "Sentence": "Sentence",
         "Person": "PER",
         "Company": "ORG",
         "Organization": "ORG",
