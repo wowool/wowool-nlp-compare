@@ -20,14 +20,9 @@ def get_nlp_engine(nlp_engine, language, **kwargs):
         short_form = language
 
     if nlp_engine == "spacy":
-        try:
-            from nlp_compare.nlp_spacy import NLPSpacy
+        from nlp_compare.nlp_spacy import NLPSpacy
 
-            return NLPSpacy(short_form, **kwargs)
-        except ImportError:
-            raise ImportError(
-                "Please install spacy and the corresponding language model"
-            )
+        return NLPSpacy(short_form, **kwargs)
     elif nlp_engine == "stanza":
         from nlp_compare.nlp_stanza import NLPStanza
 
