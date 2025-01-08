@@ -1,8 +1,8 @@
 from typing import Any
 from google.cloud import language_v1
 from nlp_compare.cmp_objects import CmpItem
-from os import environ
-
+from nlp_compare.concept_filter import ConceptFilter
+from nlp_compare.cmp_objects import NLPEngine
 
 entity_mapping_table = {
     "es": {
@@ -65,12 +65,13 @@ entity_mapping_table = {
 }
 
 
-class NLPGoogle:
+class NLPGoogle(NLPEngine):
     language_short_form: str
     name: str = "google"
     engine: Any | None = None
 
-    def __init__(self, language_short_form: str, **kwargs):
+    def __init__(self, cmp_idx, language_short_form: str, **kwargs):
+        super().__init__(cmp_idx)
         self.language_short_form = language_short_form
         self.engine = language_v1.LanguageServiceClient()
 
@@ -87,10 +88,12 @@ class NLPGoogle:
         )
         return response
 
-    def get_compare_data(self, other_, doc):
+    def get_compare_data(self, other_, doc, concept_filter: ConceptFilter):
 
         for entity in doc.entities:
             uri = language_v1.Entity.Type(entity.type).name
+            if not concept_filter(uri):
+                continue
             # print(entity)
             first_mention = None
             for mention in entity.mentions:
@@ -105,6 +108,7 @@ class NLPGoogle:
 
                 other_.data.append(
                     CmpItem(
+                        self.cmp_idx,
                         begin_offset,
                         begin_offset + len(mention.text.content),
                         self.name,
