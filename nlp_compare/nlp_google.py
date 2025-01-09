@@ -75,7 +75,10 @@ class NLPGoogle(NLPEngine):
         self.language_short_form = language_short_form
         self.engine = language_v1.LanguageServiceClient()
 
+    def warmup(self): ...
+
     def __call__(self, text):
+
         document = language_v1.Document(
             content=text, type=language_v1.Document.Type.PLAIN_TEXT
         )

@@ -17,6 +17,7 @@ entity_mapping_table = {
         "PlaceAdj": "LOC",
         "MoneyAmount": "MONEY",
         "Event": "EVENT",
+        "Date": "DATE",
     },
     "nl": {
         "Sentence": "Sentence",
@@ -30,6 +31,7 @@ entity_mapping_table = {
         "WorldRegion": "LOC",
         "MoneyAmount": "MONEY",
         "Event": "EVENT",
+        "Date": "DATE",
     },
     "de": {
         "Sentence": "Sentence",
@@ -44,6 +46,7 @@ entity_mapping_table = {
         "PlaceAdj": "LOC",
         "MoneyAmount": "MONEY",
         "Event": "EVENT",
+        "Date": "DATE",
     },
     "en": {
         "Sentence": "Sentence",
@@ -62,6 +65,7 @@ entity_mapping_table = {
         "Event": "EVENT",
         "TimePhrase": "TIME",
         "Place": "GPE",
+        "Date": "DATE",
     },
 }
 
@@ -77,6 +81,9 @@ class NLPWowool(NLPEngine):
             self.engine = PipeLine(kwargs["pipeline"])
         # self.engine = stanza.Pipeline(self.language_short_form)
         self.map_table = entity_mapping_table.get(self.language_short_form, {})
+
+    def warmup(self):
+        self.engine("warmup")
 
     def __call__(self, text):
         return self.engine(text)

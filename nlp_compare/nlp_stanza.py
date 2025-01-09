@@ -77,6 +77,9 @@ class NLPStanza(NLPEngine):
         self.engine = stanza.Pipeline(self.language_short_form)
         self.map_table = entity_mapping_table.get(self.language_short_form, {})
 
+    def warmup(self):
+        self.engine("warmup")
+
     def __call__(self, text):
         return self.engine(text)
 

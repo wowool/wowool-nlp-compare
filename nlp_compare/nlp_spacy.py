@@ -4,6 +4,7 @@ from nlp_compare.cmp_objects import CmpItem
 from nlp_compare.concept_filter import ConceptFilter
 import re
 from nlp_compare.cmp_objects import NLPEngine
+from nlp_compare.measure_performance import measure_performance
 
 entity_mapping_table = {
     "es": {
@@ -99,6 +100,9 @@ class NLPSpacy(NLPEngine):
                 f"""Please install spacy and the corresponding language model for {self.model_mame}
 try:\npython -m spacy download {self.model_mame} """
             )
+
+    def warmup(self):
+        self.engine("warmup")
 
     def __call__(self, text):
         return self.engine(text)

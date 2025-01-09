@@ -15,6 +15,7 @@ from nlp_compare.concept_filter import ConceptFilter
 import csv
 import re
 
+
 MISSING = "**Missing**"
 
 
@@ -100,7 +101,7 @@ def insert_missing_comparison_items(offset_data: list[CmpItem], nlp_engines: lis
             rhs = offset_data[nidx]
             if lhs.begin_offset == rhs.begin_offset:
                 if lhs.end_offset == rhs.end_offset:
-                    if cmp_items[rhs.cmp_idx]:
+                    if cmp_items[rhs.cmp_idx] and cmp_items[rhs.cmp_idx].uri != rhs.uri:
                         cmp_items[rhs.cmp_idx].uri += f", {rhs.uri}"
                     else:
                         cmp_items[rhs.cmp_idx] = rhs
@@ -116,7 +117,10 @@ def insert_missing_comparison_items(offset_data: list[CmpItem], nlp_engines: lis
             nidx = get_next_valid_idx(offset_data, size_offset_data, nidx)
 
         offset_data_.append(cmp_items)
-        idx = nidx
+        if nidx != -1:
+            idx = nidx
+        else:
+            idx += 1
 
     return offset_data_
 
@@ -277,14 +281,6 @@ KEY_IS_DIFFERENT = "?"
 class CompareContext:
     def __init__(self):
         self.exclude_missing = None
-        self.different = []
-
-    def write_different_entries(self):
-        with open("different.csv", "w") as csvfile:
-            if self.different:
-                writer = csv.DictWriter(csvfile, fieldnames=self.different[0].keys())
-                writer.writeheader()
-                writer.writerows(self.different)
 
     def print_tabulate(self, compare_data: dict[str:NlpData]):
 
@@ -300,23 +296,27 @@ class CompareContext:
                 f"uri_{ll.source}": ll.uri,
                 f"text_{ll.source}": ll.text,
             }
+            missing_in_source = []
             for other_ in row[1:]:
                 rl = other_
                 if ll.uri != rl.uri:
                     if rl.uri == MISSING:
                         item[KEY_IS_DIFFERENT] += "-"
+                        missing_in_source.append(rl.source)
                     elif ll.uri == MISSING:
                         item[KEY_IS_DIFFERENT] += "x"
+                        missing_in_source.append(ll.source)
                     else:
                         item[KEY_IS_DIFFERENT] += "!"
                 item[f"uri_{rl.source}"] = rl.uri
                 item[f"text_{rl.source}"] = rl.text if rl.text else f"({rl.literal})"
 
-            if item[KEY_IS_DIFFERENT]:
+            if missing_in_source and item[KEY_IS_DIFFERENT]:
                 if self.exclude_missing and self.exclude_missing.match(item["literal"]):
                     ...
                 else:
-                    self.different.append(item)
+                    for source in missing_in_source:
+                        compare_data[source].missing.append(item)
 
             item.pop("literal")
             tabel_data.append(item)
@@ -346,6 +346,8 @@ class CompareContext:
                     first = cmp_item
                     break
             if first and first.uri == "Sentence":
+                self.print_tabulate(compare_data)
+                self.clear_rows(compare_data)
                 print(f"\n\n`{first.text}`\n")
                 continue
 
@@ -360,7 +362,7 @@ class CompareContext:
                     text_ = self.get_text(
                         document_text, first.begin_offset, first.end_offset
                     )
-                    text = f"*({text_})*"
+                    text = f"*{text_}*"
                     literal = text
                     source = find_source(compare_data, cmp_idx)
 
@@ -373,6 +375,7 @@ class CompareContext:
                 )
 
         self.print_tabulate(compare_data)
+        self.clear_rows(compare_data)
 
     def compare_entities(
         self,
@@ -397,6 +400,9 @@ class CompareContext:
             doc = nlp(text)
             end = time.time()
             other_.time += end - start
+            processing_time = end - start
+            logger.info(f"{nlp.name} processing time: {processing_time:.3f}")
+
             nlp.get_compare_data(other_, doc, concept_filter)
             # print(*other_.data, sep="\n")
             offset_data.extend(other_.data)
@@ -404,13 +410,6 @@ class CompareContext:
         offset_data = sorted(offset_data, key=cmp_to_key(sort_by_offset))
 
         cmp_lines = insert_missing_comparison_items(offset_data, nlp_engines)
-        # for idx, cmp_items in enumerate(cmp_lines):
-        #     print(f"-- idx: {idx} ---------")
-        #     for cmp_idx, cmp_item in enumerate(cmp_items):
-        #         if cmp_item:
-        #             print(f"{idx=}, {cmp_idx=}, {cmp_item=}")
-        #         else:
-        #             print(f"{idx=}, {cmp_idx=}, MISSING")
 
         nlp = other_engines[0]
         # print_rst_table(offset_data, nlp.name)
@@ -434,7 +433,7 @@ def get_nlp_engines(nlp_engines: str, language, **kwargs):
     for cmp_idx, nlp_name in enumerate(nlp_engines.split(",")):
         start = time.time()
         nlp_engine = get_nlp_engine(cmp_idx, nlp_name, language, **kwargs)
-        nlp_engine("test")
+        nlp_engine.warmup()
         engines.append(nlp_engine)
         end = time.time()
         startup_time = end - start
@@ -443,7 +442,17 @@ def get_nlp_engines(nlp_engines: str, language, **kwargs):
     return engines
 
 
-DEFAULT_ANNOTATIONS = ["ORG", "PERSON", "GPE", "TIME", "DATE", "MONEY", "EVENT", "LOC"]
+DEFAULT_ANNOTATIONS = [
+    "Sentence",
+    "ORG",
+    "PERSON",
+    "GPE",
+    "TIME",
+    "DATE",
+    "MONEY",
+    "EVENT",
+    "LOC",
+]
 
 
 def get_wowool_annotation_filter(annotations):
@@ -459,16 +468,10 @@ def get_wowool_annotation_filter(annotations):
     return ConceptFilter(filter_table)
 
 
-def cleanup_result_files(nlp_engine: str):
-    cleanup = [
-        "wowool.diff",
-        f"{nlp_engine}.diff",
-        f"wowool-vs-{nlp_engine}-diff.txt",
-        f"wowool-vs-{nlp_engine}-tbl.txt",
-    ]
-    for fn in cleanup:
-        Path(fn).unlink(missing_ok=True)
-    Path(f"wowool-vs-{nlp_engine}-tbl.txt").write_text("")
+def cleanup_result_files(nlp_engines: str):
+    for name in nlp_engines:
+        Path(f"{name}.diff").unlink(missing_ok=True)
+        Path(f"missing_in_{name}.csv").unlink(missing_ok=True)
 
 
 def clear_intermediate_results(compare_data):
@@ -492,24 +495,18 @@ def print_timing_results(
         print(f""" Wowool is {faster:.3f} {word} {other_name}""")
 
 
-def write_missing_entities(wowool_, other_):
-    with open("missing_in_wowool.csv", "w") as csvfile:
-        if wowool_.missing:
-            writer = csv.DictWriter(csvfile, fieldnames=wowool_.missing[0].keys())
-            writer.writeheader()
-            writer.writerows(wowool_.missing)
-
-    with open(f"missing_in_{other_.name}.csv", "w") as csvfile:
-        if other_.missing:
-            writer = csv.DictWriter(csvfile, fieldnames=other_.missing[0].keys())
-            writer.writeheader()
-            writer.writerows(other_.missing)
+def write_missing_entities(compare_data):
+    for engine, data in compare_data.items():
+        with open(f"missing_in_{engine}.csv", "w") as csvfile:
+            if data.missing:
+                writer = csv.DictWriter(csvfile, fieldnames=data.missing[0].keys())
+                writer.writeheader()
+                writer.writerows(data.missing)
 
 
 def compare(nlp_engine: str, language: str, annotations: str, file: str, **kwargs):
 
     cc = CompareContext()
-    cleanup_result_files(nlp_engine)
     exculde_fn = Path(f"config/{language}_exculde.txt")
     if exculde_fn.exists():
         with exculde_fn.open() as fh:
@@ -522,6 +519,7 @@ def compare(nlp_engine: str, language: str, annotations: str, file: str, **kwarg
             cc.exclude_missing = re.compile(patterns)
 
     nlp_engines = get_nlp_engines(nlp_engine, language, **kwargs)
+    cleanup_result_files(nlp_engines)
     wowool_pipeline, nlp = nlp_engines[0], nlp_engines[1]
     # map_table = nlp.get_mapping_table()
     concept_filter = get_wowool_annotation_filter(annotations)
@@ -549,8 +547,7 @@ def compare(nlp_engine: str, language: str, annotations: str, file: str, **kwarg
             other_.tt_counter,
         )
 
-        if cc.different:
-            cc.write_different_entries()
+        write_missing_entities(compare_data)
 
     else:
         raise ValueError(f"File {file} not found")

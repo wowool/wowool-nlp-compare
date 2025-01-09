@@ -1,6 +1,12 @@
 __pycache__
 env
 .vscode
-wowool-vs-spacy-diff.txt
-wowool-vs-spacy-tbl.txt
+wowool-vs-*-diff.txt
+wowool-vs-*-tbl.txt
 *.diff
+missing_in_*.csv
+logging.config
+logging.conf
+.autoenv.zsh
+.DS_Store
+test.txt
