@@ -54,6 +54,7 @@ entity_mapping_table = {
         "Company": "ORG",
         "Organization": "ORG",
         "Publisher": "ORG",
+        "Position": "POSITION",
         "City": "GPE",
         "Country": "GPE",
         "Date": "DATE",

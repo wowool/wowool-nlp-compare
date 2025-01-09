@@ -93,14 +93,14 @@ def insert_missing_comparison_items(offset_data: list[CmpItem], nlp_engines: lis
             idx += 1
             continue
 
-        nidx = get_next_valid_idx(offset_data, size_offset_data, idx)
-        if nidx == -1:
+        nidx = idx + 1
+        if nidx >= size_offset_data:
             cmp_items[lhs.cmp_idx] = lhs
             offset_data_.append(cmp_items)
             break
 
         cmp_items[lhs.cmp_idx] = lhs
-        while nidx != -1:
+        while nidx < size_offset_data:
             rhs = offset_data[nidx]
             if lhs.begin_offset == rhs.begin_offset:
                 if lhs.end_offset == rhs.end_offset:
@@ -117,13 +117,13 @@ def insert_missing_comparison_items(offset_data: list[CmpItem], nlp_engines: lis
             if len(cmp_items) != sz_cmp:
                 raise Error("Should not get here")
 
-            nidx = get_next_valid_idx(offset_data, size_offset_data, nidx)
+            nidx += 1
 
         offset_data_.append(cmp_items)
-        if nidx != -1:
-            idx = nidx
-        else:
-            idx += 1
+        idx = nidx
+
+    # for idx, cmp_items in enumerate(offset_data_):
+    #     print(cmp_items)
 
     return offset_data_
 
@@ -149,125 +149,6 @@ class FileHandler:
         return self.lines_
 
 
-def get_filehandels(name: str):
-    return {
-        "wowool": FileHandler("wowool.diff"),
-        name: FileHandler(f"{name}.diff"),
-    }
-
-
-def print_diff(offset_data: list[CmpItem], nlp_name: str):
-
-    size_offset_data = len(offset_data)
-    cmp_info = get_filehandels(nlp_name)
-    wow_, other_ = cmp_info["wowool"], cmp_info[nlp_name]
-
-    idx = 0
-    for k, item in cmp_info.items():
-        item.write(f"{'-' *30} {k} {'-' *30}\n")
-
-    while idx < size_offset_data:
-
-        # ic(offset_data[idx])
-        # print("idx", idx, offset_data[idx])
-        if offset_data[idx].uri == "Sentence":
-            wow_.write(f"\n{offset_data[idx].text}\n")
-            other_.write(f"\n{offset_data[idx].text}\n")
-            idx += 1
-            continue
-
-        lhs = offset_data[idx]
-        if lhs.begin_offset == None:
-            idx += 1
-            continue
-
-        nidx = get_next_valid_idx(offset_data, size_offset_data, idx)
-        if nidx >= size_offset_data or nidx == -1:
-            cmp_info[lhs.source].write(
-                f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
-            )
-            # check to write to the other side
-            if "wowool" == lhs.source:
-                other_.write(
-                    f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {MISSING:<30}\n"
-                )
-            else:
-                wow_.write(
-                    f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {MISSING:<30}\n"
-                )
-            break
-
-        rhs = offset_data[nidx]
-
-        # check begin offsets.
-        # if args.verbose:
-        #     ic(lhs, rhs)
-        if lhs.begin_offset == rhs.begin_offset:
-            if lhs.end_offset == rhs.end_offset:
-                if lhs.source != rhs.source:
-                    cmp_info[lhs.source].write(
-                        f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
-                    )
-                    cmp_info[rhs.source].write(
-                        f"({rhs.begin_offset:<3},{rhs.end_offset:<3}) {rhs.uri:<30}:{rhs.text}\n"
-                    )
-                    idx = idx + 2
-                else:
-                    if lhs.source == "wowool":
-                        wow_.write(
-                            f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
-                        )
-                        other_.write(
-                            f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {MISSING:<30}\n"
-                        )
-                    else:
-                        wow_.write(
-                            f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {MISSING:<30}\n"
-                        )
-                        other_.write(
-                            f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
-                        )
-                    idx += 1
-            else:
-                # print("=b , != e")
-                if lhs.source == "wowool":
-                    wow_.write(
-                        f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
-                    )
-                    other_.write(
-                        f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {MISSING:<30}\n"
-                    )
-                else:
-                    wow_.write(
-                        f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {MISSING:<30}\n"
-                    )
-                    other_.write(
-                        f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
-                    )
-                idx += 1
-        elif lhs.begin_offset < rhs.begin_offset:
-            if lhs.source == "wowool":
-                wow_.write(
-                    f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
-                )
-                other_.write(
-                    f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {MISSING:<30}\n"
-                )
-            else:
-                wow_.write(
-                    f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {MISSING:<30}\n"
-                )
-                other_.write(
-                    f"({lhs.begin_offset:<3},{lhs.end_offset:<3}) {lhs.uri:<30}:{lhs.text}\n"
-                )
-            idx += 1
-        else:
-            assert False, "Can we realy get here ?????"
-
-    for k, item in cmp_info.items():
-        item.close()
-
-
 def sort_by_offset(lhs: CmpItem, rhs: CmpItem):
     if lhs.begin_offset == rhs.begin_offset:
         if lhs.end_offset == rhs.end_offset:
@@ -285,11 +166,19 @@ class CompareContext:
     def __init__(self):
         self.exclude_missing = None
 
-    def print_tabulate(self, compare_data: dict[str:NlpData]):
+    def print_tabulate(self, sentence_text, compare_data: dict[str:NlpData]):
 
+        if sentence_text is None:
+            return
         tabel_data = []
         rows = [nlpdata.rows for nlpdata in compare_data.values()]
+        sentence_printed = False
+
         for row in zip(*rows):
+            if not sentence_printed:
+                print(f"\n\n`{sentence_text}`\n\n")
+                sentence_printed = True
+
             ll = row[0]
             item = {
                 KEY_IS_DIFFERENT: "",
@@ -357,6 +246,7 @@ class CompareContext:
         compare_data: dict[str, NlpData],
         cmp_lines: list[list[CmpItem]],
     ):
+        prev_sentence = None
         for cmp_line in cmp_lines:
             first = None
             for cmp_item in cmp_line:
@@ -364,9 +254,9 @@ class CompareContext:
                     first = cmp_item
                     break
             if first and first.uri == "Sentence":
-                self.print_tabulate(compare_data)
+                self.print_tabulate(prev_sentence, compare_data)
                 self.clear_rows(compare_data)
-                print(f"\n\n`{first.text}`\n")
+                prev_sentence = first.text
                 continue
 
             for cmp_idx, cmp_item in enumerate(cmp_line):
@@ -399,7 +289,7 @@ class CompareContext:
                     literal=literal,
                 )
 
-        self.print_tabulate(compare_data)
+        self.print_tabulate(prev_sentence, compare_data)
         self.clear_rows(compare_data)
 
     def compare_entities(
