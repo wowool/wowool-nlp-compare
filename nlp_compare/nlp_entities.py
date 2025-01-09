@@ -14,7 +14,7 @@ from tabulate import tabulate
 from nlp_compare.concept_filter import ConceptFilter
 import csv
 import re
-
+from collections import namedtuple
 
 MISSING = "**Missing**"
 
@@ -32,6 +32,9 @@ class RowData:
     literal: str | None = None
 
 
+MissingData = namedtuple("MissingData", ["counter", "data"])
+
+
 @dataclass
 class NlpData:
     name: str
@@ -41,7 +44,7 @@ class NlpData:
     data: list[CmpItem] = field(default_factory=list)
     tt_time: float = 0
     tt_counter: Counter = field(default_factory=Counter)
-    missing: list[CmpItem] = field(default_factory=list)
+    missing: dict[str, MissingData] = field(default_factory=dict)
     rows: list[RowData] = field(default_factory=list)
 
     def add_row(
@@ -315,8 +318,16 @@ class CompareContext:
                 if self.exclude_missing and self.exclude_missing.match(item["literal"]):
                     ...
                 else:
+                    literal = item["literal"]
+                    new_item = {**item}
+                    new_item.pop("beg")
+                    new_item.pop("end")
                     for source in missing_in_source:
-                        compare_data[source].missing.append(item)
+                        nlp_data = compare_data[source]
+                        if literal not in nlp_data.missing:
+                            nlp_data.missing[literal] = MissingData(0, new_item)
+                        else:
+                            nlp_data.missing[literal].counter += 1
 
             item.pop("literal")
             tabel_data.append(item)
@@ -337,7 +348,6 @@ class CompareContext:
         document_text,
         compare_data: dict[str, NlpData],
         cmp_lines: list[list[CmpItem]],
-        nlp_name: str,
     ):
         for cmp_line in cmp_lines:
             first = None
@@ -385,13 +395,10 @@ class CompareContext:
         concept_filter: ConceptFilter,
     ):
 
-        wowool_pipeline, other_engines = nlp_engines[0], nlp_engines[1:]
         text = input_provider.text
         for nlp in nlp_engines:
             if nlp.name not in compare_data:
                 compare_data[nlp.name] = NlpData(nlp.name, nlp.cmp_idx)
-
-        wowool_: NlpData = compare_data["wowool"]
 
         offset_data = []
         for nlp in nlp_engines:
@@ -411,9 +418,8 @@ class CompareContext:
 
         cmp_lines = insert_missing_comparison_items(offset_data, nlp_engines)
 
-        nlp = other_engines[0]
         # print_rst_table(offset_data, nlp.name)
-        self.print_md_table(text, compare_data, cmp_lines, nlp.name)
+        self.print_md_table(text, compare_data, cmp_lines)
         # print_diff(offset_data, nlp.name)
 
         # with open(f"wowool-vs-{nlp.name}-diff.txt", "a") as wfh:
@@ -481,27 +487,41 @@ def clear_intermediate_results(compare_data):
         data.time = 0
 
 
-def print_timing_results(
-    prefix, wowool_time, other_name, other_time, wowool_counter, other_counter
+def print_total_timing_results(
+    compare_data: dict[str, NlpData],
+    # prefix, wowool_time, other_name, other_time, wowool_counter, other_counter
 ):
-    print(f"""\n{prefix} Time: {other_name: <8}: {other_time:.3f} {other_counter}""")
-    print(f"""{prefix} Time: {'Wowool':<8}: {wowool_time:.3f} {wowool_counter}""")
-    word = "faster than" if wowool_time < other_time else "slower than"
-    faster = round(abs((other_time / wowool_time) - 1), 1)
+    print("\n-----------------------------")
+    prefix = "Total"
+    for engine, data in compare_data.items():
+        print(f"""{prefix} Time: {engine: <8}: {data.tt_time :.3f} {data.tt_counter}""")
 
-    if faster == 0:
-        print(f""" Wowool is is as fast as {other_name}""")
-    else:
-        print(f""" Wowool is {faster:.3f} {word} {other_name}""")
+    wow_ = compare_data["wowool"]
+    for engine, data in compare_data.items():
+        if "wowool" == engine:
+            continue
+
+        # print(f"""{prefix} Time: {'Wowool':<8}: {wowool_time:.3f} {wowool_counter}""")
+        word = "faster than" if wow_.tt_time < data.tt_time else "slower than"
+        faster = round(abs((data.tt_time / wow_.tt_time) - 1), 1)
+
+        if faster == 0:
+            print(f""" Wowool is is as fast as {engine}""")
+        else:
+            print(f""" Wowool is {faster:.3f} {word} {engine}""")
 
 
 def write_missing_entities(compare_data):
     for engine, data in compare_data.items():
         with open(f"missing_in_{engine}.csv", "w") as csvfile:
             if data.missing:
-                writer = csv.DictWriter(csvfile, fieldnames=data.missing[0].keys())
+                first_key = next(iter(data.missing))
+                writer = csv.DictWriter(
+                    csvfile, fieldnames=data.missing[first_key].data.keys()
+                )
                 writer.writeheader()
-                writer.writerows(data.missing)
+                missingdata = [md.data for md in data.missing.values()]
+                writer.writerows(missingdata)
 
 
 def compare(nlp_engine: str, language: str, annotations: str, file: str, **kwargs):
@@ -520,8 +540,6 @@ def compare(nlp_engine: str, language: str, annotations: str, file: str, **kwarg
 
     nlp_engines = get_nlp_engines(nlp_engine, language, **kwargs)
     cleanup_result_files(nlp_engines)
-    wowool_pipeline, nlp = nlp_engines[0], nlp_engines[1]
-    # map_table = nlp.get_mapping_table()
     concept_filter = get_wowool_annotation_filter(annotations)
     files = []
     for fn in file:
@@ -536,16 +554,7 @@ def compare(nlp_engine: str, language: str, annotations: str, file: str, **kwarg
                 data.tt_time += data.time
                 data.tt_counter.update(data.counter)
 
-        other_ = compare_data[nlp.name]
-        wowool_ = compare_data["wowool"]
-        print_timing_results(
-            "Total: ",
-            wowool_.tt_time,
-            other_.name,
-            other_.tt_time,
-            wowool_.tt_counter,
-            other_.tt_counter,
-        )
+        print_total_timing_results(compare_data)
 
         write_missing_entities(compare_data)
 
