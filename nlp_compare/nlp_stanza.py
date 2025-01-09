@@ -4,67 +4,7 @@ from nlp_compare.cmp_objects import CmpItem
 from nlp_compare.concept_filter import ConceptFilter
 from nlp_compare.cmp_objects import NLPEngine
 
-entity_mapping_table = {
-    "es": {
-        "Sentence": "Sentence",
-        "Person": "PER",
-        "Company": "ORG",
-        "Organization": "ORG",
-        "City": "LOC",
-        "Country": "LOC",
-        "Street": "LOC",
-        "Facility": "FAC",
-        "WorldRegion": "LOC",
-        "PlaceAdj": "LOC",
-        "MoneyAmount": "MONEY",
-        "Event": "EVENT",
-    },
-    "nl": {
-        "Sentence": "Sentence",
-        "Person": "PER",
-        "Company": "ORG",
-        "Organization": "ORG",
-        "City": "LOC",
-        "Country": "LOC",
-        "Street": "LOC",
-        "Facility": "LOC",
-        "WorldRegion": "LOC",
-        "MoneyAmount": "MONEY",
-        "Event": "EVENT",
-    },
-    "de": {
-        "Sentence": "Sentence",
-        "Person": "PER",
-        "Company": "ORG",
-        "Organization": "ORG",
-        "City": "LOC",
-        "Country": "LOC",
-        "Street": "LOC",
-        "Facility": "LOC",
-        "WorldRegion": "LOC",
-        "PlaceAdj": "LOC",
-        "MoneyAmount": "MONEY",
-        "Event": "EVENT",
-    },
-    "en": {
-        "Sentence": "Sentence",
-        "Person": "PERSON",
-        "Company": "ORG",
-        "Organization": "ORG",
-        "Publisher": "ORG",
-        "City": "GPE",
-        "Country": "GPE",
-        "Date": "DATE",
-        "Street": "LOC",
-        "Facility": "LOC",
-        "WorldRegion": "LOC",
-        "PlaceAdj": "NORP",
-        "MoneyAmount": "MONEY",
-        "Event": "EVENT",
-        "TimePhrase": "TIME",
-        "Place": "GPE",
-    },
-}
+entity_mapping_table = {}
 
 
 class NLPStanza(NLPEngine):

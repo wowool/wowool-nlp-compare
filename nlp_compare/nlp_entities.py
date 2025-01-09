@@ -1,8 +1,6 @@
 from pathlib import Path
-from wowool.native.core import PipeLine
 from wowool.error import Error
 from wowool.io.provider import Factory
-import subprocess
 from collections import Counter
 import time
 from functools import cmp_to_key
@@ -14,7 +12,6 @@ from tabulate import tabulate
 from nlp_compare.concept_filter import ConceptFilter
 import csv
 import re
-from collections import namedtuple
 
 MISSING = "**Missing**"
 
@@ -32,7 +29,10 @@ class RowData:
     literal: str | None = None
 
 
-MissingData = namedtuple("MissingData", ["counter", "data"])
+@dataclass
+class MissingData:
+    counter: int
+    data: dict[str, str]
 
 
 @dataclass
@@ -311,6 +311,11 @@ class CompareContext:
                         missing_in_source.append(ll.source)
                     else:
                         item[KEY_IS_DIFFERENT] += "!"
+                else:
+                    if not rl.text.startswith(ll.text):
+                        item[KEY_IS_DIFFERENT] += "~"
+                        missing_in_source.append(ll.source)
+
                 item[f"uri_{rl.source}"] = rl.uri
                 item[f"text_{rl.source}"] = rl.text if rl.text else f"({rl.literal})"
 
@@ -318,10 +323,13 @@ class CompareContext:
                 if self.exclude_missing and self.exclude_missing.match(item["literal"]):
                     ...
                 else:
-                    literal = item["literal"]
+
                     new_item = {**item}
+                    new_item["literal"] = new_item["literal"].lstrip("*").rstrip("*")
+                    literal = new_item["literal"]
                     new_item.pop("beg")
                     new_item.pop("end")
+
                     for source in missing_in_source:
                         nlp_data = compare_data[source]
                         if literal not in nlp_data.missing:
@@ -365,14 +373,21 @@ class CompareContext:
                 if cmp_item is not None:
                     uri = cmp_item.uri
                     text = cmp_item.text
-                    literal = cmp_item.literal
+                    text_in_doc = text
+                    if cmp_item.literal:
+                        literal = cmp_item.literal
+                    else:
+                        text_in_doc = self.get_text(
+                            document_text, first.begin_offset, first.end_offset
+                        )
+                        literal = text_in_doc
                     source = cmp_item.source
                 else:
                     uri = MISSING
-                    text_ = self.get_text(
+                    text_in_doc = self.get_text(
                         document_text, first.begin_offset, first.end_offset
                     )
-                    text = f"*{text_}*"
+                    text = f"*{text_in_doc}*"
                     literal = text
                     source = find_source(compare_data, cmp_idx)
 

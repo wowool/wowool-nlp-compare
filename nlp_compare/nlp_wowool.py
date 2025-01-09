@@ -58,7 +58,7 @@ entity_mapping_table = {
         "Country": "GPE",
         "Date": "DATE",
         "Street": "LOC",
-        "Facility": "LOC",
+        "Facility": "FAC",
         "WorldRegion": "LOC",
         "PlaceAdj": "NORP",
         "MoneyAmount": "MONEY",
@@ -76,7 +76,6 @@ class NLPWowool(NLPEngine):
     def __init__(self, cmp_idx, language_short_form, **kwargs):
         super(NLPWowool, self).__init__(cmp_idx)
         self.language_short_form = language_short_form
-        print(f"{kwargs=}")
         if "pipeline" in kwargs:
             self.engine = PipeLine(kwargs["pipeline"])
         # self.engine = stanza.Pipeline(self.language_short_form)
