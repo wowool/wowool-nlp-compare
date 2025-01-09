@@ -31,6 +31,8 @@ This command will generate 2 file: **wowool-vs-spacy-tbl.txt** and **wowool-vs-s
 
 ### Results
 
+
+
 #### Anaphora
 
     python3 -m nlp_compare -e spacy -l english -p "english,entity" -f tests/data/anaphora.text
@@ -162,6 +164,51 @@ As we see none of these entities are found. (Note this happens a lot with pdf do
 |    15 |    22 | GPE       | Antwerp          | **Missing** |              |
 |    32 |    50 | LOC       | Renecarel street | **Missing** |              |
 |    69 |    86 | LOC       | Rivirenhof Park  | **Missing** |              |
+
+#### Tokenization
+
+Tokenization seems to be a bit random in the case of alphanumeric characters. Note *A66* vs *A1M*
+
+`A66 in County Durham/Cumbria closed in both directions between A1M (J53) and M6 (J40) - snow .`
+
+Tokens:
+
+```
+A66
+in
+County
+Durham
+/
+Cumbria
+closed
+in
+both
+directions
+between
+A1
+M
+(
+J53
+)
+and
+M6
+(
+J40
+)
+-
+snow
+.
+```
+
+Entities are also off:
+
+```
+A66 - ORG
+County Durham/Cumbria - ORG
+A1M - PERSON
+M6 (J40 - ORG
+```
+
 
 ## Stanza vs Wowool
 
