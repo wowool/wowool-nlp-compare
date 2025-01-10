@@ -1,6 +1,7 @@
 import argparse
 import spacy
 from pathlib import Path
+from collections import Counter
 
 
 def parse_arguments():
@@ -19,15 +20,16 @@ def parse_arguments():
 if __name__ == "__main__":
     kwargs = dict(parse_arguments()._get_kwargs())
     engine = spacy.load(kwargs["model"])
+    uris = Counter()
     if "input" in kwargs and kwargs["input"]:
         text = kwargs.pop("input")
         doc = engine(text)
         print("Entities:\n==========")
         for ent in doc.ents:
+            uris[ent.label_] += 1
             print(f"{ent.text} - {ent.label_}")
     else:
         files = kwargs.pop("file")
-
         for filename in files:
             fn = Path(filename)
             if fn.exists():
@@ -35,6 +37,9 @@ if __name__ == "__main__":
                 doc = engine(text)
                 print("Entities:\n==========")
                 for ent in doc.ents:
+                    uris[ent.label_] += 1
                     print(f"{ent.text} - {ent.label_}")
             else:
                 print(f"File not found: {fn}")
+
+    print(uris)
