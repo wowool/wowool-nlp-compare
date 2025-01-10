@@ -11,6 +11,27 @@ This tool allows us to compare different nlp engines with the wowool engine.
 
 We are going to compare several cases using wowool, spacy, stanza and google NLP.
 
+| Feature          | Wowool  | Spacy   | Stanza   | Notes                                                                                                                |
+|:-----------------|:-------:|:--------:|:--------:|---------------------------------------------------------------------------------------------------------------------|
+| Anaphora         | Yes     | No       | No       | Stanza does not resolve pronouns like he, she, the city, the company, etc.                                          |
+| Conjecture       | Yes     | No       | No       | When Mentioning a something in context, wowool will remeber that what it was later on                               |
+| Aggregation      | Yes     | No       | No       | Wowool aggregates attributes like positions, country, descriptions                                                  |
+| Instances        | Yes     | No       | No       | Wowool keeps track of instances, collecting information such as *John Smith, John, He, J. Smith* as the same entity |
+| Normalization    | Yes     | No       | No       | In Wowool, *UK* is recognized as the same instance as *United Kingdom*                                              |
+| Hyphenation      | Yes     | No       | No       | Stanza does not recognize words that have been split                                                                |
+| Augmented        | Yes     | No       | No       | Wowool adds information from Wikipedia to the attributes                                                            |
+| Numbers          | Yes     | No       | No       | Resolves written numbers like *five hundred billion dollars*                                                        |
+| Sentiment        | Yes     | No       | No       | Wowool returns sentence-based sentiment analysis                                                                    |
+| Attributes       | Yes     | No       | No       | Annotations have attributes ex: gender, position, ...                                                               |
+| Onthologies      | places  | No       | No       | Things like UK, USA, Belgium, Europe,EU                                                                             |
+| Entity types     | +231    | 18       | 18       | The number of different type of entities                                                                            |
+| Sub Annotations  | Yes     | No       | No       | Wowool support subannotation like Tripels have Subject, Object, Verb                                                |
+| Custom Domains   | Yes     | No       | No       | Does not requires training data, Wowool is a rule-based language                                                    |
+| False Positive's |         |          |          |    |
+| False Negative's |         |          |          |    |
+
+
+
 ### Anaphora
 
 
@@ -126,7 +147,7 @@ Testing a text that contains hyphenations. This happens a lot with pdf documents
 
 | beg | end | uri_wowool   | URI_wowool   | text_wowool         | uri_spacy   | text_spacy           | uri_stanza   | text_stanza          | uri_google   | URI_google   | text_google          |
 |-----|-----|--------------|--------------|---------------------|-------------|----------------------|--------------|----------------------|--------------|--------------|----------------------|
-|  15 |  22 | GPE          | City         | Antwerp             | **Missing** | *Ant-\nwerp*         | **Missing**  | *Ant-\nwerp*           | GPE          | LOCATION     | Ant-\nwerp           |
+|  15 |  22 | GPE          | City         | Antwerp             | **Missing** | *Ant-\nwerp*         | **Missing**  | *Ant-\nwerp*         | GPE          | LOCATION     | Ant-\nwerp           |
 |  32 |  50 | LOC          | Street       | Renecarel street    | **Missing** | *Rene-\ncarel street*| **Missing**  | *Rene-\ncarel street*| **Missing**  |              | *Rene-\ncarel street*|
 |  32 |  36 |              |              | *Rene*              | **Missing** | *Rene*               | **Missing**  | *Rene*               | ~~PERSON~~   | ~~PERSON~~   | Rene                 |
 |  44 |  50 |              |              | *street*            | **Missing** | *street*             | **Missing**  | *street*             | GPE          | LOCATION     | street               |
@@ -187,14 +208,48 @@ As you can see spacy does not look good on their own demo text, imagine on unkno
 
 ## Spacy vs Wowool
 
+### Features
+
+#### Speed
+
+We can say that wowool and spacy has a very similair speed
+
+#### Accuracy
+
+Wowool out performs by far Spacy, As SpaCy
+
+#### Features
+
+| Feature          | Wowool  | SpaCy    | Notes                                                                                                               |
+|:-----------------|:-------:|:--------:|---------------------------------------------------------------------------------------------------------------------|
+| Anaphora         | Yes     | No       | SpaCy does not resolve pronouns like he, she, the city, the company, etc.                                           |
+| Conjecture       | Yes     | No       | When Mentioning a something in context, wowool will remeber that what it was later on                               |
+| Aggregation      | Yes     | No       | Wowool aggregates attributes like positions, country, descriptions                                                  |
+| Instances        | Yes     | No       | Wowool keeps track of instances, collecting information such as *John Smith, John, He, J. Smith* as the same entity |
+| Normalization    | Yes     | No       | In Wowool, *UK* is recognized as the same instance as *United Kingdom*                                              |
+| Hyphenation      | Yes     | No       | SpaCy does not recognize words that have been split                                                                 |
+| Augmented        | Yes     | No       | Wowool adds information from Wikipedia to the attributes                                                            |
+| Numbers          | Yes     | No       | Resolves written numbers like *five hundred billion dollars*                                                        |
+| Sentiment        | Yes     | No       | Wowool returns sentence-based sentiment analysis                                                                    |
+| Attributes       | Yes     | No       | Annotations have attributes ex: gender, position, ...                                                               |
+| Onthologies      | places  | No       | Things like UK, USA, Belgium, Europe,EU                                                                             |
+| Entity types     | +231    | 18       | The number of different type of entities                                                                            |
+| Sub Annotations  | Yes     | No       | Wowool support subannotation like Tripels have Subject, Object, Verb                                                |
+| Custom Domains   | Yes     | No       | SpaCy requires training data, while Wowool is a rule-based language                                                 |
+| False Positive's |         |          |    |
+| False Negative's |         |          |    |
+
+
+### Comparing
+
+Notes: we used the `en_core_web_sm` to compare with wowool, but we noticed that using other models returns inconsistencies during the tests. As some of their own entities disappear and other appeare in other models, so we decided to stick to this model.
+
+
 ### Setup
 
     pip install spacy
     python -m spacy download en_core_web_sm
-  
-### Comparing
 
-Notes: we used the `en_core_web_sm` to compare with wowool, but we noticed that using other models returns inconsistencies during the tests. As some of their own entities disappear and other appeare in other models, so we decided to stick to this model.
 
 Using this command you will see the comparison between spacy and wowool in speed and accuracy.
 
@@ -380,20 +435,44 @@ M6 (J40 - ORG
 
     pip install stanza
 
+
+### Features
+
+#### Speed
+
+We wowool is up to 50 to 100 faster, and wowool is only using 1 cpu while stanza is using all off them, going up to 800% CPU usage.
+
+#### Accuracy
+
+Wowool out performs by far Stanza
+
+#### Features
+
+| Feature          | Wowool  | Stanza   | Notes                                                                                                               |
+|:-----------------|:-------:|:--------:|---------------------------------------------------------------------------------------------------------------------|
+| Anaphora         | Yes     | No       | Stanza does not resolve pronouns like he, she, the city, the company, etc.                                          |
+| Conjecture       | Yes     | No       | When Mentioning a something in context, wowool will remeber that what it was later on                               |
+| Aggregation      | Yes     | No       | Wowool aggregates attributes like positions, country, descriptions                                                  |
+| Instances        | Yes     | No       | Wowool keeps track of instances, collecting information such as *John Smith, John, He, J. Smith* as the same entity |
+| Normalization    | Yes     | No       | In Wowool, *UK* is recognized as the same instance as *United Kingdom*                                              |
+| Hyphenation      | Yes     | No       | Stanza does not recognize words that have been split                                                                |
+| Augmented        | Yes     | No       | Wowool adds information from Wikipedia to the attributes                                                            |
+| Numbers          | Yes     | No       | Resolves written numbers like *five hundred billion dollars*                                                        |
+| Sentiment        | Yes     | No       | Wowool returns sentence-based sentiment analysis                                                                    |
+| Attributes       | Yes     | No       | Annotations have attributes ex: gender, position, ...                                                               |
+| Onthologies      | places  | No       | Things like UK, USA, Belgium, Europe,EU                                                                             |
+| Entity types     | +231    | 18       | The number of different type of entities                                                                            |
+| Sub Annotations  | Yes     | No       | Wowool support subannotation like Tripels have Subject, Object, Verb                                                |
+| Custom Domains   | Yes     | No       | Stanza requires training data, while Wowool is a rule-based language                                                |
+| False Positive's |         |          |    |
+| False Negative's |         |          |    |
+
 ### Comparing
 
 Using this command you will see the comparison between stanza and wowool in speed and accuracy.
 
     python3 -m nlp_compare -l english -p "english,entity" -f test.txt -e stanza --show
 
-<<<<<<< HEAD
-This command will generate 2 files:
-
-* `wowool-vs-stanza-tbl.txt`: A table with the entities side by side 
-* `wowool-vs-stanza-diff.txt`: A diff beween the two result files
-
-=======
->>>>>>> 3bed17e (logging and readme)
 #### Anaphora
 
     python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/anaphora.txt
@@ -705,6 +784,21 @@ It is very clear that Wowool knows about language and tackles all the linguistic
 * Spacy: **PERSON**: 1652, **ORG**: 2357,
 * Stanza: **PERSON**: 1716, **ORG**: 1479,
 
+WOWOOL: Counter({'Person.': 3278, 'PersonMention': 2278, 'Event': 1909, 'Publisher': 1094, 'Company': 1049, 'Position': 995, 'Organization': 694, 'Country': 683, 'Facility': 542, 'PlaceAdj': 522, 'Date': 421, 'City': 359, 'Url': 328, 'WorldRegion': 275, 'They': 208, 'Month': 195, 'MoneyAmount': 95, 'CurrencyUnit': 24, 'Email': 12, 'Street': 9})
+Spacy: Counter({'ORG': 2357, 'PERSON': 1652, 'DATE': 1155, 'GPE': 1065, 'CARDINAL': 890, 'NORP': 344, 'LANGUAGE': 322, 'ORDINAL': 149, 'TIME': 128, 'WORK_OF_ART': 101, 'MONEY': 95, 'LOC': 75, 'PERCENT': 75, 'FAC': 38, 'PRODUCT': 34, 'QUANTITY': 23, 'EVENT': 11, 'LAW': 4})
+Stanza: Counter({'PERSON': 1716, 'ORG': 1479, 'DATE': 1114, 'GPE': 1006, 'CARDINAL': 579, 'NORP': 369, 'LANGUAGE': 323, 'WORK_OF_ART': 261, 'ORDINAL': 155, 'TIME': 120, 'MONEY': 104, 'EVENT': 98, 'PERCENT': 79, 'LOC': 77, 'FAC': 59, 'PRODUCT': 32, 'QUANTITY': 29, 'LAW': 15})
+
+|     URI     | Wowool | Spacy | Stanza
+|-------------|--------|-------|-------|
+| PERSON      | 3278   | 1652  | 1716  |
+| ORG         |  see Company,Organization    | 2357  |  1479  |
+| Company     | 1049 | | |
+| Organization| 694  | | |
+
+
+
+
+
 Note: we need to add false positive stats  here.
 
 ### Resource Utilization
@@ -741,3 +835,17 @@ In short, spacy does not handle big data, and stanza looks like it does handle b
 |   beg |   end | uri_wowool   | text_wowool   | uri_spacy   | text_spacy   | uri_stanza   | text_stanza   |
 |-------|-------|--------------|---------------|-------------|--------------|--------------|---------------|
 |  7787 |  7797 | **Missing**  | *Whole-Arse*  | PERSON      | Whole-Arse   | **Missing**  | *Whole-Arse*  |
+
+
+* Date's are random in spacy and stanza
+
+╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1363 books."
+1363 - CARDINAL
+╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1364 books."
+1364 - DATE
+╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2000 books."
+2000 - CARDINAL
+╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2001 books."
+2001 - DATE
+╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2025 books."
+2025 - DATE
