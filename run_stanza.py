@@ -1,6 +1,7 @@
 import argparse
 import stanza
 from pathlib import Path
+from collections import Counter
 
 
 def parse_arguments():
@@ -19,11 +20,14 @@ def parse_arguments():
 if __name__ == "__main__":
     kwargs = dict(parse_arguments()._get_kwargs())
     engine = stanza.Pipeline(kwargs["language"])
+    uris = Counter()
+
     if "input" in kwargs and kwargs["input"]:
         text = kwargs.pop("input")
         doc = engine(text)
         print("Entities:\n==========")
         for ent in doc.entities:
+            uris[ent.type] += 1
             print(f"{ent}")
     else:
         files = kwargs.pop("file")
@@ -35,6 +39,9 @@ if __name__ == "__main__":
                 doc = engine(text)
                 print("Entities:\n==========")
                 for ent in doc.ents:
+                    uris[ent.type] += 1
                     print(f"{ent}")
             else:
                 print(f"File not found: {fn}")
+
+    print(uris)
