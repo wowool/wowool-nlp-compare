@@ -5,12 +5,15 @@ from nlp_compare.concept_filter import ConceptFilter
 import re
 from nlp_compare.cmp_objects import NLPEngine
 from nlp_compare.measure_performance import measure_performance
+from logging import getLogger
+
+logger = getLogger("nlp.cmp.spacy")
 
 entity_mapping_table = {}
 
 
 cleanup_table = {
-    "en": [[re.compile(r"'s"), ""]],
+    "en": [[re.compile(r"'s$|^the "), ""]],
 }
 
 
@@ -49,6 +52,9 @@ try:\npython -m spacy download {self.model_mame} """
 
     def get_compare_data(self, other_, doc, concept_filter: ConceptFilter):
         for entity in doc.ents:
+            logger.debug(
+                f"SPACY: {entity.start_char} {entity.end_char} {entity.label_} {entity.text}"
+            )
             uri = (
                 self.map_table[entity.label_]
                 if entity.label_ in self.map_table
@@ -58,6 +64,7 @@ try:\npython -m spacy download {self.model_mame} """
             if concept_filter and not concept_filter(uri):
                 continue
 
+            beg_char = entity.start_char
             end_char = entity.end_char
             entity_text = entity.text
 
@@ -65,18 +72,22 @@ try:\npython -m spacy download {self.model_mame} """
                 for pattern, replace in self.cleanup_table:
                     entity_text_ = pattern.sub(replace, entity_text)
                     if entity_text_ != entity_text:
-                        end_char -= len(entity_text) - len(entity_text_)
+                        pos = entity_text.find(entity_text_)
+                        if pos >= 0:
+                            beg_char += pos
+                            end_char = beg_char + len(entity_text_)
                         # entity_text = entity_text_
                         break
 
             other_.data.append(
                 CmpItem(
                     self.cmp_idx,
-                    entity.start_char,
+                    beg_char,
                     end_char,
                     self.name,
                     uri,
                     entity_text,
+                    original_uri=entity.label_,
                 )
             )
             other_.counter[uri] += 1

@@ -2,6 +2,9 @@ from nlp_compare.cmp_objects import CmpItem
 from nlp_compare.concept_filter import ConceptFilter
 from wowool.native.core import PipeLine
 from nlp_compare.cmp_objects import NLPEngine
+from logging import getLogger
+
+logger = getLogger("nlp.cmp.wowool")
 
 entity_mapping_table = {
     "es": {
@@ -55,6 +58,7 @@ entity_mapping_table = {
         "Organization": "ORG",
         "Publisher": "ORG",
         "Position": "POSITION",
+        "Product": "PRODUCT",
         "City": "GPE",
         "Country": "GPE",
         "Date": "DATE",
@@ -103,11 +107,13 @@ class NLPWowool(NLPEngine):
                                 "wowool",
                                 uri,
                                 token.literal,
+                                original_uri=uri,
                             )
                         )
 
                 elif annotation.is_concept:
                     concept = annotation
+                    logger.debug(f"WOWOOL: {concept}")
                     uri = (
                         self.map_table[concept.uri]
                         if concept.uri in self.map_table
@@ -127,6 +133,7 @@ class NLPWowool(NLPEngine):
                                 uri,
                                 concept.canonical,
                                 literal=concept.literal,
+                                original_uri=concept.uri,
                             )
                         )
                         wowool_.counter[uri] += 1
@@ -139,6 +146,7 @@ class NLPWowool(NLPEngine):
                                 "wowool",
                                 uri,
                                 sentence.text,
+                                original_uri=concept.uri,
                             )
                         )
 

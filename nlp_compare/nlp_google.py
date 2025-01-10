@@ -3,64 +3,29 @@ from google.cloud import language_v1
 from nlp_compare.cmp_objects import CmpItem
 from nlp_compare.concept_filter import ConceptFilter
 from nlp_compare.cmp_objects import NLPEngine
+from logging import getLogger
 
+logger = getLogger("nlp.cmp.google")
 entity_mapping_table = {
     "es": {
-        "Person": "PERSON",
-        "Company": "ORGANIZATION",
-        "Organization": "ORGANIZATION",
-        "City": "LOCATION",
-        "Country": "LOCATION",
-        "Street": "LOCATION",
-        "Facility": "FAC",
-        "WorldRegion": "LOCATION",
-        "PlaceAdj": "LOCATION",
-        "MoneyAmount": "MONEY",
-        "Event": "EVENT",
+        "ORGANIZATION": "ORG",
+        "LOCATION": "GPE",
+        "ADDRESS": "LOC",
     },
     "nl": {
-        "Person": "PERSON",
-        "Company": "ORGANIZATION",
-        "Organization": "ORGANIZATION",
-        "City": "LOCATION",
-        "Country": "LOCATION",
-        "Street": "LOCATION",
-        "Facility": "LOCATION",
-        "WorldRegion": "LOCATION",
-        "MoneyAmount": "MONEY",
-        "Event": "EVENT",
+        "ORGANIZATION": "ORG",
+        "LOCATION": "GPE",
+        "ADDRESS": "LOC",
     },
     "de": {
-        "Person": "PERSON",
-        "Company": "ORGANIZATION",
-        "Organization": "ORGANIZATION",
-        "City": "LOCATION",
-        "Country": "LOCATION",
-        "Street": "LOCATION",
-        "Facility": "LOCATION",
-        "WorldRegion": "LOCATION",
-        "PlaceAdj": "LOCATION",
-        "MoneyAmount": "MONEY",
-        "Event": "EVENT",
+        "ORGANIZATION": "ORG",
+        "LOCATION": "GPE",
+        "ADDRESS": "LOC",
     },
     "en": {
-        "Sentence": "Sentence",
-        "Person": "PERSON",
-        "Position": "Position",
-        "Company": "ORGANIZATION",
-        "Organization": "ORGANIZATION",
-        "Publisher": "ORGANIZATION",
-        "City": "GPE",
-        "Country": "GPE",
-        "Date": "DATE",
-        "Street": "LOCATION",
-        "Facility": "LOCATION",
-        "WorldRegion": "LOCATION",
-        "PlaceAdj": "NORP",
-        "MoneyAmount": "MONEY",
-        "Event": "EVENT",
-        "TimePhrase": "TIME",
-        "Place": "GPE",
+        "ORGANIZATION": "ORG",
+        "LOCATION": "GPE",
+        "ADDRESS": "LOC",
     },
 }
 
@@ -74,6 +39,7 @@ class NLPGoogle(NLPEngine):
         super().__init__(cmp_idx)
         self.language_short_form = language_short_form
         self.engine = language_v1.LanguageServiceClient()
+        self.map_table = entity_mapping_table.get(self.language_short_form, {})
 
     def warmup(self): ...
 
@@ -94,7 +60,13 @@ class NLPGoogle(NLPEngine):
     def get_compare_data(self, other_, doc, concept_filter: ConceptFilter):
 
         for entity in doc.entities:
-            uri = language_v1.Entity.Type(entity.type).name
+            logger.debug(f"GOOGLE: {entity}")
+            original_uri = language_v1.Entity.Type(entity.type).name
+            uri = (
+                self.map_table[original_uri]
+                if original_uri in self.map_table
+                else original_uri
+            )
             if not concept_filter(uri):
                 continue
             # print(entity)
@@ -117,6 +89,7 @@ class NLPGoogle(NLPEngine):
                         self.name,
                         uri,
                         first_mention,
+                        original_uri=original_uri,
                     )
                 )
                 other_.counter[uri] += 1

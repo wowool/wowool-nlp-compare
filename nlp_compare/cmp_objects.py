@@ -10,6 +10,7 @@ class CmpItem:
     uri: str
     text: str
     literal: str | None = None
+    original_uri: str | None = None
 
 
 class NLPEngine:

@@ -3,6 +3,9 @@ import stanza
 from nlp_compare.cmp_objects import CmpItem
 from nlp_compare.concept_filter import ConceptFilter
 from nlp_compare.cmp_objects import NLPEngine
+from logging import getLogger
+
+logger = getLogger("nlp.cmp.stanza")
 
 entity_mapping_table = {}
 
@@ -25,11 +28,15 @@ class NLPStanza(NLPEngine):
 
     def get_compare_data(self, other_, doc, concept_filter: ConceptFilter):
         for entity in doc.entities:
+            logger.debug(
+                f"STANZA: {entity.start_char} {entity.end_char} {entity.type} {entity.text}"
+            )
 
+            original_uri = entity.type
             uri = (
-                self.map_table[entity.type]
-                if entity.type in self.map_table
-                else entity.type
+                self.map_table[original_uri]
+                if original_uri in self.map_table
+                else original_uri
             )
 
             if not concept_filter(uri):
@@ -43,6 +50,7 @@ class NLPStanza(NLPEngine):
                     self.name,
                     uri,
                     entity.text,
+                    original_uri=original_uri,
                 )
             )
             other_.counter[uri] += 1

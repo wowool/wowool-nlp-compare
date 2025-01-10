@@ -77,7 +77,7 @@ As we can see spacy is incorrectly tagging **the George Washington** missing **J
 
 The first instance is correct, but in the second sentence **Georgia** is tagged as a location (**GPE**) 
 
-`Georgia Smith work in Antwerpen.`
+`Georgia Smith work in Antwerp.`
 
 |   beg |   end | uri_wow     | text_wow      | uri_spacy   | text_spacy    |
 |-------|-------|-------------|---------------|-------------|---------------|
@@ -210,11 +210,6 @@ M6 (J40 - ORG
 Using this command you will see the comparison between stanza and wowool in speed and accuracy.
 
     python3 -m nlp_compare -l english -p "english,entity" -f test.txt -e stanza --show
-
-This command will generate 2 files:
-
-* `wowool-vs-stanza-tbl.txt`: A table with the entities side by side 
-* `wowool-vs-stanza-diff.txt`: A diff beween the two result files
 
 #### Anaphora
 

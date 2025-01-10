@@ -10,7 +10,7 @@ from pathlib import Path
 
 LOGGIN_CONFIG_FILE = Path("logging.conf")
 LOGGIN_CONFIG_DATA = """[loggers]
-keys=root,nlp_engine,stanza
+keys=root,nlp_engine,nlp.cmp.spacy,nlp.cmp.wowool,nlp.cmp.stanza,nlp.cmp.google
 
 [handlers]
 keys=consoleHandler,fileHandler
@@ -22,11 +22,30 @@ keys=default
 level=INFO
 handlers=consoleHandler
 
-[logger_stanza]
+[logger_nlp.cmp.wowool]
 level=ERROR
 handlers=consoleHandler
-qualname=stanza
+qualname=nlp.cmp.wowool
 propagate=0
+
+[logger_nlp.cmp.spacy]
+level=ERROR
+handlers=consoleHandler
+qualname=nlp.cmp.spacy
+propagate=0
+
+[logger_nlp.cmp.stanza]
+level=ERROR
+handlers=consoleHandler
+qualname=nlp.cmp.stanza
+propagate=0
+
+[logger_nlp.cmp.google]
+level=INFO
+handlers=consoleHandler
+qualname=nlp.cmp.google
+propagate=0
+
 
 [logger_nlp_engine]
 level=INFO

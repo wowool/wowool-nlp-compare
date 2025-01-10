@@ -27,6 +27,7 @@ class RowData:
     end_offset: int
     text: str | None = None
     literal: str | None = None
+    original_uri: str | None = None
 
 
 @dataclass
@@ -54,9 +55,12 @@ class NlpData:
         end_offset,
         text: str | None = None,
         literal: str | None = None,
+        original_uri: str | None = None,
     ):
         self.rows.append(
-            RowData(self.name, uri, begin_offset, end_offset, text, literal)
+            RowData(
+                self.name, uri, begin_offset, end_offset, text, literal, original_uri
+            )
         )
 
 
@@ -186,6 +190,7 @@ class CompareContext:
                 "end": ll.end_offset,
                 "literal": ll.literal,
                 f"uri_{ll.source}": ll.uri,
+                f"URI_{ll.source}": ll.original_uri,
                 f"text_{ll.source}": ll.text,
             }
             missing_in_source = []
@@ -206,6 +211,7 @@ class CompareContext:
                         missing_in_source.append(ll.source)
 
                 item[f"uri_{rl.source}"] = rl.uri
+                item[f"URI_{rl.source}"] = rl.original_uri
                 item[f"text_{rl.source}"] = rl.text if rl.text else f"({rl.literal})"
 
             if missing_in_source and item[KEY_IS_DIFFERENT]:
@@ -272,8 +278,10 @@ class CompareContext:
                         )
                         literal = text_in_doc
                     source = cmp_item.source
+                    orignal_uri = cmp_item.original_uri
                 else:
                     uri = MISSING
+                    orignal_uri = ""
                     text_in_doc = self.get_text(
                         document_text, first.begin_offset, first.end_offset
                     )
@@ -287,6 +295,7 @@ class CompareContext:
                     first.end_offset,
                     text,
                     literal=literal,
+                    original_uri=orignal_uri,
                 )
 
         self.print_tabulate(prev_sentence, compare_data)
