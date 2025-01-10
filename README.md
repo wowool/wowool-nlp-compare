@@ -6,6 +6,168 @@ This tool allows us to compare different nlp engines with the wowool engine.
 
     pip install -r wowool-requirements.txt
 
+
+## Wowool vs Spacy,Stanza and Google
+
+### Anaphora
+
+As we can see spacy is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the it company* )  and **John Dow** (*he*)
+
+
+`John Dow and Mary Smith went to work at EyeOnText.`
+
+| ?   |   beg |   end | uri_wowool   | text_wowool   | uri_spacy   | text_spacy   | uri_stanza   | text_stanza   | uri_google   | text_google   |
+|-----|-------|-------|--------------|---------------|-------------|--------------|--------------|---------------|--------------|---------------|
+|     |     0 |     8 | PERSON       | John Dow      | PERSON      | John Dow     | PERSON       | John Dow      | PERSON       | John Dow      |
+|     |    13 |    23 | PERSON       | Mary Smith    | PERSON      | Mary Smith   | PERSON       | Mary Smith    | PERSON       | Mary Smith    |
+| -   |    40 |    49 | ORG          | EyeOnText     | ORG         | EyeOnText    | ORG          | EyeOnText     | **Missing**  | *EyeOnText*   |
+
+
+`She works for the it company but he only cleans there.`
+
+| ?   |   beg |   end | uri_wowool   | text_wowool   | uri_spacy   | text_spacy       | uri_stanza   | text_stanza      | uri_google   | text_google      |
+|-----|-------|-------|--------------|---------------|-------------|------------------|--------------|------------------|--------------|------------------|
+| --- |    51 |    54 | PERSON       | Mary Smith    | **Missing** | *She*            | **Missing**  | *She*            | **Missing**  | *She*            |
+| --- |    65 |    79 | ORG          | EyeOnText     | **Missing** | *the it company* | **Missing**  | *the it company* | **Missing**  | *the it company* |
+| --- |    84 |    86 | PERSON       | John Dow      | **Missing** | *he*             | **Missing**  | *he*             | **Missing**  | *he*             |
+
+
+#### Wrong tagging
+
+    python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/person_wrong_tagging.txt -a "Sentence,PERSON,ORG,POS,GPE,LOC"
+
+The first instance is correct, but in the second sentence *Georgia* is tagged as a location (**GPE**) 
+
+
+`Georgia Smith work in Antwerp.`
+
+
+| beg | end | uri_wowool   | text_wowool   | uri_spacy   | text_spacy    | uri_stanza   | text_stanza   | uri_google   | text_google   |
+|-----|-----|--------------|---------------|-------------|---------------|--------------|---------------|--------------|---------------|
+|   0 |  13 | PERSON       | Georgia Smith | PERSON      | Georgia Smith | PERSON       | Georgia Smith | PERSON       | Georgia Smith |
+|  22 |  29 | GPE          | Antwerp       | GPE         | Antwerp       | GPE          | Antwerp       | GPE          | Antwerp       |
+
+
+`Georgia is nice, she does a lot.`
+
+
+| beg | end | uri_wowool   | text_wowool   | uri_spacy   | text_spacy   | uri_stanza   | text_stanza   | uri_google   | text_google   |
+|-----|-----|--------------|---------------|-------------|--------------|--------------|---------------|--------------|---------------|
+|  31 |  38 | PERSON, LOC  | Georgia Smith | ~~GPE~~     | Georgia      | ~~GPE~~      | Georgia       | ~~GPE~~      | Georgia       |
+|  48 |  51 | PERSON       | Georgia Smith | **Missing** | *she*        | **Missing**  | *she*         | **Missing**  | *she*         |
+
+
+#### Conjecture
+
+
+* spacy,stanza are not tagging the **Position** *CEO*
+* google is tagging *CEO* and *Mr.* as a **Person** but it clearly a Position in this sentence.
+* google is then referenceing *Miyaktama Mitshu* as being *CEO* while it's the oposit.
+* they all miss the anaphoara *he*
+
+
+`The CEO Mr. Miyaktama Mitshu is a bad person he kill a person.`
+
+| beg | end | uri_wowool   | text_wowool      | uri_spacy   | text_spacy       | uri_stanza   | text_stanza      | uri_google   | text_google   |
+|-----|-----|--------------|------------------|-------------|------------------|--------------|------------------|--------------|---------------|
+|   4 |   7 | POSITION     | CEO              | **Missing** | *CEO*            | **Missing**  | *CEO*            | ~~PERSON~~   | CEO           |
+|   8 |  11 |              | *Mr.*            |             | *Mr.*            |              | *Mr.*            | PERSON       | CEO           |
+|  12 |  28 | PERSON       | Miyaktama Mitshu | PERSON      | Miyaktama Mitshu | PERSON       | Miyaktama Mitshu | PERSON       | CEO           |
+|  38 |  44 |              | *person*         |             | *person*         |              | *person*         | PERSON       | CEO           |
+|  45 |  47 | PERSON       | Miyaktama Mitshu | **Missing** | *he*             | **Missing**  | *he*             | **Missing**  | *he*          |
+|  55 |  61 |              | *person*         |             | *person*         |              | *person*         | PERSON       | person        |
+
+* spacy is mistagging *Miyaktama* as a **GPE**, while stanza,google lost the reference to *Miyaktama Mitshu*
+* spacy,stanza and google does not reference *the CEO* to *Miyaktama Mitshu*, google just find the *CEO* as a **PERSON** while it should be a **POSITION**.
+
+`Miyaktama is the CEO.`
+
+
+| beg | end | uri_wowool   | text_wowool      | uri_spacy   | text_spacy   | uri_stanza   | text_stanza   | uri_google   | text_google   |
+|-----|-----|--------------|------------------|-------------|--------------|--------------|---------------|--------------|---------------|
+|  63 |  72 | PERSON       | Miyaktama Mitshu | ~~GPE~~     | Miyaktama    | PERSON       | Miyaktama     | PERSON       | Miyaktama     |
+|  76 |  83 | PERSON       | Miyaktama Mitshu | **Missing** | *the CEO*    | **Missing**  | *the CEO*     | **Missing**  | *the CEO*     |
+|  80 |  83 | POSITION     | CEO              | **Missing** | *CEO*        | **Missing**  | *CEO*         | ~~PERSON~~   | CEO           |
+
+But it clear from the first sentence that it is a Person.
+
+
+#### Hyphenation
+
+Testing a text that contains hyphenations. This happens a lot with pdf documents that uses colums
+
+    python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/hyphenation.txt
+
+    I've worked in Ant-
+    werp in the Rene-
+    carel street which is close to Riviren-
+    hof Park.
+
+* spacy and stanza are not dealing with hyphenations.
+* google does, but does not clean it up and does sometime tag it wrongly *Rene* is a Person but not in this case. *Renecarel* is a street name. I would even argue that *street* in this case is not a location.
+
+
+| beg | end | uri_wowool   | URI_wowool   | text_wowool         | uri_spacy   | text_spacy           | uri_stanza   | text_stanza          | uri_google   | URI_google   | text_google          |
+|-----|-----|--------------|--------------|---------------------|-------------|----------------------|--------------|----------------------|--------------|--------------|----------------------|
+|  15 |  22 | GPE          | City         | Antwerp             | **Missing** | *Ant-\nwerp*         | **Missing**  | *Ant-\nwe*           | GPE          | LOCATION     | Ant-\nwerp           |
+|  32 |  50 | LOC          | Street       | Renecarel street    | **Missing** | *Rene-\ncarel street*| **Missing**  | *Rene-\ncarel street*| **Missing**  |              | *Rene-\ncarel street*|
+|  32 |  36 |              |              | *Rene*              | **Missing** | *Rene*               | **Missing**  | *Rene*               | ~~PERSON~~   | ~~PERSON~~   | Rene                 |
+|  44 |  50 |              |              | *street*            | **Missing** | *street*             | **Missing**  | *street*             | GPE          | LOCATION     | street               |
+|  69 |  86 | FAC          | Facility     | *Rivirenhof Park*   | **Missing** | *Riviren-\nhof Park* | **Missing**  | *Riviren-\nhof Park* | GPE          | LOCATION     | Riviren-\nhof Park   |
+
+
+#### Spacyio Demo text
+
+Runnig a text i've found in the demo from Spacyio.
+
+    python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/companies.txt -a "Sentence,PERSON,FAC,ORG,POSITION,GPE,LOC,PRODUCT,WORK_OF_ART"
+
+`When Sebastian Thrun started working on self-driving cars at Google in 2007 few people outside of the company took him seriously.`
+
+* stanza is splitting *Sebastian Thrun* into 2 Persons, which is wrong.
+* google is tagging *people* as a Person
+* spacy,stanza and google are missing *the company*, and google tags *company* as a ORGANIZATION which is wrong.
+* spacy,stanza and google are missing *him*
+
+| beg | end | uri_wowool   | URI_wowool   | text_wowool     | uri_spacy   | URI_spacy   | text_spacy      | uri_stanza   | URI_stanza   | text_stanza   | uri_google   | URI_google       | text_google     |
+|-----|-----|--------------|--------------|-----------------|-------------|-------------|-----------------|--------------|--------------|---------------|--------------|------------------|-----------------|
+|   5 |  20 | PERSON       | Person       | Sebastian Thrun | PERSON      | PERSON      | Sebastian Thrun | PERSON       | PERSON       | Sebastian     | PERSON       | PERSON           | Sebastian Thrun |
+|  15 |  20 |              |              | *Thrun*         |             |             | *Thrun*         | PERSON       | PERSON       | Thrun         |              |                  | *Thrun*         |
+|  61 |  67 | ORG          | Company      | Google          | ORG         | ORG         | Google          | ORG          | ORG          | Google        | ORG          | ORGANIZATION     | Google          |
+|  80 |  86 |              |              | *people*        |             |             | *people*        |              |              | *people*      | ~~PERSON~~   | ~~PERSON~~       | people          |
+|  98 | 109 | ORG          | Company      | Google          | **Missing** |             | *the company*   | **Missing**  |              | *the company* | **Missing**  |                  | *the company*   |
+| 102 | 109 |              |              | *company*       |             |             | *company*       |              |              | *company*     | ~~ORG~~      | ~~ORGANIZATION~~ | company         |
+| 115 | 118 | PERSON       | Person       | Sebastian Thrun | **Missing** |             | *him*           | **Missing**  |              | *him*         | **Missing**  |                  | *him*           |
+
+
+`"I can tell you very senior CEOs of major American car companies would shake my hand and turn away because I wasn't worth talking to." said Thrun, now the co-founder and CEO of online higher education startup Udacity, in an interview with Recode earlier this week.`
+
+* wowool is the only one capturing the POSITION
+* google is adding a lot of wrong tags like *CEOs* as PERSON or *car companies* as ORGANIZATION
+* spacy is wrongly tagging *Thrun* as a GPE, stanza get it correct but looses the refernce to *Sebastian Thrun*, only google and wowool get it correctly.
+* spacy is missing the startup *Udacity*
+* google are missing *Recode* and stanza things it's a WORK_OF_ART
+* spacy and stanza are also missing the positions *co-founder* and *CEO* , while google things these are PERSON's
+ 
+
+| beg | end | uri_wowool   | URI_wowool   | text_wowool                | uri_spacy   | URI_spacy   | text_spacy                 | uri_stanza   | URI_stanza      | text_stanza                | uri_google   | URI_google   | text_google     |
+|-----|-----|--------------|--------------|----------------------------|-------------|-------------|----------------------------|--------------|-----------------|----------------------------|--------------|--------------|-----------------|
+| 151 | 162 | POSITION     | Position     | CEO                        | **Missing** |             | *senior CEOs*              | **Missing**  |                 | *senior CEOs*              | **Missing**  |              | *senior CEOs*   |
+| 158 | 162 |              |              | *CEOs*                     |             |             | *CEOs*                     |              |                 | *CEOs*                     | PERSON       | PERSON       | CEOs            |
+| 172 | 180 | **Missing**  |              | *American*                 | **Missing** |             | *American*                 | **Missing**  |                 | *American*                 | GPE          | LOCATION     | American        |
+| 181 | 194 |              |              | *car companies*            |             |             | *car companies*            |              |                 | *car companies*            | ORG          | ORGANIZATION | car companies   |
+| 270 | 275 | PERSON       | Person       | Sebastian Thrun            | GPE         | GPE         | Thrun                      | PERSON       | PERSON          | Thrun                      | PERSON       | PERSON       | Sebastian Thrun |
+| 285 | 295 | POSITION     | Position     | co - founder               | **Missing** |             | *co-founder*               | **Missing**  |                 | *co-founder*               | PERSON       | PERSON       | co-founder      |
+| 300 | 303 | POSITION     | Position     | CEO                        | **Missing** |             | *CEO*                      | **Missing**  |                 | *CEO*                      | PERSON       | PERSON       | CEO             |
+| 314 | 338 |              |              | *higher education startup* |             |             | *higher education startup* |              |                 | *higher education startup* | ORG          | ORGANIZATION | Udacity         |
+| 339 | 346 | ORG          | Company      | Udacity                    | **Missing** |             | *Udacity*                  | ORG          | ORG             | Udacity                    | ORG          | ORGANIZATION | Udacity         |
+| 369 | 375 | ORG          | Company      | Recode                     | ORG         | ORG         | Recode                     | **Missing**  | ~~WORK_OF_ART~~ | Recode                     | **Missing**  |              | *Recode*        |
+
+
+As you can see spacy does not look good on there own demo text, imagine on unknown territory.
+
+
+
 ## Spacy vs Wowool
 
 ### Setup
@@ -211,6 +373,14 @@ Using this command you will see the comparison between stanza and wowool in spee
 
     python3 -m nlp_compare -l english -p "english,entity" -f test.txt -e stanza --show
 
+<<<<<<< HEAD
+This command will generate 2 files:
+
+* `wowool-vs-stanza-tbl.txt`: A table with the entities side by side 
+* `wowool-vs-stanza-diff.txt`: A diff beween the two result files
+
+=======
+>>>>>>> 3bed17e (logging and readme)
 #### Anaphora
 
     python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/anaphora.txt
