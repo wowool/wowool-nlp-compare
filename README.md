@@ -9,9 +9,9 @@ This tool allows us to compare different nlp engines with the wowool engine.
 
 ## Wowool vs Spacy,Stanza and Google
 
-### Anaphora
+We are going to compare several cases using wowool, spacy, stanza and google NLP.
 
-As we can see spacy is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the it company* )  and **John Dow** (*he*)
+### Anaphora
 
 
 `John Dow and Mary Smith went to work at EyeOnText.`
@@ -22,6 +22,9 @@ As we can see spacy is missing all the references in the second sentence  **Mary
 |     |    13 |    23 | PERSON       | Mary Smith    | PERSON      | Mary Smith   | PERSON       | Mary Smith    | PERSON       | Mary Smith    |
 | -   |    40 |    49 | ORG          | EyeOnText     | ORG         | EyeOnText    | ORG          | EyeOnText     | **Missing**  | *EyeOnText*   |
 
+
+
+* In the second sentence of the same text, we see that spacy, stanza and google are missing the anaphora references to **Mary Smith** (*she*), **EyeOnText** ( *the it company* ) and **John Dow** (*he*)
 
 `She works for the it company but he only cleans there.`
 
@@ -39,7 +42,7 @@ As we can see spacy is missing all the references in the second sentence  **Mary
 The first instance is correct, but in the second sentence *Georgia* is tagged as a location (**GPE**) 
 
 
-`Georgia Smith work in Antwerp.`
+`Georgia Smith works in Antwerp.`
 
 
 | beg | end | uri_wowool   | text_wowool   | uri_spacy   | text_spacy    | uri_stanza   | text_stanza   | uri_google   | text_google   |
@@ -57,16 +60,16 @@ The first instance is correct, but in the second sentence *Georgia* is tagged as
 |  48 |  51 | PERSON       | Georgia Smith | **Missing** | *she*        | **Missing**  | *she*         | **Missing**  | *she*         |
 
 
-#### Conjecture
+### Conjecture
 
 
-* spacy,stanza are not tagging the **Position** *CEO*
-* google is tagging *CEO* and *Mr.* as a **Person** but it clearly a Position in this sentence.
-* google is then referenceing *Miyaktama Mitshu* as being *CEO* while it's the oposit.
-* they all miss the anaphoara *he*
+* spacy and stanza are not tagging the **Position** *CEO*
+* google is tagging *CEO* and *Mr.* as a **Person** but they are clearly a Position in this sentence.
+* google is then referencing *Miyaktama Mitshu* as being *CEO* while it's the opposite.
+* they all miss the anaphora *he*
 
 
-`The CEO Mr. Miyaktama Mitshu is a bad person he kill a person.`
+`The CEO Mr. Miyaktama Mitshu is a bad person he killed a person.`
 
 | beg | end | uri_wowool   | text_wowool      | uri_spacy   | text_spacy       | uri_stanza   | text_stanza      | uri_google   | text_google   |
 |-----|-----|--------------|------------------|-------------|------------------|--------------|------------------|--------------|---------------|
@@ -77,8 +80,8 @@ The first instance is correct, but in the second sentence *Georgia* is tagged as
 |  45 |  47 | PERSON       | Miyaktama Mitshu | **Missing** | *he*             | **Missing**  | *he*             | **Missing**  | *he*          |
 |  55 |  61 |              | *person*         |             | *person*         |              | *person*         | PERSON       | person        |
 
-* spacy is mistagging *Miyaktama* as a **GPE**, while stanza,google lost the reference to *Miyaktama Mitshu*
-* spacy,stanza and google does not reference *the CEO* to *Miyaktama Mitshu*, google just find the *CEO* as a **PERSON** while it should be a **POSITION**.
+* spacy is mistagging *Miyaktama* as a **GPE**, while stanza, google lost the reference to *Miyaktama Mitshu*
+* spacy, stanza and google do not reference *the CEO* to *Miyaktama Mitshu*, google just finds the *CEO* as a **PERSON** while it should be a **POSITION**.
 
 `Miyaktama is the CEO.`
 
@@ -89,12 +92,26 @@ The first instance is correct, but in the second sentence *Georgia* is tagged as
 |  76 |  83 | PERSON       | Miyaktama Mitshu | **Missing** | *the CEO*    | **Missing**  | *the CEO*     | **Missing**  | *the CEO*     |
 |  80 |  83 | POSITION     | CEO              | **Missing** | *CEO*        | **Missing**  | *CEO*         | ~~PERSON~~   | CEO           |
 
-But it clear from the first sentence that it is a Person.
+But it is clear from the first sentence that it is a Person.
 
 
-#### Hyphenation
+### Normalization
 
-Testing a text that contains hyphenations. This happens a lot with pdf documents that uses colums
+While performing NER it is very important to apply text normalization so that you can use the output directly for data science. Wowool is the only engine that does this:
+
+`The question is whether Marion will seek to have a [political] standing of her own.”.`
+
+
+|   beg |   end | uri_wowool   | text_wowool     | uri_spacy   | text_spacy   | uri_stanza   | text_stanza   |
+|-------|-------|--------------|-----------------|-------------|--------------|--------------|---------------|
+|  5783 |  5789 | PERSON       | Marion Maréchal | ~~ORG~~     | Marion       | PERSON       | Marion        |
+|  5834 |  5837 | PERSON       | Marion Maréchal | **Missing** | *her*        | **Missing**  | *her*         |
+
+
+
+### Hyphenation
+
+Testing a text that contains hyphenations. This happens a lot with pdf documents that use columns
 
     python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/hyphenation.txt
 
@@ -104,21 +121,21 @@ Testing a text that contains hyphenations. This happens a lot with pdf documents
     hof Park.
 
 * spacy and stanza are not dealing with hyphenations.
-* google does, but does not clean it up and does sometime tag it wrongly *Rene* is a Person but not in this case. *Renecarel* is a street name. I would even argue that *street* in this case is not a location.
+* google does, but does not clean it up and does sometimes tag it wrongly: *Rene* is a Person but not in this case. *Renecarel* is a street name. I would even argue that *street* on its own is not a location.
 
 
 | beg | end | uri_wowool   | URI_wowool   | text_wowool         | uri_spacy   | text_spacy           | uri_stanza   | text_stanza          | uri_google   | URI_google   | text_google          |
 |-----|-----|--------------|--------------|---------------------|-------------|----------------------|--------------|----------------------|--------------|--------------|----------------------|
-|  15 |  22 | GPE          | City         | Antwerp             | **Missing** | *Ant-\nwerp*         | **Missing**  | *Ant-\nwe*           | GPE          | LOCATION     | Ant-\nwerp           |
+|  15 |  22 | GPE          | City         | Antwerp             | **Missing** | *Ant-\nwerp*         | **Missing**  | *Ant-\nwerp*           | GPE          | LOCATION     | Ant-\nwerp           |
 |  32 |  50 | LOC          | Street       | Renecarel street    | **Missing** | *Rene-\ncarel street*| **Missing**  | *Rene-\ncarel street*| **Missing**  |              | *Rene-\ncarel street*|
 |  32 |  36 |              |              | *Rene*              | **Missing** | *Rene*               | **Missing**  | *Rene*               | ~~PERSON~~   | ~~PERSON~~   | Rene                 |
 |  44 |  50 |              |              | *street*            | **Missing** | *street*             | **Missing**  | *street*             | GPE          | LOCATION     | street               |
 |  69 |  86 | FAC          | Facility     | *Rivirenhof Park*   | **Missing** | *Riviren-\nhof Park* | **Missing**  | *Riviren-\nhof Park* | GPE          | LOCATION     | Riviren-\nhof Park   |
 
 
-#### Spacyio Demo text
+#### Spacy.io Demo text
 
-Runnig a text i've found in the demo from Spacyio.
+Runnig a text i've found in the demo from Spacy.io.
 
     python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/companies.txt -a "Sentence,PERSON,FAC,ORG,POSITION,GPE,LOC,PRODUCT,WORK_OF_ART"
 
@@ -146,8 +163,8 @@ Runnig a text i've found in the demo from Spacyio.
 * google is adding a lot of wrong tags like *CEOs* as PERSON or *car companies* as ORGANIZATION
 * spacy is wrongly tagging *Thrun* as a GPE, stanza get it correct but looses the refernce to *Sebastian Thrun*, only google and wowool get it correctly.
 * spacy is missing the startup *Udacity*
-* google are missing *Recode* and stanza things it's a WORK_OF_ART
-* spacy and stanza are also missing the positions *co-founder* and *CEO* , while google things these are PERSON's
+* google are missing *Recode* and stanza thinks it's a WORK_OF_ART
+* spacy and stanza are also missing the positions *co-founder* and *CEO* , while google thinks these are PERSON's
  
 
 | beg | end | uri_wowool   | URI_wowool   | text_wowool                | uri_spacy   | URI_spacy   | text_spacy                 | uri_stanza   | URI_stanza      | text_stanza                | uri_google   | URI_google   | text_google     |
@@ -164,7 +181,7 @@ Runnig a text i've found in the demo from Spacyio.
 | 369 | 375 | ORG          | Company      | Recode                     | ORG         | ORG         | Recode                     | **Missing**  | ~~WORK_OF_ART~~ | Recode                     | **Missing**  |              | *Recode*        |
 
 
-As you can see spacy does not look good on there own demo text, imagine on unknown territory.
+As you can see spacy does not look good on their own demo text, imagine on unknown territory.
 
 
 
@@ -177,16 +194,12 @@ As you can see spacy does not look good on there own demo text, imagine on unkno
   
 ### Comparing
 
-Notes: we used the `en_core_web_sm` to compare with wowool, but we noticed that using other models returns inconsistencies during the tests. As some of their own entities disapeared and other appeared in other models, so we decided to stick to the one model.
+Notes: we used the `en_core_web_sm` to compare with wowool, but we noticed that using other models returns inconsistencies during the tests. As some of their own entities disappear and other appeare in other models, so we decided to stick to this model.
 
 Using this command you will see the comparison between spacy and wowool in speed and accuracy.
 
     python3 -m nlp_compare -l english -p "english,entity" -f test.txt -e spacy
 
-This command will generate 2 files:
-
-* `wowool-vs-spacy-tbl.txt`: Table with the entities side by side 
-* `wowool-vs-spacy-diff.txt`: Fiff beween the two result files
 
 ### Results
 
@@ -670,9 +683,10 @@ Google does find these entities, but the literal has not been resolved and they 
 |    44 |    50 | **Missing** |                  | LOCATION     | street            |
 |    69 |    86 | LOCATION    | Rivirenhof Park  | LOCATION     | Riviren-\nhof Park|
 
+
 ## Findings
 
-In this project, we compared various Natural Language Processing (NLP) engines to evaluate their performance on different tasks. The key findings are as follows:
+In this project, we compared various Natural Language Processing (NLP) engines to evaluate their performance on name entity recognition (NER). The key findings are as follow:
 
 ### Restricting our entity space
 
@@ -711,3 +725,19 @@ Second, consumed memory:
 
 In short, spacy does not handle big data, and stanza looks like it does handle bigger data sets but it takes an incredibly long time (718 sec) to process a 1 Mb file, and it uses 11 threads during the process. In contrast, Wowool processed the same input using a single thread in 24 seconds.
 
+### Things that go wrong in unexplainable ways
+
+`Most nonprofits, experts say, don't or can't provide third-party data about the costs and benefits of their interventions.`
+
+
+|   beg |   end | uri_wowool   | text_wowool   | uri_spacy   | text_spacy   | uri_stanza   | text_stanza   |
+|-------|-------|--------------|---------------|-------------|--------------|--------------|---------------|
+|  4729 |  4732 | **Missing**  | *n’t*         | GPE         | n’t          | **Missing**  | *n’t*         |
+
+
+`The final chapter is, perhaps inevitably, called What to Whole-Arse.`
+
+
+|   beg |   end | uri_wowool   | text_wowool   | uri_spacy   | text_spacy   | uri_stanza   | text_stanza   |
+|-------|-------|--------------|---------------|-------------|--------------|--------------|---------------|
+|  7787 |  7797 | **Missing**  | *Whole-Arse*  | PERSON      | Whole-Arse   | **Missing**  | *Whole-Arse*  |
