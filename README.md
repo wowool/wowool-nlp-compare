@@ -37,7 +37,7 @@ None of the NLP engines except Wowool is resolving the Anaphora.
 In the second sentence of the same text, we see that Spacy, Stanza and Google are missing the anaphora references to:
 
 * *Mary Smith (she)*, 
-* *EyeOnText (the it company)*
+* *EyeOnText (the IT company)*
 * *John Doe (he)*
 
 `John Doe and Mary Smith went to work at EyeOnText.`
@@ -49,12 +49,12 @@ In the second sentence of the same text, we see that Spacy, Stanza and Google ar
 | ORG          | EyeOnText     | ORG         | EyeOnText    | ORG          | EyeOnText     | **Missing**  | *EyeOnText*   |
 
 
-`She works for the it company but he only cleans there.`
+`She works for the IT company but he only cleans there.`
 
 | uri_wowool   | text_wowool   | uri_spacy   | text_spacy       | uri_stanza   | text_stanza      | uri_google   | text_google      |
 |--------------|---------------|-------------|------------------|--------------|------------------|--------------|------------------|
 | PERSON       | Mary Smith    | **Missing** | *She*            | **Missing**  | *She*            | **Missing**  | *She*            |
-| ORG          | EyeOnText     | **Missing** | *the it company* | **Missing**  | *the it company* | **Missing**  | *the it company* |
+| ORG          | EyeOnText     | **Missing** | *the IT company* | **Missing**  | *the IT company* | **Missing**  | *the IT company* |
 | PERSON       | John Doe      | **Missing** | *he*             | **Missing**  | *he*             | **Missing**  | *he*             |
 
 
@@ -484,7 +484,7 @@ First, some speed results:
 * Processing time of Wowool: 0.010 Counter({'PERSON': 4, 'ORG': 2})
 * Wowool is 73.213 times faster than Stanza
 
-As we can see Stanza is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the it company* )  and **John Doe** (*he*)
+As we can see Stanza is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the IT company* )  and **John Doe** (*he*)
 
 `John Doe and Mary Smith went to work at EyeOnText.`
 
@@ -494,7 +494,7 @@ As we can see Stanza is missing all the references in the second sentence  **Mar
 | PERSON    | Mary Smith | PERSON       | Mary Smith    |
 | ORG       | EyeOnText  | ORG          | EyeOnText     |
 
-`She works for the it company but he only cleans there.`
+`She works for the IT company but he only cleans there.`
 
 | uri_wow   | text_wow   | uri_stanza   | text_stanza   |
 |-----------|------------|--------------|---------------|
@@ -623,13 +623,13 @@ First of, there seems to be a bug in GoogleAPI. If an entity is on offset 0 then
 | ORGANIZATION | EyeOnText  | OTHER        | EyeOnText     |
 
 
-`She works for the it company but he only cleans there.`
+`She works for the IT company but he only cleans there.`
 
 | uri_wow      | text_wow   | uri_google   | text_google   |
 |--------------|------------|--------------|---------------|
 | PERSON       | Mary Smith | **Missing**  |               |
 | ORGANIZATION | EyeOnText  | **Missing**  |               |
-| **Missing**  |            | ORGANIZATION | it company    |
+| **Missing**  |            | ORGANIZATION | IT company    |
 | PERSON       | John Doe   | **Missing**  |               |
 
 Total:  Time: Google  : 0.303 Counter({'PERSON': 2, 'OTHER': 1, 'ORGANIZATION': 1})
