@@ -38,13 +38,13 @@ In the second sentence of the same text, we see that Spacy, Stanza and Google ar
 
 * *Mary Smith (she)*, 
 * *EyeOnText (the it company)*
-* *John Dow (he)*
+* *John Doe (he)*
 
-`John Dow and Mary Smith went to work at EyeOnText.`
+`John Doe and Mary Smith went to work at EyeOnText.`
 
 | uri_wowool   | text_wowool   | uri_spacy   | text_spacy   | uri_stanza   | text_stanza   | uri_google   | text_google   |
 |--------------|---------------|-------------|--------------|--------------|---------------|--------------|---------------|
-| PERSON       | John Dow      | PERSON      | John Dow     | PERSON       | John Dow      | PERSON       | John Dow      |
+| PERSON       | John Doe      | PERSON      | John Doe     | PERSON       | John Doe      | PERSON       | John Doe      |
 | PERSON       | Mary Smith    | PERSON      | Mary Smith   | PERSON       | Mary Smith    | PERSON       | Mary Smith    |
 | ORG          | EyeOnText     | ORG         | EyeOnText    | ORG          | EyeOnText     | **Missing**  | *EyeOnText*   |
 
@@ -55,7 +55,7 @@ In the second sentence of the same text, we see that Spacy, Stanza and Google ar
 |--------------|---------------|-------------|------------------|--------------|------------------|--------------|------------------|
 | PERSON       | Mary Smith    | **Missing** | *She*            | **Missing**  | *She*            | **Missing**  | *She*            |
 | ORG          | EyeOnText     | **Missing** | *the it company* | **Missing**  | *the it company* | **Missing**  | *the it company* |
-| PERSON       | John Dow      | **Missing** | *he*             | **Missing**  | *he*             | **Missing**  | *he*             |
+| PERSON       | John Doe      | **Missing** | *he*             | **Missing**  | *he*             | **Missing**  | *he*             |
 
 
 ### Wrong tagging
@@ -261,13 +261,13 @@ Using this command you will see the comparison between Spacy and Wowool in speed
 
     python3 -m nlp_compare -e Spacy -l english -p "english,entity" -f tests/data/anaphora.text
 
-As we can see Spacy is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the IT company* )  and **John Dow** (*he*)
+As we can see Spacy is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the IT company* )  and **John Doe** (*he*)
 
-`John Dow and Mary Smith went to work at EyeOnText.`
+`John Doe and Mary Smith went to work at EyeOnText.`
 
 | uri_wow   | text_wow   | uri_spacy        | text_spacy        |
 |-----------|------------|------------------|-------------------|
-| PERSON    | John Dow   | PERSON           | John Dow          |
+| PERSON    | John Doe   | PERSON           | John Doe          |
 | PERSON    | Mary Smith | PERSON           | Mary Smith        |
 | ORG       | EyeOnText  | ORG              | EyeOnText         |
 
@@ -278,7 +278,7 @@ As we can see Spacy is missing all the references in the second sentence  **Mary
 |-----------|------------|------------------|-------------------|
 | PERSON    | Mary Smith | **Missing**      |                   |
 | ORG       | EyeOnText  | **Missing**      |                   |
-| PERSON    | John Dow   | **Missing**      |                   |
+| PERSON    | John Doe   | **Missing**      |                   |
 
 
 #### Wrong tagging
@@ -484,13 +484,13 @@ First, some speed results:
 * Processing time of Wowool: 0.010 Counter({'PERSON': 4, 'ORG': 2})
 * Wowool is 73.213 times faster than Stanza
 
-As we can see Stanza is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the it company* )  and **John Dow** (*he*)
+As we can see Stanza is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the it company* )  and **John Doe** (*he*)
 
-`John Dow and Mary Smith went to work at EyeOnText.`
+`John Doe and Mary Smith went to work at EyeOnText.`
 
 | uri_wow   | text_wow   | uri_stanza   | text_stanza   |
 |-----------|------------|--------------|---------------|
-| PERSON    | John Dow   | PERSON       | John Dow      |
+| PERSON    | John Doe   | PERSON       | John Doe      |
 | PERSON    | Mary Smith | PERSON       | Mary Smith    |
 | ORG       | EyeOnText  | ORG          | EyeOnText     |
 
@@ -500,7 +500,7 @@ As we can see Stanza is missing all the references in the second sentence  **Mar
 |-----------|------------|--------------|---------------|
 | PERSON    | Mary Smith | **Missing**  |               |
 | ORG       | EyeOnText  | **Missing**  |               |
-| PERSON    | John Dow   | **Missing**  |               |
+| PERSON    | John Doe   | **Missing**  |               |
 
 #### Wrong tagging
 
@@ -614,11 +614,11 @@ First of, there seems to be a bug in GoogleAPI. If an entity is on offset 0 then
 
     python3 -m nlp_compare -e Google -l english -p "english,entity" -f tests/data/anaphora.txt
 
-`John Dow and Mary Smith went to work at EyeOnText.`
+`John Doe and Mary Smith went to work at EyeOnText.`
 
 | uri_wow      | text_wow   | uri_google   | text_google   |
 |--------------|------------|--------------|---------------|
-| PERSON       | John Dow   | PERSON       | John Dow      |
+| PERSON       | John Doe   | PERSON       | John Doe      |
 | PERSON       | Mary Smith | PERSON       | Mary Smith    |
 | ORGANIZATION | EyeOnText  | OTHER        | EyeOnText     |
 
@@ -630,7 +630,7 @@ First of, there seems to be a bug in GoogleAPI. If an entity is on offset 0 then
 | PERSON       | Mary Smith | **Missing**  |               |
 | ORGANIZATION | EyeOnText  | **Missing**  |               |
 | **Missing**  |            | ORGANIZATION | it company    |
-| PERSON       | John Dow   | **Missing**  |               |
+| PERSON       | John Doe   | **Missing**  |               |
 
 Total:  Time: Google  : 0.303 Counter({'PERSON': 2, 'OTHER': 1, 'ORGANIZATION': 1})
 Total:  Time: Wowool  : 0.009 Counter({'PERSON': 4, 'ORGANIZATION': 2})
