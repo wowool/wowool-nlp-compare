@@ -1,20 +1,20 @@
 # NLP compare
 
-This tool allows us to compare different nlp engines with the wowool engine.
+This tool allows us to compare different nlp engines with the Wowool engine.
 
 ## Setup
 
-    pip install -r wowool-requirements.txt
+    pip install -r Wowool-requirements.txt
 
 
 ## Wowool vs Spacy,Stanza and Google
 
-We are going to compare several cases using wowool, spacy, stanza and google NLP.
+We are going to compare several cases using Wowool, Spacy, Stanza and Google NLP.
 
 | Feature          | Wowool  | Spacy   | Stanza   | Notes                                                                                                                |
 |:-----------------|:-------:|:--------:|:--------:|---------------------------------------------------------------------------------------------------------------------|
 | Anaphora         | Yes     | No       | No       | Stanza does not resolve pronouns like he, she, the city, the company, etc.                                          |
-| Conjecture       | Yes     | No       | No       | When Mentioning a something in context, wowool will remeber that what it was later on                               |
+| Conjecture       | Yes     | No       | No       | When Mentioning a something in context, Wowool will remeber that what it was later on                               |
 | Aggregation      | Yes     | No       | No       | Wowool aggregates attributes like positions, country, descriptions                                                  |
 | Instances        | Yes     | No       | No       | Wowool keeps track of instances, collecting information such as *John Smith, John, He, J. Smith* as the same entity |
 | Normalization    | Yes     | No       | No       | In Wowool, *UK* is recognized as the same instance as *United Kingdom*                                              |
@@ -33,8 +33,8 @@ We are going to compare several cases using wowool, spacy, stanza and google NLP
 
 ### Anaphora
 
-None of the NLP engine except Wowool is resolving the Anaphora.
-In the second sentence of the same text, we see that spacy, stanza and google are missing the anaphora references to:
+None of the NLP engines except Wowool is resolving the Anaphora.
+In the second sentence of the same text, we see that Spacy, Stanza and Google are missing the anaphora references to:
 
 * *Mary Smith (she)*, 
 * *EyeOnText (the it company)*
@@ -81,14 +81,14 @@ The first instance is correct, but in the second sentence *Georgia* is tagged as
 | PERSON       | Georgia Smith | ~~GPE~~     | Georgia      | ~~GPE~~      | Georgia       | ~~GPE~~      | Georgia       |
 | PERSON       | Georgia Smith | **Missing** | *she*        | **Missing**  | *she*         | **Missing**  | *she*         |
 
-***Test:***  python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/person_wrong_tagging.txt -a "Sentence,PERSON,ORG,POS,GPE,LOC"
+***Test:***  python3 -m nlp_compare -e Spacy,stanza,google -l english -p "english,entity" -f tests/data/person_wrong_tagging.txt -a "Sentence,PERSON,ORG,POS,GPE,LOC"
 
 
 ### Conjecture
 
-* spacy and stanza are not tagging the **Position** *CEO*
-* google is tagging *CEO* and *Mr.* as a **Person** but they are clearly a Position in this sentence.
-* google is then referencing *Miyaktama Mitshu* as being *CEO* while it's the opposite.
+* Spacy and Stanza are not tagging the **Position** *CEO*
+* Google is tagging *CEO* and *Mr.* as a **Person** but they are clearly a Position in this sentence.
+* Google is then referencing *Miyaktama Mitshu* as being *CEO* while it's the opposite.
 * they all miss the anaphora *he*
 
 
@@ -103,8 +103,8 @@ The first instance is correct, but in the second sentence *Georgia* is tagged as
 | PERSON       | Miyaktama Mitshu | **Missing** | *he*             | **Missing**  | *he*             | **Missing**  | *he*          |
 |              | *person*         |             | *person*         |              | *person*         | PERSON       | person        |
 
-* spacy is mistagging *Miyaktama* as a **GPE**, while stanza, google lost the reference to *Miyaktama Mitshu*
-* spacy, stanza and google do not reference *the CEO* to *Miyaktama Mitshu*, google just finds the *CEO* as a **PERSON** while it should be a **POSITION**.
+* Spacy is mistagging *Miyaktama* as a **GPE**, while Stanza and Google lost the reference to *Miyaktama Mitshu*
+* Spacy, Stanza and Google do not reference *the CEO* to *Miyaktama Mitshu*, Google just finds the *CEO* as a **PERSON** while it should be a **POSITION**.
 
 `Miyaktama is the CEO.`
 
@@ -136,15 +136,15 @@ While performing NER it is very important to apply text normalization so that yo
 
 Testing a text that contains hyphenations. This happens a lot with pdf documents that use columns
 
-    python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/hyphenation.txt
+    python3 -m nlp_compare -e Spacy,stanza,google -l english -p "english,entity" -f tests/data/hyphenation.txt
 
     I've worked in Ant-
     werp in the Rene-
     carel street which is close to Riviren-
     hof Park.
 
-* spacy and stanza are not dealing with hyphenations.
-* google does, but does not clean it up and does sometimes tag it wrongly: *Rene* is a Person but not in this case. *Renecarel* is a street name. I would even argue that *street* on its own is not a location.
+* Spacy and Stanza are not dealing with hyphenations.
+* Google does, but does not clean it up and does sometimes tag it wrongly: *Rene* is a Person but not in this case. *Renecarel* is a street name. I would even argue that *street* on its own is not a location.
 
 | uri_wowool   | URI_wowool   | text_wowool         | uri_spacy   | text_spacy           | uri_stanza   | text_stanza          | uri_google   | URI_google   | text_google          |
 |--------------|--------------|---------------------|-------------|----------------------|--------------|----------------------|--------------|--------------|----------------------|
@@ -157,16 +157,16 @@ Testing a text that contains hyphenations. This happens a lot with pdf documents
 
 #### Spacy.io Demo text
 
-Runnig a text i've found in the demo from Spacy.io.
+Runnig a text found in the demo from Spacy.io.
 
-    python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/companies.txt -a "Sentence,PERSON,FAC,ORG,POSITION,GPE,LOC,PRODUCT,WORK_OF_ART"
+    python3 -m nlp_compare -e Spacy,stanza,google -l english -p "english,entity" -f tests/data/companies.txt -a "Sentence,PERSON,FAC,ORG,POSITION,GPE,LOC,PRODUCT,WORK_OF_ART"
 
 `When Sebastian Thrun started working on self-driving cars at Google in 2007 few people outside of the company took him seriously.`
 
-* stanza is splitting *Sebastian Thrun* into 2 Persons, which is wrong.
-* google is tagging *people* as a Person
-* spacy,stanza and google are missing *the company*, and google tags *company* as a ORGANIZATION which is wrong.
-* spacy,stanza and google are missing *him*
+* Stanza is splitting *Sebastian Thrun* into 2 Persons, which is wrong.
+* Google is tagging *people* as a Person
+* Spacy,stanza and Google are missing *the company*, and Google tags *company* as a ORGANIZATION which is wrong.
+* Spacy,stanza and Google are missing *him*
 
 | uri_wowool   | URI_wowool   | text_wowool     | uri_spacy   | URI_spacy   | text_spacy      | uri_stanza   | URI_stanza   | text_stanza   | uri_google   | URI_google       | text_google     |
 |--------------|--------------|-----------------|-------------|-------------|-----------------|--------------|--------------|---------------|--------------|------------------|-----------------|
@@ -181,12 +181,12 @@ Runnig a text i've found in the demo from Spacy.io.
 
 `"I can tell you very senior CEOs of major American car companies would shake my hand and turn away because I wasn't worth talking to." said Thrun, now the co-founder and CEO of online higher education startup Udacity, in an interview with Recode earlier this week.`
 
-* wowool is the only one capturing the POSITION
-* google is adding a lot of wrong tags like *CEOs* as PERSON or *car companies* as ORGANIZATION
-* spacy is wrongly tagging *Thrun* as a GPE, stanza get it correct but looses the refernce to *Sebastian Thrun*, only google and wowool get it correctly.
-* spacy is missing the startup *Udacity*
-* google are missing *Recode* and stanza thinks it's a WORK_OF_ART
-* spacy and stanza are also missing the positions *co-founder* and *CEO* , while google thinks these are PERSON's
+* Wowool is the only one capturing the POSITION
+* Google is adding a lot of wrong tags like *CEOs* as PERSON or *car companies* as ORGANIZATION
+* Spacy is wrongly tagging *Thrun* as a GPE, Stanza get it correct but looses the refernce to *Sebastian Thrun*, only Google and Wowool get it correctly.
+* Spacy is missing the startup *Udacity*
+* Google are missing *Recode* and Stanza thinks it's a WORK_OF_ART
+* Spacy and Stanza are also missing the positions *co-founder* and *CEO* , while Google thinks these are PERSON's
  
 | uri_wowool   | URI_wowool   | text_wowool                | uri_spacy   | URI_spacy   | text_spacy                 | uri_stanza   | URI_stanza      | text_stanza                | uri_google   | URI_google   | text_google     |
 |--------------|--------------|----------------------------|-------------|-------------|----------------------------|--------------|-----------------|----------------------------|--------------|--------------|-----------------|
@@ -202,7 +202,7 @@ Runnig a text i've found in the demo from Spacy.io.
 | ORG          | Company      | Recode                     | ORG         | ORG         | Recode                     | **Missing**  | ~~WORK_OF_ART~~ | Recode                     | **Missing**  |              | *Recode*        |
 
 
-As you can see spacy does not look good on their own demo text, imagine on unknown territory.
+As you can see Spacy does not look good on their own demo text, imagine on unknown territory.
 
 
 
@@ -212,7 +212,7 @@ As you can see spacy does not look good on their own demo text, imagine on unkno
 
 #### Speed
 
-We can say that wowool and spacy has a very similair speed, if we reduce our entity set to the one that Spacy supports then we are slity faster.
+We can say that Wowool and Spacy has a very similair speed, if we reduce our entity set to the one that Spacy supports then we are slity faster.
 
 #### Accuracy
 
@@ -222,7 +222,7 @@ We can say that wowool and spacy has a very similair speed, if we reduce our ent
 | Feature          | Wowool  | SpaCy    | Notes                                                                                                               |
 |:-----------------|:-------:|:--------:|---------------------------------------------------------------------------------------------------------------------|
 | Anaphora         | Yes     | No       | SpaCy does not resolve pronouns like he, she, the city, the company, etc.                                           |
-| Conjecture       | Yes     | No       | When Mentioning a something in context, wowool will remeber that what it was later on                               |
+| Conjecture       | Yes     | No       | When Mentioning a something in context, Wowool will remeber that what it was later on                               |
 | Aggregation      | Yes     | No       | Wowool aggregates attributes like positions, country, descriptions                                                  |
 | Instances        | Yes     | No       | Wowool keeps track of instances, collecting information such as *John Smith, John, He, J. Smith* as the same entity |
 | Normalization    | Yes     | No       | In Wowool, *UK* is recognized as the same instance as *United Kingdom*                                              |
@@ -241,27 +241,27 @@ We can say that wowool and spacy has a very similair speed, if we reduce our ent
 
 ### Comparing
 
-Notes: we used the `en_core_web_sm` to compare with wowool, but we noticed that using other models returns inconsistencies during the tests. As some of their own entities disappear and other appeare in other models, so we decided to stick to this model.
+Notes: we used the `en_core_web_sm` to compare with Wowool, but we noticed that using other models returns inconsistencies during the tests. As some of their own entities disappear and other appeare in other models, so we decided to stick to this model.
 
 
 ### Setup
 
-    pip install spacy
-    python -m spacy download en_core_web_sm
+    pip install Spacy
+    python -m Spacy download en_core_web_sm
 
 
-Using this command you will see the comparison between spacy and wowool in speed and accuracy.
+Using this command you will see the comparison between Spacy and Wowool in speed and accuracy.
 
-    python3 -m nlp_compare -l english -p "english,entity" -f test.txt -e spacy
+    python3 -m nlp_compare -l english -p "english,entity" -f test.txt -e Spacy
 
 
 ### Results
 
 #### Anaphora
 
-    python3 -m nlp_compare -e spacy -l english -p "english,entity" -f tests/data/anaphora.text
+    python3 -m nlp_compare -e Spacy -l english -p "english,entity" -f tests/data/anaphora.text
 
-As we can see spacy is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the IT company* )  and **John Dow** (*he*)
+As we can see Spacy is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the IT company* )  and **John Dow** (*he*)
 
 `John Dow and Mary Smith went to work at EyeOnText.`
 
@@ -283,7 +283,7 @@ As we can see spacy is missing all the references in the second sentence  **Mary
 
 #### Wrong tagging
 
-As we can see spacy is incorrectly tagging **the George Washington** missing **John Smith** and missing the location **Washington** from **longtime Washington lawyer**
+As we can see Spacy is incorrectly tagging **the George Washington** missing **John Smith** and missing the location **Washington** from **longtime Washington lawyer**
 
 `John Smith, the George Washington law professor and Eugene Fidell, a longtime Washington lawyer.`
 
@@ -324,7 +324,7 @@ The first instance is correct, but in the second sentence **Georgia** is tagged 
 
 #### Conjecture
 
-As we can see spacy is incorrectly tagging **Miyaktama** in the second sentence as an organization, although it is clear from the first sentence that it is a Person.
+As we can see Spacy is incorrectly tagging **Miyaktama** in the second sentence as an organization, although it is clear from the first sentence that it is a Person.
 
 `Mr. Miyaktama Mitshu is a very successful person.`
 
@@ -342,7 +342,7 @@ As we can see spacy is incorrectly tagging **Miyaktama** in the second sentence 
 
 We are testing the sample sentences in the site of Displacy
 
-In this first sentence, the references to **the company** and **him** are lost in spacy.
+In this first sentence, the references to **the company** and **him** are lost in Spacy.
 
 `When Sebastian Thrun started working on self-driving cars at Google in 2007 few people outside of the company took him seriously.`
 
@@ -368,7 +368,7 @@ The reference to **Thrun**, who is mentioned in the previous sentence, is lost a
 
 #### Hyphenation
 
-    python3 -m nlp_compare -e spacy -l english -p "english,entity" -f tests/data/hyphenation.txt
+    python3 -m nlp_compare -e Spacy -l english -p "english,entity" -f tests/data/hyphenation.txt
 
 As we see, none of these entities are found. Note that this happens a lot with PDF documents that use colums.
 
@@ -432,25 +432,25 @@ M6 (J40 - ORG
 
 ### Setup
 
-    pip install stanza
+    pip install Stanza
 
 
 ### Features
 
 #### Speed
 
-We wowool is up to 50 to 100 faster, and wowool is only using 1 cpu while stanza is using all off them, going up to 800% CPU usage.
+Wowool is 50 to a 100 times faster while only using a single core while Stanza is using all cores.
 
 #### Accuracy
 
-Wowool out performs by far Stanza
+Wowool out performs Stanza by far.
 
 #### Features
 
 | Feature          | Wowool  | Stanza   | Notes                                                                                                               |
 |:-----------------|:-------:|:--------:|---------------------------------------------------------------------------------------------------------------------|
 | Anaphora         | Yes     | No       | Stanza does not resolve pronouns like he, she, the city, the company, etc.                                          |
-| Conjecture       | Yes     | No       | When Mentioning a something in context, wowool will remeber that what it was later on                               |
+| Conjecture       | Yes     | No       | When Mentioning a something in context, Wowool will remeber that what it was later on                               |
 | Aggregation      | Yes     | No       | Wowool aggregates attributes like positions, country, descriptions                                                  |
 | Instances        | Yes     | No       | Wowool keeps track of instances, collecting information such as *John Smith, John, He, J. Smith* as the same entity |
 | Normalization    | Yes     | No       | In Wowool, *UK* is recognized as the same instance as *United Kingdom*                                              |
@@ -463,28 +463,28 @@ Wowool out performs by far Stanza
 | Entity types     | +231    | 18       | The number of different type of entities                                                                            |
 | Sub Annotations  | Yes     | No       | Wowool support subannotation like Tripels have Subject, Object, Verb                                                |
 | Custom Domains   | Yes     | No       | Stanza requires training data, while Wowool is a rule-based language                                                |
-| False Positive's |         |          |    |
-| False Negative's |         |          |    |
+| False Positive's |         |          |                                                                                                                     |
+| False Negative's |         |          |                                                                                                                     |
 
 ### Comparing
 
-Using this command you will see the comparison between stanza and wowool in speed and accuracy.
+Using this command you will see the comparison between Stanza and Wowool in speed and accuracy.
 
-    python3 -m nlp_compare -l english -p "english,entity" -f test.txt -e stanza --show
+    python3 -m nlp_compare -l english -p "english,entity" -f test.txt -e Stanza --show
 
 #### Anaphora
 
-    python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/anaphora.txt
+    python3 -m nlp_compare -e Stanza -l english -p "english,entity" -f tests/data/anaphora.txt
 
 First, some speed results:
 
 * Wowool startup time: 0.247
 * Stanza startup time: 8.582
-* Processing time of stanza: 0.701 Counter({'PERSON': 2, 'ORG': 1})
-* Processing time of wowool: 0.010 Counter({'PERSON': 4, 'ORG': 2})
-* Wowool is 73.213 times faster than stanza
+* Processing time of Stanza: 0.701 Counter({'PERSON': 2, 'ORG': 1})
+* Processing time of Wowool: 0.010 Counter({'PERSON': 4, 'ORG': 2})
+* Wowool is 73.213 times faster than Stanza
 
-As we can see stanza is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the it company* )  and **John Dow** (*he*)
+As we can see Stanza is missing all the references in the second sentence  **Mary Smith** (*she*), **EyeOnText** ( *the it company* )  and **John Dow** (*he*)
 
 `John Dow and Mary Smith went to work at EyeOnText.`
 
@@ -504,7 +504,7 @@ As we can see stanza is missing all the references in the second sentence  **Mar
 
 #### Wrong tagging
 
-As we can see spacy is incorrectly tagging **George Washington** as a location, missing **John Smith**, and missing the location **Washington** from **longtime Washington lawyer**.
+As we can see Spacy is incorrectly tagging **George Washington** as a location, missing **John Smith**, and missing the location **Washington** from **longtime Washington lawyer**.
 
 `John Smith, the George Washington law professor and Eugene Fidell, a longtime Washington lawyer.`
 
@@ -536,11 +536,11 @@ The first instance is correct, but in the second sentence **Georgia** is tagged 
 | *LOC*     | Georgia       | **Missing**  |               |
 | PERSON    | Georgia Smith | **Missing**  |               |
 
-**Test:** python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/person_wrong_names.txt
+**Test:** python3 -m nlp_compare -e Stanza -l english -p "english,entity" -f tests/data/person_wrong_names.txt
 
 #### Conjecture
 
-Stanza is doing better than spacy in this case, but still loses the reference to **Miyaktama Mitshu**.
+Stanza is doing better than Spacy in this case, but still loses the reference to **Miyaktama Mitshu**.
 
 
 `Mr. Miyaktama Mitshu is a very successful person.`
@@ -557,13 +557,13 @@ Stanza is doing better than spacy in this case, but still loses the reference to
 |-----------|------------------|--------------|-----------------|
 | PERSON    | Miyaktama Mitshu | PERSON       | *Miyaktama*     |
 
-**Test:** python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/person_conjecture.txt
+**Test:** python3 -m nlp_compare -e Stanza -l english -p "english,entity" -f tests/data/person_conjecture.txt
 
 #### Spacy demo sample data.
 
-    python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/companies.txt
+    python3 -m nlp_compare -e Stanza -l english -p "english,entity" -f tests/data/companies.txt
 
-In this case stanza split the name **Sebastian Thrun** in two Persons, where it is just one. They are missing **Google** as *the company* and **Sebastian Thrun** as *him* 
+In this case Stanza split the name **Sebastian Thrun** in two Persons, where it is just one. They are missing **Google** as *the company* and **Sebastian Thrun** as *him* 
 
 `When Sebastian Thrun started working on self-driving cars at Google in 2007 few people outside of the company took him seriously.`
 
@@ -591,7 +591,7 @@ In this case stanza split the name **Sebastian Thrun** in two Persons, where it 
 
 Stanza does find these entities which have been split with new lines, but the literal has not been resoved or cleandup.
 
-* python3 -m nlp_compare -e stanza -l english -p "english,entity" -f tests/data/hyphenation.txt
+* python3 -m nlp_compare -e Stanza -l english -p "english,entity" -f tests/data/hyphenation.txt
 
 
 ```
@@ -612,7 +612,7 @@ First of, there seems to be a bug in GoogleAPI. If an entity is on offset 0 then
 
 #### Anaphora
 
-    python3 -m nlp_compare -e google -l english -p "english,entity" -f tests/data/anaphora.txt
+    python3 -m nlp_compare -e Google -l english -p "english,entity" -f tests/data/anaphora.txt
 
 `John Dow and Mary Smith went to work at EyeOnText.`
 
@@ -632,12 +632,12 @@ First of, there seems to be a bug in GoogleAPI. If an entity is on offset 0 then
 | **Missing**  |            | ORGANIZATION | it company    |
 | PERSON       | John Dow   | **Missing**  |               |
 
-Total:  Time: google  : 0.303 Counter({'PERSON': 2, 'OTHER': 1, 'ORGANIZATION': 1})
+Total:  Time: Google  : 0.303 Counter({'PERSON': 2, 'OTHER': 1, 'ORGANIZATION': 1})
 Total:  Time: Wowool  : 0.009 Counter({'PERSON': 4, 'ORGANIZATION': 2})
 
 #### Wrong tagging
 
-    python3 -m nlp_compare -e google -l english -p "english,entity" -f tests/data/person_wrong_names.txt
+    python3 -m nlp_compare -e Google -l english -p "english,entity" -f tests/data/person_wrong_names.txt
 
 `John Smith, the George Washington law professor and Eugene Fidell, a longtime Washington lawyer.`
 
@@ -663,13 +663,13 @@ Total:  Time: Wowool  : 0.009 Counter({'PERSON': 4, 'ORGANIZATION': 2})
 | PERSON    | George Washington | PERSON       | George Washington |
 | LOCATION  | Washington        | **Missing**  |                   |
 
-Total:  Time: google  : 0.306 Counter({'PERSON': 7, 'LOCATION': 1})
+Total:  Time: Google  : 0.306 Counter({'PERSON': 7, 'LOCATION': 1})
 Total:  Time: Wowool  : 0.017 Counter({'PERSON': 4, 'LOCATION': 3, 'Position': 3, 'GPE': 1})
 
 #### Conjecture
 
 
-    python3 -m nlp_compare -e google -l english -p "english,entity" -f tests/data/person_conjecture.txt
+    python3 -m nlp_compare -e Google -l english -p "english,entity" -f tests/data/person_conjecture.txt
 
 `Mr. Miyaktama Mitshu is a very successful person.`
 
@@ -687,12 +687,12 @@ Total:  Time: Wowool  : 0.017 Counter({'PERSON': 4, 'LOCATION': 3, 'Position': 3
 | PERSON      | Miyaktama Mitshu | PERSON       | Miyaktama     |
 | **Missing** |                  | ~~PERSON~~       | leader        |
 
-Total:  Time: google  : 0.815 Counter({'PERSON': 5})
+Total:  Time: Google  : 0.815 Counter({'PERSON': 5})
 Total:  Time: Wowool  : 0.007 Counter({'PERSON': 2})
 
 #### Spacy demo sample data.
 
-    python3 -m nlp_compare -e google -l english -p "english,entity" -f tests/data/companies.txt
+    python3 -m nlp_compare -e Google -l english -p "english,entity" -f tests/data/companies.txt
 
 `When Sebastian Thrun started working on self-driving cars at Google in 2007 few people outside of the company took him seriously.`
 
@@ -736,12 +736,12 @@ Total:  Time: Wowool  : 0.007 Counter({'PERSON': 2})
 | ORGANIZATION | Recode          | **Missing**  |                          |
 | **Missing**  |                 | OTHER        | Recode                   |
 
-Total:  Time: google  : 0.759 Counter({'PERSON': 6, 'ORGANIZATION': 5, 'OTHER': 3, 'LOCATION': 1, 'EVENT': 1, 'DATE': 1, 'NUMBER': 1})
+Total:  Time: Google  : 0.759 Counter({'PERSON': 6, 'ORGANIZATION': 5, 'OTHER': 3, 'LOCATION': 1, 'EVENT': 1, 'DATE': 1, 'NUMBER': 1})
 Total:  Time: Wowool  : 0.025 Counter({'ORGANIZATION': 4, 'PERSON': 3, 'Position': 3, 'NORP': 1})
 
 #### Hyphenation
 
-    python3 -m nlp_compare -e google -l english -p "english,entity" -f tests/data/hyphenation.txt
+    python3 -m nlp_compare -e Google -l english -p "english,entity" -f tests/data/hyphenation.txt
 
 Google does find these entities, but the literal has not been resolved and they are confused with the street. **Renecarel street** as they find **Rene** and **street**
 
@@ -803,9 +803,9 @@ First, size on disk:
 
 |  name  |      model     | size in Mb |  Max text     |
 |--------|----------------|:----------:|---------------|
-| wowool | english-entity | 14         |               |
-| spacy  | n_core_web_sm  | 15         | <1Mb          |
-| stanza | en             | 1100       |               |
+| Wowool | english-entity | 14         |               |
+| Spacy  | n_core_web_sm  | 15         | <1Mb          |
+| Stanza | en             | 1100       |               |
 
 Second, consumed memory:
 
@@ -813,7 +813,7 @@ Second, consumed memory:
 * Spacy scales very poorly, giving us the following message `Text of length 1132067 exceeds maximum of 1000000. The parser and NER models require roughly 1GB of temporary memory per 100,000 characters in the input.`
 * Stanza uses a max of 2G
 
-In short, spacy does not handle big data, and stanza looks like it does handle bigger data sets but it takes an incredibly long time (718 sec) to process a 1 Mb file, and it uses 11 threads during the process. In contrast, Wowool processed the same input using a single thread in 24 seconds.
+In short, Spacy does not handle big data, and Stanza looks like it does handle bigger data sets but it takes an incredibly long time (718 sec) to process a 1 Mb file, and it uses 11 threads during the process. In contrast, Wowool processed the same input using a single thread in 24 seconds.
 
 ### Things that go wrong in unexplainable ways
 
@@ -833,7 +833,7 @@ In short, spacy does not handle big data, and stanza looks like it does handle b
 |              |               | PERSON      | Whole-Arse   | **Missing**  | *Whole-Arse*  |
 
 
-* Date's are random in spacy and stanza
+* Date's are random in Spacy and Stanza
 
 ╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1363 books."
 1363 - CARDINAL
