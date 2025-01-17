@@ -34,7 +34,7 @@ def get_entities(engine, text: str) -> dict:
     return doc
 
 
-def display_entities(doc):
+def display_entities(doc, uris):
     """
     Display entities.
     """
@@ -43,6 +43,7 @@ def display_entities(doc):
     for entity in doc.entities:
         uri = language_v1.Entity.Type(entity.type).name
         print(f"{entity.name} - {uri}")
+        uris[uri] += 1
         for mention in entity.mentions:
             print(f"  - {mention.text.content}")
 
@@ -55,7 +56,7 @@ if __name__ == "__main__":
         text = kwargs.pop("input")
 
         doc = get_entities(engine, text)
-        display_entities(doc)
+        display_entities(doc, uris)
     else:
         files = kwargs.pop("file")
         for filename in files:
@@ -63,7 +64,7 @@ if __name__ == "__main__":
             if fn.exists():
                 text = fn.read_text()
                 doc = get_entities(engine, text)
-                display_entities(doc)
+                display_entities(doc, uris)
             else:
                 print(f"File not found: {fn}")
 
