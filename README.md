@@ -11,24 +11,26 @@ This tool allows us to compare different nlp engines with the Wowool engine.
 
 We are going to compare several cases using Wowool, Spacy, Stanza and Google NLP.
 
-| Feature          | Wowool  | Spacy   | Stanza   | Notes                                                                                                                |
-|:-----------------|:-------:|:--------:|:--------:|---------------------------------------------------------------------------------------------------------------------|
-| Anaphora         | Yes     | No       | No       | Stanza does not resolve pronouns like he, she, the city, the company, etc.                                          |
-| Conjecture       | Yes     | No       | No       | When Mentioning a something in context, Wowool will remeber that what it was later on                               |
-| Aggregation      | Yes     | No       | No       | Wowool aggregates attributes like positions, country, descriptions                                                  |
-| Instances        | Yes     | No       | No       | Wowool keeps track of instances, collecting information such as *John Smith, John, He, J. Smith* as the same entity |
-| Normalization    | Yes     | No       | No       | In Wowool, *UK* is recognized as the same instance as *United Kingdom*                                              |
-| Hyphenation      | Yes     | No       | No       | Stanza does not recognize words that have been split                                                                |
-| Augmented        | Yes     | No       | No       | Wowool adds information from Wikipedia to the attributes                                                            |
-| Numbers          | Yes     | No       | No       | Resolves written numbers like *five hundred billion dollars*                                                        |
-| Sentiment        | Yes     | No       | No       | Wowool returns sentence-based sentiment analysis                                                                    |
-| Attributes       | Yes     | No       | No       | Annotations have attributes ex: gender, position, ...                                                               |
-| Onthologies      | places  | No       | No       | Things like UK, USA, Belgium, Europe,EU                                                                             |
-| Entity types     | +231    | 18       | 18       | The number of different type of entities                                                                            |
-| Sub Annotations  | Yes     | No       | No       | Wowool support subannotation like Tripels have Subject, Object, Verb                                                |
-| Custom Domains   | Yes     | No       | No       | Does not requires training data, Wowool is a rule-based language                                                    |
-| False Positive's |         |          |          |    |
-| False Negative's |         |          |          |    |
+| Feature           | Wowool  | Spacy    | Stanza   | Google   | Notes                                                                                                               |
+|:------------------|:-------:|:--------:|:--------:|:--------:|---------------------------------------------------------------------------------------------------------------------|
+| Anaphora          | Yes     | No       | No       | Poorly   | Most does not resolve pronouns like he, she. only Google resolves some like the city, the company                   |
+| Conjecture        | Yes     | No       | No       | No       | When Mentioning a something in context, wowool will remeber that what it was later on                               |
+| Custom extraction | Yes     | No       | No       | No       | When Mentioning a something in context, wowool will remeber that what it was later on                               |
+| Aggregation       | Yes     | No       | No       | No       | Wowool aggregates attributes like positions, country, descriptions                                                  |
+| Instances         | Yes     | No       | No       | No       | Wowool keeps track of instances, collecting information such as *John Smith, John, He, J. Smith* as the same entity |
+| Normalization     | Yes     | No       | No       | Yes      | In Wowool, *UK* is recognized as the same instance as *United Kingdom*                                              |
+| Hyphenation       | Yes     | No       | No       | Poorly   | Stanza does not recognize words that have been split,google does not cleanup, and get it wrong with partial matches |
+| Augmented         | Yes     | No       | No       | Link     | Wowool adds information to the entity that can be used (key people,headqurters,positions), Google only the link to Wikipedia |
+| Numbers           | Yes     | No       | No       | Yes      | Resolves written numbers like *five hundred billion dollars* -> 500000000700, *$2bn* -> 2000000000                  |
+| Resolving Dates   | Yes     | No       | No       | No       | Resolving to absolute dates. like: *two year ago* to the actual date starting from the initial publishing date      | 
+| Sentiment         | Yes     | Yes      | No       | Yes      | Wowool returns sentence-based sentiment analysis vs document bases.                                                 |
+| Attributes        | Yes     | No       | No       | No       | Annotations have attributes ex: gender, position, ...                                                               |
+| Onthologies       | places  | No       | No       | No       | Things like UK, USA, Belgium, Europe,EU                                                                             |
+| Entity types      | +231    | 18       | 18       | 18       | The number of different type of entities                                                                            |
+| Sub Annotations   | Yes     | No       | No       | No       | Wowool support subannotation like Tripels have Subject, Object, Verb                                                |
+| Custom Domains    | Yes     | No       | No       | No       | Does not requires training data, Wowool is a rule-based language                                                    |
+| False Positive's  |         |          |          |          |    |
+| False Negative's  |         |          |          |          |    |
 
 
 ### Anaphora
@@ -219,7 +221,7 @@ We can say that Wowool and Spacy has a very similair speed, if we reduce our ent
 
 #### Features
 
-| Feature          | Wowool  | SpaCy    | Notes                                                                                                               |
+| Feature          | Wowool  |  SpaCy   | Notes                                                                                                               |
 |:-----------------|:-------:|:--------:|---------------------------------------------------------------------------------------------------------------------|
 | Anaphora         | Yes     | No       | SpaCy does not resolve pronouns like he, she, the city, the company, etc.                                           |
 | Conjecture       | Yes     | No       | When Mentioning a something in context, Wowool will remeber that what it was later on                               |
@@ -238,6 +240,8 @@ We can say that Wowool and Spacy has a very similair speed, if we reduce our ent
 | False Positive's |         |          |    |
 | False Negative's |         |          |    |
 
+
+Note: google
 
 ### Comparing
 
@@ -635,6 +639,37 @@ First of, there seems to be a bug in GoogleAPI. If an entity is on offset 0 then
 Total:  Time: Google  : 0.303 Counter({'PERSON': 2, 'OTHER': 1, 'ORGANIZATION': 1})
 Total:  Time: Wowool  : 0.009 Counter({'PERSON': 4, 'ORGANIZATION': 2})
 
+
+#### Resolving Entities
+
+As we can see Google is just taking the previous to resolve the CEO and does not look at the context to check the validity.
+
+
+`Elon Musk is the CEO of SpaceX.`
+
+
+| uri_wowool   | text_wowool         | uri_google   | text_google     |
+|--------------|---------------------|--------------|-----------------|
+| PERSON       | Elon Musk           | PERSON       | Elon Musk       |
+| PERSON       | the CEO (Elon Musk) | **Missing**  | *the CEO*       |
+| POSITION     | CEO                 | PERSON       | CEO (Elon Musk) |
+| ORG          | SpaceX              | ORG          | SpaceX          |
+
+
+`CEO Mark Smith of the company he is responsible for the overall success of the company.`
+
+Elon Musk is NOT the CEO it's Mark Smith, Wowool has the position on the entity *Mark Smith* as a position.
+
+| uri_wowool   | text_wowool          | uri_google   | text_google     |
+|--------------|----------------------|--------------|-----------------|
+| POSITION     | CEO                  | PERSON       | CEO (Elon Musk) |
+| PERSON       | Mark Smith           | PERSON       | Mark Smith      |
+| ORG          | the company (SpaceX) | **Missing**  | *the company*   |
+|              | *company*            | ORG          | company         |
+| PERSON       | he (Mark Smith)      | **Missing**  | *he*            |
+| ORG          | the company (SpaceX) | ORG          | *the company*   |
+
+
 #### Wrong tagging
 
     python3 -m nlp_compare -e Google -l english -p "english,entity" -f tests/data/person_wrong_names.txt
@@ -651,7 +686,7 @@ Total:  Time: Wowool  : 0.009 Counter({'PERSON': 4, 'ORGANIZATION': 2})
 | PERSON      | Eugene Fidell | PERSON       | Eugene Fidell     |
 | LOCATION    | Washington    | LOCATION     | Washington        |
 | GPE         | Washington    | **Missing**  |                   |
-| Position    | lawyer        | ~~PERSON~~       | lawyer            |
+| Position    | lawyer        | ~~PERSON~~   | lawyer            |
 
 
 `He worked with the president George Washington.`

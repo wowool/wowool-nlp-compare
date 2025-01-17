@@ -17,6 +17,16 @@ def parse_arguments():
     return args
 
 
+def print_entities(doc):
+    """
+    Display entities.
+    """
+    print(doc)
+    print("Entities:\n==========")
+    for ent in doc.concepts():
+        print(f"{ent.text} - {ent.uri}")
+
+
 if __name__ == "__main__":
     kwargs = dict(parse_arguments()._get_kwargs())
     engine = Pipeline(kwargs["pipeline"])
@@ -24,10 +34,7 @@ if __name__ == "__main__":
     if "input" in kwargs and kwargs["input"]:
         text = kwargs.pop("input")
         doc = engine(text)
-        print("Entities:\n==========")
-        for ent in doc.concepts():
-            uris[ent.uri] += 1
-            print(f"{ent.text} - {ent.uri}")
+        print_entities(doc)
     else:
         files = kwargs.pop("file")
         for filename in files:
@@ -35,10 +42,7 @@ if __name__ == "__main__":
             if fn.exists():
                 text = fn.read_text()
                 doc = engine(text)
-                print("Entities:\n==========")
-                for ent in doc.concepts():
-                    uris[ent.uri] += 1
-                    print(f"{ent.text} - {ent.uri}")
+                print_entities(doc)
             else:
                 print(f"File not found: {fn}")
 
