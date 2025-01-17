@@ -837,6 +837,14 @@ In short, spacy does not handle big data, and stanza looks like it does handle b
 |  7787 |  7797 | **Missing**  | *Whole-Arse*  | PERSON      | Whole-Arse   | **Missing**  | *Whole-Arse*  |
 
 
+`## Half time: Tottenham 0-0 Liverpool .`
+
+
+| ?   |   beg |   end | uri_wowool   | URI_wowool   | text_wowool     | uri_spacy   | URI_spacy   | text_spacy    |
+|-----|-------|-------|--------------|--------------|-----------------|-------------|-------------|---------------|
+| x   |  2066 |  2079 | **Missing**  |              | *Tottenham 0-0* | PERSON      | PERSON      | Tottenham 0-0 |
+
+
 * Date's are random in spacy and stanza
 
 ╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1363 books."
