@@ -19,7 +19,8 @@ def parse_arguments():
         "--annotations",
         help="All will display all of them. Otherwise we will lower our self to Spacy",
     )
-    parser.add_argument("--show", help="Show the output", action="store_true")
+    parser.add_argument("--no-show", help="Show the output", action="store_false")
+    # parser.add_argument("--profile", help="Profile the code", action="store_true")
 
     args = parser.parse_args()
     return args
@@ -28,17 +29,18 @@ def parse_arguments():
 if __name__ == "__main__":
     initialize_logging_level()
     kwargs = dict(parse_arguments()._get_kwargs())
-    show = kwargs.pop("show")
+    print(kwargs)
+    show = kwargs.pop("no_show")
     diff_files = ["wowool.diff"]
     if kwargs["nlp_engine"] == "all":
         from nlp_compare.nlp_engine import all_nlp_engines
 
         kwargs.pop("nlp_engine")
         for nlp_engine in all_nlp_engines:
-            compare(nlp_engine=nlp_engine, **kwargs)
+            compare(nlp_engine=nlp_engine, **kwargs, show=show)
 
     else:
-        compare(**kwargs)
+        compare(**kwargs, show=show)
         diff_files.append(f"{kwargs.pop('nlp_engine')}.diff")
     if show:
         print("All done: you can run the following command to see the results")

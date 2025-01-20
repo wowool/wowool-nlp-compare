@@ -307,6 +307,7 @@ class CompareContext:
         input_provider,
         nlp_engines: list,
         concept_filter: ConceptFilter,
+        show: bool = True,
     ):
 
         text = input_provider.text
@@ -333,7 +334,8 @@ class CompareContext:
         cmp_lines = insert_missing_comparison_items(offset_data, nlp_engines)
 
         # print_rst_table(offset_data, nlp.name)
-        self.print_md_table(text, compare_data, cmp_lines)
+        if show:
+            self.print_md_table(text, compare_data, cmp_lines)
         # print_diff(offset_data, nlp.name)
 
         # with open(f"wowool-vs-{nlp.name}-diff.txt", "a") as wfh:
@@ -438,7 +440,14 @@ def write_missing_entities(compare_data):
                 writer.writerows(missingdata)
 
 
-def compare(nlp_engine: str, language: str, annotations: str, file: str, **kwargs):
+def compare(
+    nlp_engine: str,
+    language: str,
+    annotations: str,
+    file: str,
+    show: bool = True,
+    **kwargs,
+):
 
     cc = CompareContext()
     exculde_fn = Path(f"config/{language}_exculde.txt")
@@ -463,7 +472,7 @@ def compare(nlp_engine: str, language: str, annotations: str, file: str, **kwarg
         for ip in files:
             logger.info(f"Process: {ip.id}")
             clear_intermediate_results(compare_data)
-            cc.compare_entities(compare_data, ip, nlp_engines, concept_filter)
+            cc.compare_entities(compare_data, ip, nlp_engines, concept_filter, show)
             for engine, data in compare_data.items():
                 data.tt_time += data.time
                 data.tt_counter.update(data.counter)

@@ -4,8 +4,10 @@ from nlp_compare.cmp_objects import CmpItem
 from nlp_compare.concept_filter import ConceptFilter
 import re
 from nlp_compare.cmp_objects import NLPEngine
-from nlp_compare.measure_performance import measure_performance
 from logging import getLogger
+
+from nlp_compare.profile import nlp_profile
+from memory_profiler import profile
 
 logger = getLogger("nlp.cmp.spacy")
 
@@ -20,6 +22,7 @@ cleanup_table = {
 class NLPSpacy(NLPEngine):
     name: str = "spacy"
 
+    @profile
     def __init__(self, cmp_idx, language_short_form: str, **kwargs):
         super().__init__(cmp_idx)
         self.language_short_form = language_short_form
@@ -38,6 +41,7 @@ class NLPSpacy(NLPEngine):
         self.map_table = entity_mapping_table.get(self.language_short_form, {})
         try:
             self.engine = spacy.load(self.model_mame)
+            self.warmup()
         except OSError:
             raise ImportError(
                 f"""Please install spacy and the corresponding language model for {self.model_mame}
@@ -47,6 +51,7 @@ try:\npython -m spacy download {self.model_mame} """
     def warmup(self):
         self.engine("warmup")
 
+    @profile
     def __call__(self, text):
         return self.engine(text)
 

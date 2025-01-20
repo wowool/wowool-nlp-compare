@@ -4,6 +4,10 @@ from wowool.native.core import PipeLine
 from nlp_compare.cmp_objects import NLPEngine
 from logging import getLogger
 
+# from nlp_compare.profile import profile
+from memory_profiler import profile
+from nlp_compare.profile import nlp_profile
+
 logger = getLogger("nlp.cmp.wowool")
 
 entity_mapping_table = {
@@ -78,17 +82,22 @@ entity_mapping_table = {
 class NLPWowool(NLPEngine):
     name: str = "wowool"
 
+    @profile
+    # @nlp_profile("init wowool")
     def __init__(self, cmp_idx, language_short_form, **kwargs):
         super(NLPWowool, self).__init__(cmp_idx)
         self.language_short_form = language_short_form
         if "pipeline" in kwargs:
             self.engine = PipeLine(kwargs["pipeline"])
+            self.warmup()
         # self.engine = stanza.Pipeline(self.language_short_form)
         self.map_table = entity_mapping_table.get(self.language_short_form, {})
 
     def warmup(self):
         self.engine("warmup")
 
+    # @profile("wowool")
+    @profile
     def __call__(self, text):
         return self.engine(text)
 

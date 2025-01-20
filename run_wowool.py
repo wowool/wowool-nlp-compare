@@ -12,7 +12,7 @@ def parse_arguments():
     parser.add_argument("-f", "--file", help="input file", nargs="*", required=False)
     parser.add_argument("-i", "--input", help="input text")
     parser.add_argument("-p", "--pipeline", help="input model")
-
+    parser.add_argument("--no-show", help="Show the output", action="store_false")
     args = parser.parse_args()
     return args
 
@@ -31,10 +31,12 @@ if __name__ == "__main__":
     kwargs = dict(parse_arguments()._get_kwargs())
     engine = Pipeline(kwargs["pipeline"])
     uris = Counter()
+    show = kwargs.pop("no_show")
     if "input" in kwargs and kwargs["input"]:
         text = kwargs.pop("input")
         doc = engine(text)
-        print_entities(doc)
+        if show:
+            print_entities(doc)
     else:
         files = kwargs.pop("file")
         for filename in files:
@@ -42,7 +44,8 @@ if __name__ == "__main__":
             if fn.exists():
                 text = fn.read_text()
                 doc = engine(text)
-                print_entities(doc)
+                if show:
+                    print_entities(doc)
             else:
                 print(f"File not found: {fn}")
 

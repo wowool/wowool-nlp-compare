@@ -4,6 +4,8 @@ from nlp_compare.cmp_objects import CmpItem
 from nlp_compare.concept_filter import ConceptFilter
 from nlp_compare.cmp_objects import NLPEngine
 from logging import getLogger
+from memory_profiler import profile
+from nlp_compare.profile import nlp_profile
 
 logger = getLogger("nlp.cmp.stanza")
 
@@ -13,6 +15,7 @@ entity_mapping_table = {}
 class NLPStanza(NLPEngine):
     name: str = "stanza"
 
+    @profile
     def __init__(self, cmp_idx, language_short_form, **kwargs):
         super().__init__(cmp_idx)
         self.language_short_form = language_short_form
@@ -21,10 +24,12 @@ class NLPStanza(NLPEngine):
             self.language_short_form, processors="tokenize,ner,coref"
         )
         self.map_table = entity_mapping_table.get(self.language_short_form, {})
+        self.warmup()
 
     def warmup(self):
         self.engine("warmup")
 
+    @profile
     def __call__(self, text):
         return self.engine(text)
 
