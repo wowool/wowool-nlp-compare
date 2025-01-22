@@ -924,8 +924,9 @@ In short, Spacy does not handle big data, and Stanza looks like it does handle b
 | x   |  7357 |  7364 | **Missing**  |              | *Stanley*      | ORG          | ORG          | Stanley          |
 
 
+### wowool vs spacy
 
-Spacy
+Spacy (counting anaphora)
 
 | Precision | Recall | Accuracy | F1 Score |
 |-----------|--------|----------|----------|
@@ -938,3 +939,18 @@ Wowool
 | 0.99      | 0.91   | 0.90     | 0.94     |
 
 
+### wowool vs stanza
+
+
+Stanza (12 docs) - no anaphora
+
+| Precision | Recall | Accuracy | F1 Score |
+|-----------|--------|----------|----------|
+| 0.93      | 0.86   | 0.81     | 0.89     |
+
+
+Wowool
+
+| Precision | Recall | Accuracy | F1 Score |
+|-----------|--------|----------|----------|
+| 0.97      | 0.88   | 0.86     | 0.92     |
