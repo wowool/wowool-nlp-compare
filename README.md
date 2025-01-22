@@ -880,3 +880,30 @@ In short, Spacy does not handle big data, and Stanza looks like it does handle b
 2001 - DATE
 ╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2025 books."
 2025 - DATE
+
+
+
+`His physical makeover for Maga reasons, performing music because no one will stop him, trying to look cool on a surfboard - all these are extremely difficult to watch.`
+
+
+| ?   |   beg |   end | uri_wowool   | URI_wowool   | text_wowool     | uri_stanza   | URI_stanza   | text_stanza   |
+|-----|-------|-------|--------------|--------------|-----------------|--------------|--------------|---------------|
+| x   |  3404 |  3408 | **Missing**  |              | *Maga*          | PERSON       | PERSON       | Maga          |
+
+`This lifted shares of other luxury goods makers such as LVMH and Kering in France, and the UK's Burberry .`
+
+
+| ?   |   beg |   end | uri_wowool   | URI_wowool   | text_wowool                 | uri_stanza   | URI_stanza   | text_stanza         |
+|-----|-------|-------|--------------|--------------|-----------------------------|--------------|--------------|---------------------|
+| x   |   710 |   729 | **Missing**  |              | *the UK’s   Burberry*       | ORG          | ORG          | the UK’s   Burberry |
+| -   |   714 |   716 | GPE          | Country      | UK                          | **Missing**  |              | *UK*                |
+| -   |   721 |   729 | ORG          | Company      | Burberry                    | **Missing**  |              | *Burberry*          |
+
+`Morgan Stanley made a profit of $3.7bn in the fourth quarter of last year, up from $1.5bn a year earlier.`
+
+
+| ?   |   beg |   end | uri_wowool   | URI_wowool   | text_wowool    | uri_stanza   | URI_stanza   | text_stanza      |
+|-----|-------|-------|--------------|--------------|----------------|--------------|--------------|------------------|
+| -   |  7350 |  7364 | ORG          | Company      | Morgan Stanley | **Missing**  |              | *Morgan Stanley* |
+| x   |  7350 |  7356 | **Missing**  |              | *Morgan*       | PERSON       | PERSON       | Morgan           |
+| x   |  7357 |  7364 | **Missing**  |              | *Stanley*      | ORG          | ORG          | Stanley          |
