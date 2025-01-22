@@ -17,7 +17,9 @@ class NLPStanza(NLPEngine):
         super().__init__(cmp_idx)
         self.language_short_form = language_short_form
         stanza.download(self.language_short_form)
-        self.engine = stanza.Pipeline(self.language_short_form)
+        self.engine = stanza.Pipeline(
+            self.language_short_form, processors="tokenize,ner,coref"
+        )
         self.map_table = entity_mapping_table.get(self.language_short_form, {})
 
     def warmup(self):
