@@ -922,3 +922,19 @@ In short, Spacy does not handle big data, and Stanza looks like it does handle b
 | -   |  7350 |  7364 | ORG          | Company      | Morgan Stanley | **Missing**  |              | *Morgan Stanley* |
 | x   |  7350 |  7356 | **Missing**  |              | *Morgan*       | PERSON       | PERSON       | Morgan           |
 | x   |  7357 |  7364 | **Missing**  |              | *Stanley*      | ORG          | ORG          | Stanley          |
+
+
+
+Spacy
+
+| Precision | Recall | Accuracy | F1 Score |
+|-----------|--------|----------|----------|
+| 0.90      | 0.70   | 0.65     | 0.70     |
+
+Wowool
+
+| Precision | Recall | Accuracy | F1 Score |
+|-----------|--------|----------|----------|
+| 0.99      | 0.91   | 0.90     | 0.94     |
+
+
