@@ -16,7 +16,7 @@ We are going to compare several cases using Wowool, Spacy, Stanza and Google NLP
 | Anaphora          | Yes     | No       | Yes      | Poorly   | Most do not resolve pronouns like he, she. Only Google resolves some like City, Company                             |
 | Conjecture        | Yes     | No       | Yes      | No       | When mentioning something in context, Wowool will remember what it was later on                                     |
 | Custom extraction | Yes     | No       | No       | No       | When mentioning something in context, Wowool will remebmer that what it was later on                                |
-| Compounds         | Yes     | No       | No       | No       | Wowool decompound word for languages like swedish, german, dutch, danish, norwegian                                 |
+| Compounds         | Yes     | No       | No       | No       | Wowool decompound words for languages like swedish, german, dutch, danish, norwegian                                |
 | Aggregation       | Yes     | No       | No       | No       | Wowool aggregates attributes like positions, country, descriptions                                                  |
 | Instances         | Yes     | No       | No       | No       | Wowool keeps track of instances, collecting information such as *John Smith, John, He, J. Smith* as the same entity |
 | Normalization     | Yes     | No       | Yes      | Yes      | In Wowool, *UK* is recognized as the same instance as *United Kingdom*                                              |
