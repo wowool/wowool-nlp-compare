@@ -987,3 +987,17 @@ Wowool
 | -   |   123 |   134 | ORG          | Company      | ByteDance           | **Missing**  |              | *the company*     |
 | ~   |   158 |   171 | ORG          | Organization | Supreme Court       | ORG          | ORG         | the Supreme Court |
 
+
+### Google
+
+`Frank McCourt told CNN on Thursday that while ByteDance's bankers have confirmed receipt of his group's offer, he expected the company was waiting to hear what the Supreme Court does.`
+
+| uri_wowool   | URI_wowool   | text_wowool         | uri_stanza   | URI_stanza   | text_stanza       |
+|--------------|--------------|---------------------|--------------|--------------|-------------------|
+| PERSON       | Person       | Frank Mccourt       | PERSON       | PERSON       | Frank McCourt     |
+| ORG          | Publisher    | CNN                 | ORG          | ORG          | CNN               |
+| ORG          | Company      | ByteDance           | ORG          | ORG          | ByteDance         |
+| POSITION     | Position     | banker              | PERSON       | PERSON       | Frank McCourt     |
+| PERSON       | Person       | Frank Mccourt       | **Missing**  |              | *he*              |
+| ORG          | Company      | ByteDance           | ORG          | ORG          | company           |
+| ORG          | Organization | Supreme Court       | ORG          | ORG         | the Supreme Court  |
