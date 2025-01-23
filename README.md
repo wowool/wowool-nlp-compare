@@ -954,3 +954,36 @@ Wowool
 | Precision | Recall | Accuracy | F1 Score |
 |-----------|--------|----------|----------|
 | 0.97      | 0.88   | 0.86     | 0.92     |
+
+
+
+## Sample Sentence
+
+`Frank McCourt told CNN on Thursday that while ByteDance's bankers have confirmed receipt of his group's offer, he expected the company was waiting to hear what the Supreme Court does.`
+
+
+### Spacy
+
+| ?   |   beg |   end | uri_wowool   | URI_wowool   | text_wowool   | uri_spacy   | URI_spacy   | text_spacy        |
+|-----|-------|-------|--------------|--------------|---------------|-------------|-------------|-------------------|
+| ~   |     0 |    13 | PERSON       | Person       | Frank Mccourt | PERSON      | PERSON      | Frank McCourt     |
+|     |    19 |    22 | ORG          | Publisher    | CNN           | ORG         | ORG         | CNN               |
+|     |    46 |    55 | ORG          | Company      | ByteDance     | ORG         | ORG         | ByteDance         |
+| -   |   111 |   113 | PERSON       | Person       | Frank Mccourt | **Missing** |             | *he*              |
+| -   |   123 |   134 | ORG          | Company      | ByteDance     | **Missing** |             | *the company*     |
+| ~   |   164 |   177 | ORG          | Organization | Supreme Court | ORG         | ORG         | the Supreme Court |
+
+### Stanza
+
+`Frank McCourt told CNN on Thursday that while ByteDance's bankers have confirmed receipt of his group's offer, he expected the company was waiting to hear what the Supreme Court does.`
+
+
+| ?   |   beg |   end | uri_wowool   | URI_wowool   | text_wowool         | uri_stanza   | URI_stanza   | text_stanza       |
+|-----|-------|-------|--------------|--------------|---------------------|--------------|--------------|-------------------|
+| ~   |     0 |    13 | PERSON       | Person       | Frank Mccourt       | PERSON       | PERSON       | Frank McCourt     |
+|     |    19 |    22 | ORG          | Publisher    | CNN                 | ORG          | ORG          | CNN               |
+|     |    46 |    55 | ORG          | Company      | ByteDance           | ORG          | ORG          | ByteDance's       |
+| -   |   111 |   113 | PERSON       | Person       | Frank Mccourt       | **Missing**  |              | *he*              |
+| -   |   123 |   134 | ORG          | Company      | ByteDance           | **Missing**  |              | *the company*     |
+| ~   |   158 |   171 | ORG          | Organization | Supreme Court       | ORG          | ORG         | the Supreme Court |
+
