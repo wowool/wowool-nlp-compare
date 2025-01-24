@@ -22,7 +22,6 @@ cleanup_table = {
 class NLPSpacy(NLPEngine):
     name: str = "spacy"
 
-    @profile
     def __init__(self, cmp_idx, language_short_form: str, **kwargs):
         super().__init__(cmp_idx)
         self.language_short_form = language_short_form
@@ -51,7 +50,6 @@ try:\npython -m spacy download {self.model_mame} """
     def warmup(self):
         self.engine("warmup")
 
-    @profile
     def __call__(self, text):
         return self.engine(text)
 
