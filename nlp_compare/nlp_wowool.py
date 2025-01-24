@@ -6,7 +6,8 @@ from logging import getLogger
 
 # from nlp_compare.profile import profile
 from memory_profiler import profile
-from nlp_compare.profile import nlp_profile
+
+# from nlp_compare.profile import nlp_profile
 
 logger = getLogger("nlp.cmp.wowool")
 

@@ -191,7 +191,9 @@ class CompareContext:
                 "literal": ll.literal,
                 f"uri_{ll.source}": ll.uri,
                 f"URI_{ll.source}": ll.original_uri,
-                f"text_{ll.source}": ll.text,
+                f"text_{ll.source}": (
+                    ll.text if ll.text == ll.literal else f"{ll.text}/{ll.literal}"
+                ),
             }
             missing_in_source = []
             for other_ in row[1:]:
