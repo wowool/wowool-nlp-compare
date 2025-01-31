@@ -15,6 +15,12 @@ def parse_arguments():
     parser.add_argument("-p", "--pipeline", help="input pipeline", required=True)
     parser.add_argument("-m", "--model", help="input model")
     parser.add_argument(
+        "-g",
+        "--golden_corpus_filename",
+        help="filename corpus filename",
+    )
+
+    parser.add_argument(
         "-a",
         "--annotations",
         help="All will display all of them. Otherwise we will lower our self to Spacy",

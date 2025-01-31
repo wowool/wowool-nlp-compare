@@ -12,6 +12,7 @@ from tabulate import tabulate
 from nlp_compare.concept_filter import ConceptFilter
 import csv
 import re
+from collections import defaultdict
 
 MISSING = "**Missing**"
 
@@ -167,8 +168,65 @@ KEY_IS_DIFFERENT = "?"
 
 
 class CompareContext:
-    def __init__(self):
+    def __init__(self, golden_corpus_filename: str | None = None):
         self.exclude_missing = None
+        self.golden_corpus_filename = golden_corpus_filename
+        if golden_corpus_filename:
+            self.golden_corpus_fh = open(golden_corpus_filename, "w")
+        else:
+            self.golden_corpus_fh = None
+        self.sentence_tokens = None
+
+    def print_golden_corpus(
+        self, sentence, sentence_text, compare_data: dict[str:NlpData]
+    ):
+        if self.golden_corpus_fh is None:
+            return
+
+        if sentence_text is None:
+            return
+        tabel_data = {}
+        rows = [nlpdata.rows for nlpdata in compare_data.values()]
+        sentence_printed = False
+        size_cmp = len(compare_data)
+
+        for row in zip(*rows):
+            if not sentence_printed:
+                tokens = self.sentence_tokens.get(sentence.begin_offset, [])
+                tks_str = " ".join(
+                    [
+                        f"{tk.literal}({tk.begin_offset},{tk.end_offset})"
+                        for tk in tokens
+                    ]
+                )
+                print(f"\n\nOFFSETS: {tks_str}", file=self.golden_corpus_fh)
+                print(f"\n`{sentence_text}`\n", file=self.golden_corpus_fh)
+                sentence_printed = True
+
+            for item in row:
+                key = (item.begin_offset, item.end_offset, item.literal)
+                if key not in tabel_data:
+                    tabel_data[key] = [None] * size_cmp
+                tabel_data[key][compare_data[item.source].cmp_idx] = [
+                    item.source,
+                    item.uri if item.uri != MISSING else "NF",
+                    item.text,
+                ]
+
+        data = []
+        for key, value in tabel_data.items():
+            item = {"T": "C", "beg": key[0], "end": key[1], "literal": key[2]}
+            all_same: bool = all([cmp_item[1] == value[0][1] for cmp_item in value])
+            item["uri"] = value[0][1] if all_same else ""
+            for cmp_item in value:
+                canonical = f":{cmp_item[2]}" if cmp_item[2] != item["literal"] else ""
+                item[f"{cmp_item[0]}"] = f"{cmp_item[0][:3]}:{cmp_item[1]}{canonical}"
+            data.append(item)
+
+        print(
+            tabulate(data, headers="keys", tablefmt="github"),
+            file=self.golden_corpus_fh,
+        )
 
     def print_tabulate(self, sentence_text, compare_data: dict[str:NlpData]):
 
@@ -179,11 +237,11 @@ class CompareContext:
         sentence_printed = False
 
         for row in zip(*rows):
+            ll = row[0]
             if not sentence_printed:
                 print(f"\n\n`{sentence_text}`\n\n")
                 sentence_printed = True
 
-            ll = row[0]
             item = {
                 KEY_IS_DIFFERENT: "",
                 "beg": ll.begin_offset,
@@ -254,6 +312,7 @@ class CompareContext:
         compare_data: dict[str, NlpData],
         cmp_lines: list[list[CmpItem]],
     ):
+        prev_sentence_text = None
         prev_sentence = None
         for cmp_line in cmp_lines:
             first = None
@@ -262,9 +321,13 @@ class CompareContext:
                     first = cmp_item
                     break
             if first and first.uri == "Sentence":
-                self.print_tabulate(prev_sentence, compare_data)
+                self.print_tabulate(prev_sentence_text, compare_data)
+                self.print_golden_corpus(
+                    prev_sentence, prev_sentence_text, compare_data
+                )
                 self.clear_rows(compare_data)
-                prev_sentence = first.text
+                prev_sentence_text = first.text
+                prev_sentence = first
                 continue
 
             for cmp_idx, cmp_item in enumerate(cmp_line):
@@ -287,7 +350,7 @@ class CompareContext:
                     text_in_doc = self.get_text(
                         document_text, first.begin_offset, first.end_offset
                     )
-                    text = f"*{text_in_doc}*"
+                    text = text_in_doc
                     literal = text
                     source = find_source(compare_data, cmp_idx)
 
@@ -300,7 +363,8 @@ class CompareContext:
                     original_uri=orignal_uri,
                 )
 
-        self.print_tabulate(prev_sentence, compare_data)
+        self.print_tabulate(prev_sentence_text, compare_data)
+        self.print_golden_corpus(prev_sentence, prev_sentence_text, compare_data)
         self.clear_rows(compare_data)
 
     def compare_entities(
@@ -330,7 +394,12 @@ class CompareContext:
             nlp.get_compare_data(other_, doc, concept_filter)
             # print(*other_.data, sep="\n")
             offset_data.extend(other_.data)
+            if self.sentence_tokens is None:
+                self.sentence_tokens = {}
+                for sentence in doc.sentences:
+                    self.sentence_tokens[sentence.begin_offset] = [*sentence.tokens]
 
+        # print(f"Tokens: {self.sentence_tokens}")
         offset_data = sorted(offset_data, key=cmp_to_key(sort_by_offset))
 
         cmp_lines = insert_missing_comparison_items(offset_data, nlp_engines)
@@ -338,6 +407,7 @@ class CompareContext:
         # print_rst_table(offset_data, nlp.name)
         if show:
             self.print_md_table(text, compare_data, cmp_lines)
+
         # print_diff(offset_data, nlp.name)
 
         # with open(f"wowool-vs-{nlp.name}-diff.txt", "a") as wfh:
@@ -448,10 +518,11 @@ def compare(
     annotations: str,
     file: str,
     show: bool = True,
+    golden_corpus_filename: str | None = None,
     **kwargs,
 ):
 
-    cc = CompareContext()
+    cc = CompareContext(golden_corpus_filename=golden_corpus_filename)
     exculde_fn = Path(f"config/{language}_exculde.txt")
     if exculde_fn.exists():
         with exculde_fn.open() as fh:

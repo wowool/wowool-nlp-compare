@@ -83,7 +83,7 @@ entity_mapping_table = {
 class NLPWowool(NLPEngine):
     name: str = "wowool"
 
-    @profile
+    # @profile
     # @nlp_profile("init wowool")
     def __init__(self, cmp_idx, language_short_form, **kwargs):
         super(NLPWowool, self).__init__(cmp_idx)
@@ -98,7 +98,7 @@ class NLPWowool(NLPEngine):
         self.engine("warmup")
 
     # @profile("wowool")
-    @profile
+    # @profile
     def __call__(self, text):
         return self.engine(text)
 
