@@ -26,7 +26,12 @@ def parse_arguments():
         help="All will display all of them. Otherwise we will lower our self to Spacy",
     )
     parser.add_argument("--no-show", help="Show the output", action="store_false")
-    # parser.add_argument("--profile", help="Profile the code", action="store_true")
+    parser.add_argument(
+        "-r",
+        "--precision_recall",
+        help="calculate precision recall",
+        action="store_true",
+    )
 
     args = parser.parse_args()
     return args

@@ -5,7 +5,6 @@ from nlp_compare.cmp_objects import NLPEngine
 from logging import getLogger
 
 # from nlp_compare.profile import profile
-from memory_profiler import profile
 
 # from nlp_compare.profile import nlp_profile
 

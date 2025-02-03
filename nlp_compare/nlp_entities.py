@@ -6,7 +6,7 @@ import time
 from functools import cmp_to_key
 from dataclasses import dataclass, field
 from nlp_compare.nlp_engine import get_nlp_engine
-from nlp_compare.cmp_objects import CmpItem
+from nlp_compare.cmp_objects import CmpItem, GoldenIem, PrecisionRecallData
 from logging import getLogger
 from tabulate import tabulate
 from nlp_compare.concept_filter import ConceptFilter
@@ -164,18 +164,47 @@ def sort_by_offset(lhs: CmpItem, rhs: CmpItem):
     return lhs.begin_offset - rhs.begin_offset
 
 
+def sort_by_offset_only(lhs, rhs):
+    if lhs[0].begin_offset == rhs[0].begin_offset:
+        if lhs[0].end_offset == rhs[0].end_offset:
+            return 0
+        return rhs[0].end_offset - lhs[0].end_offset
+    return lhs[0].begin_offset - rhs[0].begin_offset
+
+
 KEY_IS_DIFFERENT = "?"
 
 
+def find_next_line(cmp_lines, from_idx, begin, end):
+    for idx in range(from_idx, len(cmp_lines)):
+        cmp_line = cmp_lines[idx]
+        for cmp_item in cmp_line:
+            if cmp_item is not None and cmp_item.uri != "Sentence":
+                if cmp_item.begin_offset == begin and cmp_item.end_offset == end:
+                    return idx
+    return -1
+
+
 class CompareContext:
-    def __init__(self, golden_corpus_filename: str | None = None):
+    def __init__(
+        self,
+        golden_corpus_filename: str | None = None,
+        golden_data: list[GoldenIem] | None = None,
+    ):
         self.exclude_missing = None
         self.golden_corpus_filename = golden_corpus_filename
-        if golden_corpus_filename:
+        if golden_corpus_filename and golden_data is None:
             self.golden_corpus_fh = open(golden_corpus_filename, "w")
         else:
             self.golden_corpus_fh = None
         self.sentence_tokens = None
+        self.golden_data = golden_data
+
+    def set_engine_to_compare(self, nlp_engines):
+        self.nlp_engines = nlp_engines
+        self.id_2_source = {}
+        for nlp in nlp_engines:
+            self.id_2_source[nlp.cmp_idx] = nlp.name
 
     def print_golden_corpus(
         self, sentence, sentence_text, compare_data: dict[str:NlpData]
@@ -381,6 +410,83 @@ class CompareContext:
         self.print_golden_corpus(prev_sentence, prev_sentence_text, compare_data)
         self.clear_rows(compare_data)
 
+    def build_precision_recall_data(self, cmp_lines, nrof_compare_slots):
+        size_cmp = nrof_compare_slots + 1
+        data = {}
+        for cmp_line in cmp_lines:
+            key = (cmp_line[0].begin_offset, cmp_line[0].end_offset)
+            for cmp_item in cmp_line:
+                if cmp_item is not None:
+                    if cmp_item.uri == "Sentence":
+                        break
+                    if key not in data:
+                        data[key] = [None] * size_cmp
+                        data[key][0] = GoldenIem(
+                            cmp_item.begin_offset, cmp_item.end_offset
+                        )
+                        for idx in range(1, size_cmp):
+                            data[key][idx] = CmpItem(
+                                idx,
+                                cmp_item.begin_offset,
+                                cmp_item.end_offset,
+                                self.id_2_source[idx - 1],
+                            )
+
+                    data[key][cmp_item.cmp_idx + 1] = cmp_item
+        for golden_item in self.golden_data:
+            key = (golden_item.begin_offset, golden_item.end_offset)
+            if key not in data:
+                data[key] = [None] * size_cmp
+            data[key][0] = golden_item
+        sorted_data = sorted(data.values(), key=cmp_to_key(sort_by_offset_only))
+        return sorted_data
+
+    def calculate_precision_recall(self, cmp_lines, nrof_compare_slots):
+        NOT = "NOT"
+        NONE = "NONE"
+        GOLDEN = "GOLDEN"
+        pr_data = self.build_precision_recall_data(cmp_lines, nrof_compare_slots)
+        precision_recall = defaultdict(PrecisionRecallData)
+        for pr_line in pr_data:
+            print("------------------------------------------------")
+            # print(*pr_line, sep="\n")
+            gi = pr_line[0]
+            if gi.uri is None:
+
+                print(f"{GOLDEN:<10}:{NOT:<10}:")
+            else:
+                print(f"{GOLDEN:<10}:{gi.uri:<10}:{gi.literal}")
+
+            for cmp_item in pr_line[1:]:
+                if cmp_item.uri is None:
+                    print(f"{cmp_item.source:<10}:{NONE:<10}")
+                else:
+                    print(
+                        f"{cmp_item.source:<10}:{cmp_item.uri:<10}:{cmp_item.literal}"
+                    )
+
+                if gi.uri is None and cmp_item.uri is not None:
+                    precision_recall[cmp_item.source].false_positive += 1
+                elif cmp_item.uri == gi.uri:
+                    precision_recall[cmp_item.source].true_positive += 1
+                elif cmp_item.uri is None:
+                    precision_recall[cmp_item.source].false_negative += 1
+                else:
+                    precision_recall[cmp_item.source].false_positive += 1
+
+        print("------------------------------------------------")
+        for source, prd in precision_recall.items():
+            print(
+                f"{source}: tp={prd.true_positive} fp={prd.false_positive} fn={prd.false_negative}"
+            )
+            precision = prd.true_positive / (prd.true_positive + prd.false_positive)
+            recall = prd.true_positive / (prd.true_positive + prd.false_negative)
+            f_score = (precision * recall * 2) / (precision + recall)
+            print(
+                f"{source}: Precision: {precision:.3f} Recall: {recall:.3f} f_score: {f_score:.3f}"
+            )
+        print("------------------------------------------------")
+
     def compare_entities(
         self,
         compare_data,
@@ -388,6 +494,7 @@ class CompareContext:
         nlp_engines: list,
         concept_filter: ConceptFilter,
         show: bool = True,
+        precision_recall: bool = False,
     ):
 
         text = input_provider.text
@@ -395,6 +502,7 @@ class CompareContext:
             if nlp.name not in compare_data:
                 compare_data[nlp.name] = NlpData(nlp.name, nlp.cmp_idx)
 
+        self.sentence_tokens = None
         offset_data = []
         for nlp in nlp_engines:
             other_: NlpData = compare_data[nlp.name]
@@ -419,7 +527,9 @@ class CompareContext:
         cmp_lines = insert_missing_comparison_items(offset_data, nlp_engines)
 
         # print_rst_table(offset_data, nlp.name)
-        if show:
+        if self.golden_data:
+            self.calculate_precision_recall(cmp_lines, len(compare_data))
+        elif show:
             self.print_md_table(text, compare_data, cmp_lines)
 
         # print_diff(offset_data, nlp.name)
@@ -526,6 +636,27 @@ def write_missing_entities(compare_data):
                 writer.writerows(missingdata)
 
 
+def read_golden_corpus_data(golden_corpus_filename):
+    data = []
+    fn = Path(golden_corpus_filename).absolute()
+    with open(fn) as fh:
+        for line_nr, line in enumerate(fh, 1):
+            if line.startswith("| C   |"):
+                parts = line.split("|")
+                item = GoldenIem(
+                    begin_offset=int(parts[2]),
+                    end_offset=int(parts[3]),
+                    literal=parts[4].strip(),
+                    uri=parts[5].strip(),
+                )
+                if item.uri == "NF" or item.uri == "":
+                    raise ValueError(
+                        f"{fn}:{line_nr}: Invalid or missing uri: {item.uri}"
+                    )
+                data.append(item)
+    return data
+
+
 def compare(
     nlp_engine: str,
     language: str,
@@ -533,10 +664,21 @@ def compare(
     file: str,
     show: bool = True,
     golden_corpus_filename: str | None = None,
+    precision_recall: bool = False,
     **kwargs,
 ):
 
-    cc = CompareContext(golden_corpus_filename=golden_corpus_filename)
+    golden_data = None
+    if precision_recall:
+        if golden_corpus_filename:
+            golden_data = read_golden_corpus_data(golden_corpus_filename)
+            print(*golden_data, sep="\n")
+        else:
+            raise ValueError("Golden corpus filename is required for precision recall")
+
+    cc = CompareContext(
+        golden_corpus_filename=golden_corpus_filename, golden_data=golden_data
+    )
     exculde_fn = Path(f"config/{language}_exculde.txt")
     if exculde_fn.exists():
         with exculde_fn.open() as fh:
@@ -549,6 +691,7 @@ def compare(
             cc.exclude_missing = re.compile(patterns)
 
     nlp_engines = get_nlp_engines(nlp_engine, language, **kwargs)
+    cc.set_engine_to_compare(nlp_engines)
     cleanup_result_files(nlp_engines)
     concept_filter = get_wowool_annotation_filter(annotations)
     files = []
