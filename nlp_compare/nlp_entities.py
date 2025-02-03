@@ -418,9 +418,10 @@ class CompareContext:
         size_cmp = nrof_compare_slots + 1
         data = {}
         for cmp_line in cmp_lines:
-            key = (cmp_line[0].begin_offset, cmp_line[0].end_offset)
+
             for cmp_item in cmp_line:
                 if cmp_item is not None:
+                    key = (cmp_item.begin_offset, cmp_item.end_offset)
                     if cmp_item.uri == "Sentence":
                         break
                     if key not in data:
@@ -441,6 +442,13 @@ class CompareContext:
             key = (golden_item.begin_offset, golden_item.end_offset)
             if key not in data:
                 data[key] = [None] * size_cmp
+                for idx in range(1, size_cmp):
+                    data[key][idx] = CmpItem(
+                        idx,
+                        golden_item.begin_offset,
+                        golden_item.end_offset,
+                        self.id_2_source[idx - 1],
+                    )
             data[key][0] = golden_item
         sorted_data = sorted(data.values(), key=cmp_to_key(sort_by_offset_only))
         return sorted_data
@@ -453,7 +461,7 @@ class CompareContext:
         precision_recall = defaultdict(PrecisionRecallData)
         for pr_line in pr_data:
             print("------------------------------------------------")
-            # print(*pr_line, sep="\n")
+            print(*pr_line, sep="\n")
             gi = pr_line[0]
             if gi.uri is None:
 
