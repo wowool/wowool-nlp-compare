@@ -474,7 +474,7 @@ class CompareContext:
                     print(f"{cmp_item.source:<10}:{NONE:<10}")
                 else:
                     print(
-                        f"{cmp_item.source:<10}:{cmp_item.uri:<10}:{cmp_item.literal}"
+                        f"{cmp_item.source:<10}:{cmp_item.uri:<10}:{cmp_item.text}"
                     )
 
                 if gi.uri is None and cmp_item.uri is not None:

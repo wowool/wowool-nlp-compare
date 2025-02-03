@@ -14,7 +14,7 @@ entity_mapping_table = {}
 
 
 cleanup_table = {
-    "en": [[re.compile(r"'s$|^the "), ""]],
+    "en": [[re.compile(r"'s$|^the |^The "), ""]],
 }
 
 
