@@ -194,7 +194,11 @@ class CompareContext:
         self.exclude_missing = None
         self.golden_corpus_filename = golden_corpus_filename
         if golden_corpus_filename and golden_data is None:
-            self.golden_corpus_fh = open(golden_corpus_filename, "w")
+            answer = input("Generate golden data, yes/no ? :")
+            if answer.lower() == "yes":
+                self.golden_corpus_fh = open(golden_corpus_filename, "w")
+            else:
+                raise ValueError("Golden data will not be generated.")
         else:
             self.golden_corpus_fh = None
         self.sentence_tokens = None
