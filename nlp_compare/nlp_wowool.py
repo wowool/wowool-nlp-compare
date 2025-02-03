@@ -142,7 +142,7 @@ class NLPWowool(NLPEngine):
                                 "wowool",
                                 uri,
                                 concept.canonical,
-                                literal=concept.literal,
+                                literal=concept.text,
                                 original_uri=concept.uri,
                             )
                         )

@@ -207,6 +207,7 @@ class CompareContext:
                 key = (item.begin_offset, item.end_offset, item.literal)
                 if key not in tabel_data:
                     tabel_data[key] = [None] * size_cmp
+
                 tabel_data[key][compare_data[item.source].cmp_idx] = [
                     item.source,
                     item.uri if item.uri != MISSING else "NF",
@@ -216,11 +217,24 @@ class CompareContext:
         data = []
         for key, value in tabel_data.items():
             item = {"T": "C", "beg": key[0], "end": key[1], "literal": key[2]}
-            all_same: bool = all([cmp_item[1] == value[0][1] for cmp_item in value])
-            item["uri"] = value[0][1] if all_same else ""
+            first = None
             for cmp_item in value:
-                canonical = f":{cmp_item[2]}" if cmp_item[2] != item["literal"] else ""
-                item[f"{cmp_item[0]}"] = f"{cmp_item[0][:3]}:{cmp_item[1]}{canonical}"
+                if cmp_item is not None:
+                    first = cmp_item
+                    break
+
+            all_same: bool = all(
+                [cmp_item and cmp_item[1] == first[1] for cmp_item in value]
+            )
+            item["uri"] = value[0][1] if all_same else ""
+            canonical = ""
+            for cmp_item in value:
+                if cmp_item:
+                    if cmp_item[2] != item["literal"]:
+                        canonical = f":{cmp_item[2]}"
+                    item[f"{cmp_item[0]}"] = (
+                        f"{cmp_item[0][:3]}:{cmp_item[1]}{canonical}"
+                    )
             data.append(item)
 
         print(
