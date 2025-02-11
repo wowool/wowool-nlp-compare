@@ -21,14 +21,14 @@ We are going to compare several cases using Wowool, Spacy, Stanza and Google NLP
 | Instances         | Yes     | No       | No       | No       | Wowool keeps track of instances, collecting information such as *John Smith, John, He, J. Smith* as the same entity |
 | Normalization     | Yes     | No       | Yes      | Yes      | In Wowool, *UK* is recognized as the same instance as *United Kingdom*                                              |
 | Hyphenation       | Yes     | No       | Poorly   | Poorly   | Spacy does not recognize split words, Google does not clean up, and gets it wrong with partial matches              |
-| Augmented         | Yes     | No       | No       | Link     | Wowool adds information to the entity that can be used (key people,headqurters,positions), Google only links to Wikipedia |
+| Augmented         | Yes     | No       | No       | Link     | Wowool adds information to the entity that can be used (key people,headquarters,positions), Google only links to Wikipedia |
 | Numbers           | Yes     | No       | No       | Yes      | Resolves written numbers like *five hundred billion dollars* -> 500000000700, *$2bn* -> 2000000000                  |
 | Resolving Dates   | Yes     | No       | No       | No       | Resolving to absolute dates. like: *two year ago* to the actual date starting from the initial publishing date      | 
 | Sentiment         | Yes     | Yes      | No       | Yes      | Wowool returns sentence-based sentiment analysis vs document bases                                                  |
 | Attributes        | Yes     | No       | No       | No       | Annotations have attributes such as: gender, position, ...                                                          |
-| Onthologies       | places  | No       | No       | No       | Things like UK, USA, Belgium, Europe, EU                                                                            |
+| Ontologies       | places  | No       | No       | No       | Things like UK, USA, Belgium, Europe, EU                                                                            |
 | Entity types      | +231    | 18       | 18       | 11       | The number of different types of entities                                                                           |
-| Sub Annotations   | Yes     | No       | No       | No       | Wowool supports subannotations like Triples that have Subject, Object, and Verb                                     |
+| Sub Annotations   | Yes     | No       | No       | No       | Wowool supports subannotations like Triples that have Subject, Object, and Verb Phrase                                     |
 | Custom Domains    | Yes     | No       | No       | No       | Does not require training data, Wowool is a rule-based language                                                     |
 | False Positive's  |         |          |          |          |    |
 | False Negative's  |         |          |          |          |    |
@@ -50,7 +50,7 @@ We are going to compare several cases using Wowool, Spacy, Stanza and Google NLP
 
 ### Anaphora
 
-None of the NLP engines except Wowool is resolving the Anaphora.
+None of the NLP engines except Wowool is resolving the Anaphora in conjunction with NER. Stanza has a separate model for coreference, but it does not work together with NER in a pipleline. 
 In the second sentence of the same text, we see that Spacy, Stanza and Google are missing the anaphora references to:
 
 * *Mary Smith (she)*, 
@@ -75,7 +75,7 @@ In the second sentence of the same text, we see that Spacy, Stanza and Google ar
 | PERSON       | John Doe      | **Missing** | *he*             | **Missing**  | *he*             | **Missing**  | *he*             |
 
 
-### Wrong tagging
+### Wrong labelling
 
 
 The first instance is correct, but in the second sentence *Georgia* is tagged as a location (**GPE**) 
@@ -1001,3 +1001,27 @@ Wowool
 | PERSON       | Person       | Frank Mccourt       | **Missing**  |              | *he*              |
 | ORG          | Company      | ByteDance           | ORG          | ORG          | company           |
 | ORG          | Organization | Supreme Court       | ORG          | ORG         | the Supreme Court  |
+
+
+## Recall, precision and F-measure
+
+
+Wowool
+
+| Precision | Recall | F1 Score |
+|-----------|--------|----------|
+| 0.95      | 0.83   | 0.88     |
+
+Stanza 
+
+| Precision | Recall | F1 Score |
+|-----------|--------|----------|
+| 0.86      | 0.80   | 0.83     |
+
+Spacy 
+
+| Precision | Recall | F1 Score |
+|-----------|--------|----------|
+| 0.75      | 0.69   | 0.72     |
+
+
