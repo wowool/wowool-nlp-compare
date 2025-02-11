@@ -1083,3 +1083,24 @@ CNR = 'could not run'
 ![Timeings Kb/sec](img/speed-graph.png)
 
 
+## Recall, precision and F-measure
+
+
+Wowool
+
+| Precision | Recall | F1 Score |
+|-----------|--------|----------|
+| 0.95      | 0.83   | 0.88     |
+
+Stanza 
+
+| Precision | Recall | F1 Score |
+|-----------|--------|----------|
+| 0.86      | 0.80   | 0.83     |
+
+Spacy 
+
+| Precision | Recall | F1 Score |
+|-----------|--------|----------|
+| 0.75      | 0.69   | 0.72     |
+
