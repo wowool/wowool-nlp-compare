@@ -65,8 +65,8 @@ Wowool
 
 ### Memory profiling:
 
-[Link to RESULTS.md](docs/memory.md.md)
+[Link to memory.md](docs/memory.md)
 
 ## Detailed Results
 
-[Link to RESULTS.md](docs/results.md.md)
+[Link to results.md](docs/results.md)
