@@ -1,13 +1,9 @@
 # NLP compare
 
-This tool allows you to compare different nlp engines with the Wowool engine.
-
-## Setup
-
-    pip install -r Wowool-requirements.txt
+This tool allows you to compare different nlp engines with the Wowool engine. In this readme we compare Wowool vs Spacy, Stanza and Google
 
 
-## Wowool vs Spacy, Stanza and Google
+## Features
 
 We are going to compare several cases using Wowool, Spacy, Stanza and Google NLP.
 
@@ -32,6 +28,41 @@ We are going to compare several cases using Wowool, Spacy, Stanza and Google NLP
 | Custom Domains    | Yes     | No       | No       | No       | Does not require training data, Wowool is a rule-based language                                                     |
 | Categorization    | Yes     | Yes      | No       | Yes      |    |
 | Max Memory Fp (100k)  | 54M |  414M | 9000Mb | NA | using Scalene running a 10k english file |
+
+## Timings
+
+CNR = 'could not run'
+
+| Kb    | Wowool | Spacy  | Stanza  | Wowool Kb/sec    | Spacy Kb/sec    | Stanza Kb/sec   |
+|-------|--------|--------|---------|------------------|------------------|------------------|
+| 1     | 0,031  | 0,047  | 0,835   | 32,258064516129  | 21,2765957446809 | 1,19760479041916 |
+| 5     | 0,091  | 0,186  | 2,518   | 54,9450549450549 | 26,8817204301075 | 1,98570293884035 |
+| 10    | 0,157  | 0,35   | 5,031   | 63,6942675159236 | 28,5714285714286 | 1,98767640628106 |
+| 50    | 0,671  | 1,651  | 23,947  | 74,5156482861401 | 30,2846759539673 | 2,08794421013071 |
+| 100   | 1,317  | 3,344  | 47,332  | 75,9301442672741 | 29,9043062200957 | 2,11273557001606 |
+| 500   | 6,74   | 16,555 | 244,154 | 74,1839762611276 | 30,2023557837511 | 2,0478878085143  |
+| 1000  | 13,97  | 34,946 | 479,118 | 71,5819613457409 | 28,6155783208379 | 2,08716850546212 |
+| 2000  | 27,652 | CNR    | 973,859 | 72,3274989150875  | CNR             | 2,05368538977408 |
+
+
+<img src="img/speed-graph.png" alt="Precision and Recall" width="500">
+
+
+
+## Recall, precision and F-measure
+
+
+Wowool
+
+|           | Wowool   | Spacy   | Stanza   |
+|-----------|:--------:|:-------:|:--------:|
+| Precision	| **0,95** | 0,75    | 0,86     |
+| Recall	| **0,83** | 0,69    | 0,80     |
+| F1 Score	| **0,88** | 0,72    | 0,83     |
+
+
+
+<img src="img/precision-recall.png" alt="Precision and Recall" width="500">
 
 ### Memory profiling:
 #### Wowool
@@ -1001,38 +1032,3 @@ Wowool
 | ORG          | Organization | Supreme Court       | ORG          | ORG         | the Supreme Court  |
 
 
-## Timings
-
-
-CNR = 'could not run'
-
-| Kb    | Wowool | Spacy  | Stanza  | Wowool Kb/sec    | Spacy Kb/sec    | Stanza Kb/sec   |
-|-------|--------|--------|---------|------------------|------------------|------------------|
-| 1     | 0,031  | 0,047  | 0,835   | 32,258064516129  | 21,2765957446809 | 1,19760479041916 |
-| 5     | 0,091  | 0,186  | 2,518   | 54,9450549450549 | 26,8817204301075 | 1,98570293884035 |
-| 10    | 0,157  | 0,35   | 5,031   | 63,6942675159236 | 28,5714285714286 | 1,98767640628106 |
-| 50    | 0,671  | 1,651  | 23,947  | 74,5156482861401 | 30,2846759539673 | 2,08794421013071 |
-| 100   | 1,317  | 3,344  | 47,332  | 75,9301442672741 | 29,9043062200957 | 2,11273557001606 |
-| 500   | 6,74   | 16,555 | 244,154 | 74,1839762611276 | 30,2023557837511 | 2,0478878085143  |
-| 1000  | 13,97  | 34,946 | 479,118 | 71,5819613457409 | 28,6155783208379 | 2,08716850546212 |
-| 2000  | 27,652 | CNR    | 973,859 | 72,3274989150875  | CNR             | 2,05368538977408 |
-
-
-<img src="img/speed-graph.png" alt="Precision and Recall" width="500">
-
-
-
-## Recall, precision and F-measure
-
-
-Wowool
-
-|           | Wowool   | Spacy   | Stanza   |
-|-----------|:--------:|:-------:|:--------:|
-| Precision	| **0,95** | 0,75    | 0,86     |
-| Recall	| **0,83** | 0,69    | 0,80     |
-| F1 Score	| **0,88** | 0,72    | 0,83     |
-
-
-
-<img src="img/precision-recall.png" alt="Precision and Recall" width="500">
