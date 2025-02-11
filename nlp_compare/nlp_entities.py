@@ -625,14 +625,18 @@ def print_total_timing_results(
         if "wowool" == engine:
             continue
 
-        # print(f"""{prefix} Time: {'Wowool':<8}: {wowool_time:.3f} {wowool_counter}""")
         word = "faster than" if wow_.tt_time < data.tt_time else "slower than"
-        faster = round(abs((data.tt_time / wow_.tt_time) - 1), 1)
+        times_faster = (
+            data.tt_time / wow_.tt_time
+            if wow_.tt_time < data.tt_time
+            else wow_.tt_time / data.tt_time
+        )
+        # times_faster = round(times_faster, 2)
 
-        if faster == 0:
-            print(f""" Wowool is is as fast as {engine}""")
+        if times_faster == 1:
+            print(f""" Wowool is as fast as {engine}""")
         else:
-            print(f""" Wowool is {faster:.3f} {word} {engine}""")
+            print(f""" Wowool is {times_faster} times {word} {engine}""")
 
 
 def write_missing_entities(compare_data):
