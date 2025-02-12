@@ -30,7 +30,7 @@ def print_entities(doc):
 
 if __name__ == "__main__":
     kwargs = dict(parse_arguments()._get_kwargs())
-    engine = stanza.Pipeline(kwargs["language"], processors="tokenize,ner,coref")
+    engine = stanza.Pipeline(kwargs["language"], processors="tokenize,ner")
     uris = Counter()
     show = kwargs.pop("no_show")
     if "input" in kwargs and kwargs["input"]:

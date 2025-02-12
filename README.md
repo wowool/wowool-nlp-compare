@@ -27,7 +27,7 @@ We are going to compare several cases using Wowool, Spacy, Stanza and Google NLP
 | Sub Annotations   | Yes     | No       | No       | No       | Wowool supports subannotations like Triples that have Subject, Object, and Verb                                     |
 | Custom Domains    | Yes     | No       | No       | No       | Does not require training data, Wowool is a rule-based language                                                     |
 | Categorization    | Yes     | Yes      | No       | Yes      |    |
-| Max Memory Fp (100k)  | 54M |  414M | 9000Mb | NA | using Scalene running a 10k english file |
+| Max Memory Fp (10k)  | 54M |  224M | 816Mb | NA | using Scalene running a 10k english file (note: could not run on 100k , stanza was taking to long and finally crashed)|
 
 ## Timings
 
