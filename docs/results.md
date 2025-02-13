@@ -1,8 +1,26 @@
 # NLP compare
 
+##  Usage
+
+To run the tool simply call:
+
+    python3 -m nlp_compare -e spacy,stanza,googel -l english -p "english,entity" -f tests/data/hyphenation.txt
+
+* -e, --engines  : The engine you want to compare , currently support for spacy,stanza,google
+* -l, --language : The language to run
+* -p, --pipeline : This is the wowool pipeline.
+* -f, --file : The file you want to run.
+* -a : the list of annotation we want to compare.
+
+All the sample files are located in test/data/
+
+**Note** that all the test have been done with google nlp, so if you do not have access just remove it from the *-e* option
+
 ## Features 
 
 ### Anaphora
+
+
 
 None of the NLP engines except Wowool is resolving the Anaphora.
 In the second sentence of the same text, we see that Spacy, Stanza and Google are missing the anaphora references to:
@@ -29,7 +47,13 @@ In the second sentence of the same text, we see that Spacy, Stanza and Google ar
 | PERSON       | John Doe      | **Missing** | *he*             | **Missing**  | *he*             | **Missing**  | *he*             |
 
 
+***Test:***  python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/anaphora.txt -a "Sentence,PERSON,ORG,POS,GPE,LOC"
+
+
 ### Wrong tagging
+
+
+
 
 The first instance is correct, but in the second sentence *Georgia* is tagged as a location (**GPE**) 
 
@@ -87,6 +111,8 @@ The first instance is correct, but in the second sentence *Georgia* is tagged as
 
 But it is clear from the first sentence that it is a Person.
 
+***Test:***  python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/person_conjecture.txt -a "Sentence,PERSON,ORG,POS,GPE,LOC"
+
 
 ### Normalization
 
@@ -124,6 +150,7 @@ Testing a text that contains hyphenations. This happens a lot with pdf documents
 |              |              | *street*            | **Missing** | *street*             | **Missing**  | *street*             | GPE          | LOCATION     | street               |
 | FAC          | Facility     | *Rivirenhof Park*   | **Missing** | *Riviren-\nhof Park* | **Missing**  | *Riviren-\nhof Park* | GPE          | LOCATION     | Riviren-\nhof Park   |
 
+***Test:***  python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/normalization.txt -a "Sentence,PERSON,ORG,POS,GPE,LOC"
 
 ### Spacy.io Demo text
 
@@ -220,3 +247,64 @@ As you can see Spacy does not look good on their own demo text, imagine on unkno
 | ORG          | Organization | Supreme Court       | ORG          | ORG         | the Supreme Court  |
 
 
+## Things that go wrong in unexplainable ways
+
+### Names (snippets from news)
+
+`Most nonprofits, experts say, don't or can't provide third-party data about the costs and benefits of their interventions.`
+
+| uri_wowool   | text_wowool   | uri_spacy   | text_spacy   | uri_stanza   | text_stanza   |
+|--------------|---------------|-------------|--------------|--------------|---------------|
+|              |               | **GPE**         | **n’t**          |              |               |
+
+
+`The final chapter is, perhaps inevitably, called What to Whole-Arse.`
+
+| uri_wowool   | text_wowool   | uri_spacy   | text_spacy     | uri_stanza   | text_stanza   |
+|--------------|---------------|-------------|----------------|--------------|---------------|
+|              |               | **PERSON**  | **Whole-Arse** |              |               |
+
+There are many more !
+
+### Date's are random in Spacy and Stanza
+
+Depending on the date it's a cardinal or a date ! not very usefull if you have to figure it yourself.
+
+╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1363 books."
+1363 - CARDINAL
+╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1364 books."
+1364 - DATE
+╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2000 books."
+2000 - CARDINAL
+╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2001 books."
+2001 - DATE
+╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2025 books."
+2025 - DATE
+
+### Companies
+
+`His physical makeover for Maga reasons, performing music because no one will stop him, trying to look cool on a surfboard - all these are extremely difficult to watch.`
+
+
+| ?   |   beg |   end | uri_wowool   | text_wowool     | uri_stanza   | text_stanza   |
+|-----|-------|-------|--------------|-----------------|--------------|---------------|
+| x   |  3404 |  3408 |              | *Maga*          | PERSON       | Maga          |
+
+`This lifted shares of other luxury goods makers such as LVMH and Kering in France, and the UK's Burberry .`
+
+
+| ?   |   beg |   end | uri_wowool   | text_wowool                 | uri_stanza   | text_stanza         |
+|-----|-------|-------|--------------|-----------------------------|--------------|---------------------|
+| x   |   710 |   729 |              | *the UK’s   Burberry*       |  **ORG !**   | the UK’s   Burberry |
+| -   |   714 |   716 | **GPE**      | UK                          |              | *UK*                |
+| -   |   721 |   729 | **ORG**      | Burberry                    |              | *Burberry*          |
+
+`Morgan Stanley made a profit of $3.7bn in the fourth quarter of last year, up from $1.5bn a year earlier.`
+
+Spacy is tagging 'Morgan Stanley' as a Person and *Stanley* as a ORG ! while wowool is tagging *Morgan Stanley* as a company.
+
+| ?   |   beg |   end | uri_wowool   | text_wowool    | uri_stanza   | text_stanza      |
+|-----|-------|-------|--------------|----------------|--------------|------------------|
+| -   |  7350 |  7364 | **ORG**      | Morgan Stanley |              | *Morgan Stanley* |
+| x   |  7350 |  7356 |              | *Morgan*       | **PERSON !** | Morgan           |
+| x   |  7357 |  7364 |              | *Stanley*      | **ORG**      | Stanley          |
