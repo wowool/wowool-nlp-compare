@@ -69,7 +69,7 @@ Wowool
 
 ## Detailed Results
 
-[Link to RESULTS.md](docs/results.md.md)
+[Link to RESULTS.md](docs/results.md)
 
 
 ## Installing
