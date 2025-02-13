@@ -270,16 +270,16 @@ There are many more !
 
 Depending on the date it's a cardinal or a date ! not very usefull if you have to figure it yourself.
 
-╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1363 books."
-1363 - CARDINAL
-╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1364 books."
-1364 - DATE
-╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2000 books."
-2000 - CARDINAL
-╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2001 books."
-2001 - DATE
-╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2025 books."
-2025 - DATE
+    ╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1363 books."
+    1363 - CARDINAL
+    ╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1364 books."
+    1364 - DATE
+    ╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2000 books."
+    2000 - CARDINAL
+    ╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2001 books."
+    2001 - DATE
+    ╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 2025 books."
+    2025 - DATE
 
 ### Companies
 
