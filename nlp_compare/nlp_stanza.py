@@ -10,7 +10,11 @@ import re
 
 logger = getLogger("nlp.cmp.stanza")
 
-entity_mapping_table = {}
+entity_mapping_table = {
+    "en": {
+        "FAC" : "LOC"
+    }
+}
 
 
 cleanup_table = {

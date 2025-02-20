@@ -33,8 +33,10 @@ OFFSETS: All(327,330) military(331,339) factions(340,348) in(349,351) Syria(352,
 | C   |   414 |   423 | al-Sharaa              | PERSON| wow:NF                         | sta:NF                         | spa:PERSON                    |
 | C   |   430 |   450 | Hayat Tahrir al-Sham   | ORG   | wow:ORG:Hayat Tahrir al - Sham | sta:ORG:Hayat Tahrir al - Sham | spa:NF:Hayat Tahrir al - Sham |
 | C   |   452 |   455 | HTS                    | ORG   | wow:ORG:Hayat Tahrir al - Sham | sta:ORG:Hayat Tahrir al - Sham | spa:NF:Hayat Tahrir al - Sham |
+| C   |   481 |   492 | the country            | GPE   |                                |                                |                               |
 | C   |   513 |   521 | al-Assad               | PERSON| wow:NF                         | sta:ORG                        | spa:ORG                       |
 | C   |   524 |   529 | Baath                  | ORG   | wow:ORG                        | sta:NF                         | spa:NF                        |
+| C   |   554 |   565 | the country            | GPE   |                                |                                |                               |
 | C   |   598 |   606 | al-Assad               | PERSON | wow:NF                         | sta:PERSON                     | spa:ORG                       |
 
 
@@ -55,7 +57,7 @@ OFFSETS: The(754,757) country(758,765) 's(765,767) exports(768,775) grew(776,780
 
 | T   |   beg |   end | literal      | uri   | wowool   | stanza   | spacy   |
 |-----|-------|-------|--------------|-------|----------|----------|---------|
-| C   |   956 |   959 | The country  | GPE   | wow:NF   | sta:NF  | spa:NF   |
+| C   |   754 |   765 | The country  | GPE   | wow:NF   | sta:NF  | spa:NF   |
 | C   |   956 |   959 | GAC          | GAC   | wow:NF   | sta:ORG  | spa:ORG |
 
 
