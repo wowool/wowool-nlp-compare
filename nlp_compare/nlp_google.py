@@ -5,6 +5,9 @@ from nlp_compare.concept_filter import ConceptFilter
 from nlp_compare.cmp_objects import NLPEngine
 from logging import getLogger
 
+# note: you need to set the environment variable GOOGLE_APPLICATION_CREDENTIALS with the path to your google credentials
+# GOOGLE_APPLICATION_CREDENTIALS
+
 logger = getLogger("nlp.cmp.google")
 entity_mapping_table = {
     "es": {

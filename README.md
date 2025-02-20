@@ -27,7 +27,7 @@ We are going to compare several cases using Wowool, Spacy, Stanza and Google NLP
 | Sub Annotations   | Yes     | No       | No       | No       | Wowool supports subannotations like Triples that have Subject, Object, and Verb                                     |
 | Custom Domains    | Yes     | No       | No       | No       | Does not require training data, Wowool is a rule-based language                                                     |
 | Categorization    | Yes     | Yes      | No       | Yes      |    |
-| Max Memory Fp (100k)  | 54M |  414M | 9000Mb | NA | using Scalene running a 10k english file |
+| Max Memory Fp (10k)  | 54M |  224M | 816Mb | NA | using Scalene running a 10k english file (note: could not run on 100k , stanza was taking to long and finally crashed)|
 
 ## Timings
 
@@ -69,4 +69,28 @@ Wowool
 
 ## Detailed Results
 
-[Link to results.md](docs/results.md)
+[Link to RESULTS.md](docs/results.md)
+
+
+## Installing
+
+### Wowool
+
+To test it yourself you will need to enquire a lic file at philippe@wowool.com once you recieved it you can install it.
+At this stage we only support Linux and MacOs, on windows you can use WLS, These packages are currently on a private repo so we will need to give access to it.
+
+    pip install wowool-sdk wowool-lxware-domain-english-entity wowool-community-license
+
+### Spacy
+
+    pip install spacy
+
+### Stanza
+
+    pip install stanza
+
+
+### Google
+
+To install google nlp you will need to setup the service yourself and add you're key in a environment 'GOOGLE_APPLICATION_CREDENTIALS' variable with the credential file.
+
