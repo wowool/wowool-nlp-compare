@@ -6,7 +6,7 @@ from nlp_compare.mapping_tables import language_map
 def get_nlp_engine(cmp_idx, nlp_engine, language, **kwargs):
 
     if len(language) > 2:
-        short_form = language_map[language]
+        short_form = language_map.get(language, language)
     else:
         short_form = language
 
@@ -26,6 +26,11 @@ def get_nlp_engine(cmp_idx, nlp_engine, language, **kwargs):
 
     elif nlp_engine == "google":
         from nlp_compare.nlp_google import NLPGoogle
+
+        return NLPGoogle(cmp_idx, short_form, **kwargs)
+
+    elif nlp_engine == "google_json":
+        from nlp_compare.nlp_google_json import NLPGoogle
 
         return NLPGoogle(cmp_idx, short_form, **kwargs)
 

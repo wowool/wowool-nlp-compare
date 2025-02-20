@@ -89,3 +89,32 @@ Results:
 * Wowool is 2.4577899632829627 times faster than spacy
 * Wowool is 36.51832842531068 times faster than stanza
 
+
+
+## Using Profiler
+
+### Spacy
+
+en-1k.txt, 0.101 sec, 274.1MiB
+en-5k.txt, 0.286 sec, 286.0MiB
+en-10k.txt, 0.499 sec, 322.9MiB
+en-50k.txt, 2.525 sec, 559.2MiB
+en-100k.txt, 4.655 sec, 764.8MiB
+en-500k.txt, 23.708 sec, 1204.9MiB
+
+## Stanza
+
+en-1k.txt, 0.713 sec, 723.8MiB
+en-5k.txt, 2.387 sec, 851.0MiB
+en-10k.txt, 4.458 sec, 911.6MiB
+en-50k.txt, 24.833 sec, 977.5MiB
+en-100k.txt, 45.788 sec, 1030.9MiB
+en-500k.txt, 232.425 sec, 486.8MiB
+
+## Wowool
+en-1k.txt, 0.059 sec, 133.8MiB
+en-5k.txt, 0.069 sec, 135.6MiB
+en-10k.txt, 0.120 sec, 138.6MiB
+en-50k.txt, 0.592 sec, 156.5MiB
+en-100k.txt, 1.204 sec, 188.3MiB
+en-500k.txt, 6.099 sec, 310.9MiB
