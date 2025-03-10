@@ -1,0 +1,4090 @@
+{
+    "entities": [
+        {
+            "name": "25.45 trillion yuan",
+            "type": "PRICE",
+            "metadata": {
+                "value": "25450000000000.000000",
+                "currency": "CNY"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "25.45 trillion yuan",
+                        "beginOffset": 828
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "$3.55 trillion",
+            "type": "PRICE",
+            "metadata": {
+                "currency": "USD",
+                "value": "3550000000000.000000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "$3.55 trillion",
+                        "beginOffset": 849
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "$600,000",
+            "type": "PRICE",
+            "metadata": {
+                "value": "600000.000000",
+                "currency": "USD"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "$600,000",
+                        "beginOffset": 2457
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "$92 dollars",
+            "type": "PRICE",
+            "metadata": {
+                "value": "92.000000",
+                "currency": "USD"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "$92 dollars",
+                        "beginOffset": 2508
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "2024",
+            "type": "DATE",
+            "metadata": {
+                "year": "2024"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "2024",
+                        "beginOffset": 706
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "January 31",
+            "type": "DATE",
+            "metadata": {
+                "day": "31",
+                "month": "1"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "January 31",
+                        "beginOffset": 3828
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "2006",
+            "type": "DATE",
+            "metadata": {
+                "year": "2006"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "2006",
+                        "beginOffset": 4650
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "2011",
+            "type": "DATE",
+            "metadata": {
+                "year": "2011"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "2011",
+                        "beginOffset": 4721
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "January 1, 2024",
+            "type": "DATE",
+            "metadata": {
+                "month": "1",
+                "year": "2024",
+                "day": "1"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "January 1, 2024",
+                        "beginOffset": 4730
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "January 6, 2025",
+            "type": "DATE",
+            "metadata": {
+                "day": "6",
+                "year": "2025",
+                "month": "1"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "January 6, 2025",
+                        "beginOffset": 4845
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "60",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "60"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "60",
+                        "beginOffset": 590
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "160",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "160"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "160",
+                        "beginOffset": 666
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "2024",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "2024"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "2024",
+                        "beginOffset": 706
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "7.1",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "7.100000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "7.1",
+                        "beginOffset": 793
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "25.45 trillion",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "25450000000000.000000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "25.45 trillion",
+                        "beginOffset": 828
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "3.55 trillion",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "3550000000000.000000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "3.55 trillion",
+                        "beginOffset": 850
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "23.3",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "23.300000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "23.3",
+                        "beginOffset": 1048
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "19.2",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "19.200000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "19.2",
+                        "beginOffset": 1062
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "18.2",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "18.200000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "18.2",
+                        "beginOffset": 1079
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "13.4",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "13.400000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "13.4",
+                        "beginOffset": 1213
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "9.6",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "9.600000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "9.6",
+                        "beginOffset": 1230
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "4.3",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "4.300000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "4.3",
+                        "beginOffset": 1358
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "6.1",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "6.100000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "6.1",
+                        "beginOffset": 1374
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "0.25",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "0.250000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "0.25",
+                        "beginOffset": 2420
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "600,000",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "600.000000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "600,000",
+                        "beginOffset": 2458
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "600,000",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "600000"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "600,000",
+                        "beginOffset": 2458
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "25",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "25"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "25",
+                        "beginOffset": 2475
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "92",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "92"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "92",
+                        "beginOffset": 2509
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "20",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "20"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "20",
+                        "beginOffset": 3504
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "31",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "31"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "31",
+                        "beginOffset": 3836
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "2006",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "2006"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "2006",
+                        "beginOffset": 4650
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "2011",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "2011"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "2011",
+                        "beginOffset": 4721
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "1",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "1"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "1",
+                        "beginOffset": 4738
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "2024",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "2024"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "2024",
+                        "beginOffset": 4741
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "6",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "6"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "6",
+                        "beginOffset": 4853
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "2025",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "2025"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "2025",
+                        "beginOffset": 4856
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "two",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "2"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "two",
+                        "beginOffset": 1946
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "One",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "1"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "One",
+                        "beginOffset": 1976
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "one",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "1"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "one",
+                        "beginOffset": 2416
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "four",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "4"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "four",
+                        "beginOffset": 2704
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "Four",
+            "type": "NUMBER",
+            "metadata": {
+                "value": "4"
+            },
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Four",
+                        "beginOffset": 3641
+                    },
+                    "type": "TYPE_UNKNOWN",
+                    "probability": 1
+                }
+            ]
+        },
+        {
+            "name": "-in",
+            "type": "EVENT",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "-in",
+                        "beginOffset": 5237
+                    },
+                    "type": "COMMON",
+                    "probability": 0.542
+                }
+            ]
+        },
+        {
+            "name": "A22",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "A22",
+                        "beginOffset": 1760
+                    },
+                    "type": "PROPER",
+                    "probability": 0.917
+                },
+                {
+                    "text": {
+                        "content": "A22",
+                        "beginOffset": 1893
+                    },
+                    "type": "PROPER",
+                    "probability": 0.906
+                },
+                {
+                    "text": {
+                        "content": "A22",
+                        "beginOffset": 2149
+                    },
+                    "type": "PROPER",
+                    "probability": 0.835
+                }
+            ]
+        },
+        {
+            "name": "ASEAN",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "ASEAN",
+                        "beginOffset": 1131
+                    },
+                    "type": "PROPER",
+                    "probability": 0.507
+                }
+            ]
+        },
+        {
+            "name": "Al-Sharaa",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Al-Sharaa",
+                        "beginOffset": 161
+                    },
+                    "type": "PROPER",
+                    "probability": 0.917
+                }
+            ]
+        },
+        {
+            "name": "Army",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Army",
+                        "beginOffset": 3365
+                    },
+                    "type": "PROPER",
+                    "probability": 0.804
+                }
+            ]
+        },
+        {
+            "name": "Australia",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Australia",
+                        "beginOffset": 3091
+                    },
+                    "type": "PROPER",
+                    "probability": 0.82
+                }
+            ]
+        },
+        {
+            "name": "Australians",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Australians",
+                        "beginOffset": 2886
+                    },
+                    "type": "PROPER",
+                    "probability": 0.921
+                }
+            ]
+        },
+        {
+            "name": "BEIJING",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "BEIJING",
+                        "beginOffset": 631
+                    },
+                    "type": "PROPER",
+                    "probability": 0.882
+                }
+            ]
+        },
+        {
+            "name": "BRICS",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "BRICS",
+                        "beginOffset": 4130
+                    },
+                    "type": "PROPER",
+                    "probability": 0.511
+                }
+            ]
+        },
+        {
+            "name": "BRICS",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "BRICS",
+                        "beginOffset": 3848
+                    },
+                    "type": "PROPER",
+                    "probability": 0.804
+                },
+                {
+                    "text": {
+                        "content": "BRICS",
+                        "beginOffset": 4215
+                    },
+                    "type": "PROPER",
+                    "probability": 0.722
+                },
+                {
+                    "text": {
+                        "content": "BRICS",
+                        "beginOffset": 4288
+                    },
+                    "type": "PROPER",
+                    "probability": 0.765
+                },
+                {
+                    "text": {
+                        "content": "BRICS",
+                        "beginOffset": 4575
+                    },
+                    "type": "PROPER",
+                    "probability": 0.503
+                },
+                {
+                    "text": {
+                        "content": "BRICS",
+                        "beginOffset": 4629
+                    },
+                    "type": "PROPER",
+                    "probability": 0.636
+                }
+            ]
+        },
+        {
+            "name": "Baath",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Baath",
+                        "beginOffset": 532
+                    },
+                    "type": "PROPER",
+                    "probability": 0.933
+                }
+            ]
+        },
+        {
+            "name": "Belt and Road Initiative",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Belt and Road Initiative",
+                        "beginOffset": 1180
+                    },
+                    "type": "PROPER",
+                    "probability": 0.66
+                }
+            ]
+        },
+        {
+            "name": "Brazil",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Brazil",
+                        "beginOffset": 985
+                    },
+                    "type": "PROPER",
+                    "probability": 0.875
+                },
+                {
+                    "text": {
+                        "content": "Brazil",
+                        "beginOffset": 4658
+                    },
+                    "type": "PROPER",
+                    "probability": 0.539
+                }
+            ]
+        },
+        {
+            "name": "Canstar",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Canstar",
+                        "beginOffset": 2394
+                    },
+                    "type": "PROPER",
+                    "probability": 0.839
+                }
+            ]
+        },
+        {
+            "name": "Centre",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Centre",
+                        "beginOffset": 5000
+                    },
+                    "type": "PROPER",
+                    "probability": 0.765
+                }
+            ]
+        },
+        {
+            "name": "Champions League",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Champions League",
+                        "beginOffset": 2063
+                    },
+                    "type": "PROPER",
+                    "probability": 0.835
+                }
+            ]
+        },
+        {
+            "name": "China",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "China",
+                        "beginOffset": 642
+                    },
+                    "type": "PROPER",
+                    "probability": 0.871
+                },
+                {
+                    "text": {
+                        "content": "China",
+                        "beginOffset": 1487
+                    },
+                    "type": "PROPER",
+                    "probability": 0.867
+                },
+                {
+                    "text": {
+                        "content": "China",
+                        "beginOffset": 4685
+                    },
+                    "type": "PROPER",
+                    "probability": 0.628
+                }
+            ]
+        },
+        {
+            "name": "Denton Pugh",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Denton Pugh",
+                        "beginOffset": 2861
+                    },
+                    "type": "PROPER",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "Dmitry Peskov",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Dmitry Peskov",
+                        "beginOffset": 3925
+                    },
+                    "type": "PROPER",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "Donald Trump",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Donald Trump",
+                        "beginOffset": 4066
+                    },
+                    "type": "PROPER",
+                    "probability": 0.894
+                },
+                {
+                    "text": {
+                        "content": "Donald Trump",
+                        "beginOffset": 5214
+                    },
+                    "type": "PROPER",
+                    "probability": 0.921
+                }
+            ]
+        },
+        {
+            "name": "Egypt",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Egypt",
+                        "beginOffset": 4747
+                    },
+                    "type": "PROPER",
+                    "probability": 0.55
+                }
+            ]
+        },
+        {
+            "name": "Ethiopia",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Ethiopia",
+                        "beginOffset": 4754
+                    },
+                    "type": "PROPER",
+                    "probability": 0.722
+                }
+            ]
+        },
+        {
+            "name": "European Super League",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "European Super League",
+                        "beginOffset": 1793
+                    },
+                    "type": "PROPER",
+                    "probability": 0.847
+                }
+            ]
+        },
+        {
+            "name": "European Union",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "European Union",
+                        "beginOffset": 1312
+                    },
+                    "type": "PROPER",
+                    "probability": 0.839
+                }
+            ]
+        },
+        {
+            "name": "Exports",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Exports",
+                        "beginOffset": 974
+                    },
+                    "type": "COMMON",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "Exports",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Exports",
+                        "beginOffset": 1120
+                    },
+                    "type": "COMMON",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "GAC",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "GAC",
+                        "beginOffset": 968
+                    },
+                    "type": "PROPER",
+                    "probability": 0.89
+                },
+                {
+                    "text": {
+                        "content": "GAC",
+                        "beginOffset": 1417
+                    },
+                    "type": "PROPER",
+                    "probability": 0.91
+                }
+            ]
+        },
+        {
+            "name": "General Administration of Customs",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "General Administration of Customs",
+                        "beginOffset": 729
+                    },
+                    "type": "PROPER",
+                    "probability": 0.914
+                }
+            ]
+        },
+        {
+            "name": "HTS",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "HTS",
+                        "beginOffset": 456
+                    },
+                    "type": "PROPER",
+                    "probability": 0.914
+                }
+            ]
+        },
+        {
+            "name": "Hassan Abdel Ghani",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Hassan Abdel Ghani",
+                        "beginOffset": 74
+                    },
+                    "type": "PROPER",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "Hayat Tahrir al-Sham",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Hayat Tahrir al-Sham",
+                        "beginOffset": 434
+                    },
+                    "type": "PROPER",
+                    "probability": 0.925
+                }
+            ]
+        },
+        {
+            "name": "India",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "India",
+                        "beginOffset": 4674
+                    },
+                    "type": "PROPER",
+                    "probability": 0.566
+                }
+            ]
+        },
+        {
+            "name": "Indonesia",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Indonesia",
+                        "beginOffset": 4861
+                    },
+                    "type": "PROPER",
+                    "probability": 0.605
+                }
+            ]
+        },
+        {
+            "name": "Iran",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Iran",
+                        "beginOffset": 4764
+                    },
+                    "type": "PROPER",
+                    "probability": 0.718
+                }
+            ]
+        },
+        {
+            "name": "Javier Tebas",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Javier Tebas",
+                        "beginOffset": 1675
+                    },
+                    "type": "PROPER",
+                    "probability": 0.914
+                }
+            ]
+        },
+        {
+            "name": "Kiren Rijiju",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Kiren Rijiju",
+                        "beginOffset": 5289
+                    },
+                    "type": "PROPER",
+                    "probability": 0.921
+                }
+            ]
+        },
+        {
+            "name": "Kremlin",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Kremlin",
+                        "beginOffset": 3907
+                    },
+                    "type": "PROPER",
+                    "probability": 0.8
+                }
+            ]
+        },
+        {
+            "name": "La Liga",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "La Liga",
+                        "beginOffset": 1666
+                    },
+                    "type": "PROPER",
+                    "probability": 0.929
+                }
+            ]
+        },
+        {
+            "name": "Lok Sabha",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Lok Sabha",
+                        "beginOffset": 4910
+                    },
+                    "type": "PROPER",
+                    "probability": 0.914
+                }
+            ]
+        },
+        {
+            "name": "Lyu Daliang",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Lyu Daliang",
+                        "beginOffset": 1402
+                    },
+                    "type": "PROPER",
+                    "probability": 0.898
+                }
+            ]
+        },
+        {
+            "name": "MOSCOW",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "MOSCOW",
+                        "beginOffset": 3820
+                    },
+                    "type": "PROPER",
+                    "probability": 0.835
+                }
+            ]
+        },
+        {
+            "name": "Modi",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Modi",
+                        "beginOffset": 5339
+                    },
+                    "type": "PROPER",
+                    "probability": 0.941
+                }
+            ]
+        },
+        {
+            "name": "Mr.",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Mr.",
+                        "beginOffset": 4591
+                    },
+                    "type": "COMMON",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "NAB",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "NAB",
+                        "beginOffset": 2593
+                    },
+                    "type": "PROPER",
+                    "probability": 0.906
+                },
+                {
+                    "text": {
+                        "content": "NAB",
+                        "beginOffset": 2834
+                    },
+                    "type": "PROPER",
+                    "probability": 0.886
+                }
+            ]
+        },
+        {
+            "name": "NEW DELHI",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "NEW DELHI",
+                        "beginOffset": 2331
+                    },
+                    "type": "PROPER",
+                    "probability": 0.691
+                },
+                {
+                    "text": {
+                        "content": "NEW DELHI",
+                        "beginOffset": 4895
+                    },
+                    "type": "PROPER",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "Narendra Modi",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Narendra Modi",
+                        "beginOffset": 5196
+                    },
+                    "type": "PROPER",
+                    "probability": 0.925
+                }
+            ]
+        },
+        {
+            "name": "PM",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "PM",
+                        "beginOffset": 5336
+                    },
+                    "type": "COMMON",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "Peskov",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Peskov",
+                        "beginOffset": 4197
+                    },
+                    "type": "PROPER",
+                    "probability": 0.917
+                },
+                {
+                    "text": {
+                        "content": "Peskov",
+                        "beginOffset": 4459
+                    },
+                    "type": "PROPER",
+                    "probability": 0.914
+                }
+            ]
+        },
+        {
+            "name": "Potomac River",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Potomac River",
+                        "beginOffset": 3261
+                    },
+                    "type": "PROPER",
+                    "probability": 0.859
+                }
+            ]
+        },
+        {
+            "name": "President",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "President",
+                        "beginOffset": 4056
+                    },
+                    "type": "COMMON",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "President",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "President",
+                        "beginOffset": 4485
+                    },
+                    "type": "COMMON",
+                    "probability": 0.89
+                }
+            ]
+        },
+        {
+            "name": "Prime Minister",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Prime Minister",
+                        "beginOffset": 5181
+                    },
+                    "type": "COMMON",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "RBA",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "RBA",
+                        "beginOffset": 2795
+                    },
+                    "type": "PROPER",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "Rahul",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Rahul",
+                        "beginOffset": 5312
+                    },
+                    "type": "PROPER",
+                    "probability": 0.925
+                }
+            ]
+        },
+        {
+            "name": "Rahul Gandhi",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Rahul Gandhi",
+                        "beginOffset": 4976
+                    },
+                    "type": "PROPER",
+                    "probability": 0.933
+                }
+            ]
+        },
+        {
+            "name": "Rashtrapati Bhavan",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Rashtrapati Bhavan",
+                        "beginOffset": 2346
+                    },
+                    "type": "PROPER",
+                    "probability": 0.777
+                }
+            ]
+        },
+        {
+            "name": "Reagan National Airport",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Reagan National Airport",
+                        "beginOffset": 3595
+                    },
+                    "type": "PROPER",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "Recovery divers",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Recovery divers",
+                        "beginOffset": 3186
+                    },
+                    "type": "COMMON",
+                    "probability": 0.781
+                }
+            ]
+        },
+        {
+            "name": "Russia",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Russia",
+                        "beginOffset": 4666
+                    },
+                    "type": "PROPER",
+                    "probability": 0.46
+                }
+            ]
+        },
+        {
+            "name": "Russian",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Russian",
+                        "beginOffset": 4477
+                    },
+                    "type": "PROPER",
+                    "probability": 0.89
+                }
+            ]
+        },
+        {
+            "name": "S Jaishankar",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "S Jaishankar",
+                        "beginOffset": 5133
+                    },
+                    "type": "PROPER",
+                    "probability": 0.925
+                }
+            ]
+        },
+        {
+            "name": "SANA",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "SANA",
+                        "beginOffset": 29
+                    },
+                    "type": "PROPER",
+                    "probability": 0.925
+                }
+            ]
+        },
+        {
+            "name": "Saudi Arabia",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Saudi Arabia",
+                        "beginOffset": 1022
+                    },
+                    "type": "PROPER",
+                    "probability": 0.89
+                },
+                {
+                    "text": {
+                        "content": "Saudi Arabia",
+                        "beginOffset": 4770
+                    },
+                    "type": "PROPER",
+                    "probability": 0.753
+                }
+            ]
+        },
+        {
+            "name": "South Africa",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "South Africa",
+                        "beginOffset": 4697
+                    },
+                    "type": "PROPER",
+                    "probability": 0.632
+                }
+            ]
+        },
+        {
+            "name": "Spokesman",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Spokesman",
+                        "beginOffset": 3915
+                    },
+                    "type": "COMMON",
+                    "probability": 0.914
+                }
+            ]
+        },
+        {
+            "name": "Syria",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Syria",
+                        "beginOffset": 352
+                    },
+                    "type": "PROPER",
+                    "probability": 0.921
+                },
+                {
+                    "text": {
+                        "content": "Syria",
+                        "beginOffset": 369
+                    },
+                    "type": "PROPER",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "Syrian",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Syrian",
+                        "beginOffset": 4
+                    },
+                    "type": "PROPER",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "TASS",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "TASS",
+                        "beginOffset": 3841
+                    },
+                    "type": "PROPER",
+                    "probability": 0.859
+                }
+            ]
+        },
+        {
+            "name": "Tebas",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Tebas",
+                        "beginOffset": 2238
+                    },
+                    "type": "PROPER",
+                    "probability": 0.707
+                }
+            ]
+        },
+        {
+            "name": "Trump",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Trump",
+                        "beginOffset": 4595
+                    },
+                    "type": "PROPER",
+                    "probability": 0.921
+                },
+                {
+                    "text": {
+                        "content": "Trump",
+                        "beginOffset": 5349
+                    },
+                    "type": "PROPER",
+                    "probability": 0.921
+                }
+            ]
+        },
+        {
+            "name": "U.S.",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "U.S.",
+                        "beginOffset": 3486
+                    },
+                    "type": "PROPER",
+                    "probability": 0.925
+                }
+            ]
+        },
+        {
+            "name": "US",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "US",
+                        "beginOffset": 4053
+                    },
+                    "type": "PROPER",
+                    "probability": 0.886
+                },
+                {
+                    "text": {
+                        "content": "US",
+                        "beginOffset": 5153
+                    },
+                    "type": "PROPER",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "Uefa",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Uefa",
+                        "beginOffset": 1842
+                    },
+                    "type": "PROPER",
+                    "probability": 0.91
+                }
+            ]
+        },
+        {
+            "name": "Unify League",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Unify League",
+                        "beginOffset": 1918
+                    },
+                    "type": "PROPER",
+                    "probability": 0.82
+                }
+            ]
+        },
+        {
+            "name": "Union",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Union",
+                        "beginOffset": 5252
+                    },
+                    "type": "PROPER",
+                    "probability": 0.492
+                }
+            ]
+        },
+        {
+            "name": "United Arab Emirates",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "United Arab Emirates",
+                        "beginOffset": 997
+                    },
+                    "type": "PROPER",
+                    "probability": 0.882
+                },
+                {
+                    "text": {
+                        "content": "United Arab Emirates",
+                        "beginOffset": 4792
+                    },
+                    "type": "PROPER",
+                    "probability": 0.726
+                }
+            ]
+        },
+        {
+            "name": "United States",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "United States",
+                        "beginOffset": 1335
+                    },
+                    "type": "PROPER",
+                    "probability": 0.882
+                }
+            ]
+        },
+        {
+            "name": "Vladimir Putin",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Vladimir Putin",
+                        "beginOffset": 4495
+                    },
+                    "type": "PROPER",
+                    "probability": 0.882
+                }
+            ]
+        },
+        {
+            "name": "Washington",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Washington",
+                        "beginOffset": 3382
+                    },
+                    "type": "PROPER",
+                    "probability": 0.804
+                }
+            ]
+        },
+        {
+            "name": "Westpac",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "Westpac",
+                        "beginOffset": 2620
+                    },
+                    "type": "PROPER",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "aftermath",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "aftermath",
+                        "beginOffset": 3463
+                    },
+                    "type": "COMMON",
+                    "probability": 0.726
+                }
+            ]
+        },
+        {
+            "name": "agenda",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "agenda",
+                        "beginOffset": 4581
+                    },
+                    "type": "COMMON",
+                    "probability": 0.882
+                }
+            ]
+        },
+        {
+            "name": "air crash",
+            "type": "EVENT",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "air crash",
+                        "beginOffset": 3491
+                    },
+                    "type": "COMMON",
+                    "probability": 0.46
+                }
+            ]
+        },
+        {
+            "name": "air traffic control",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "air traffic control",
+                        "beginOffset": 3787
+                    },
+                    "type": "COMMON",
+                    "probability": 0.621
+                }
+            ]
+        },
+        {
+            "name": "aircraft",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "aircraft",
+                        "beginOffset": 3233
+                    },
+                    "type": "COMMON",
+                    "probability": 0.859
+                }
+            ]
+        },
+        {
+            "name": "al-Assad",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "al-Assad",
+                        "beginOffset": 519
+                    },
+                    "type": "PROPER",
+                    "probability": 0.933
+                },
+                {
+                    "text": {
+                        "content": "al-Assad",
+                        "beginOffset": 608
+                    },
+                    "type": "PROPER",
+                    "probability": 0.933
+                }
+            ]
+        },
+        {
+            "name": "al-Sharaa",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "al-Sharaa",
+                        "beginOffset": 99
+                    },
+                    "type": "PROPER",
+                    "probability": 0.917
+                },
+                {
+                    "text": {
+                        "content": "al-Sharaa",
+                        "beginOffset": 416
+                    },
+                    "type": "PROPER",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "alliance",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "alliance",
+                        "beginOffset": 4161
+                    },
+                    "type": "COMMON",
+                    "probability": 0.863
+                }
+            ]
+        },
+        {
+            "name": "army",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "army",
+                        "beginOffset": 379
+                    },
+                    "type": "COMMON",
+                    "probability": 0.921
+                }
+            ]
+        },
+        {
+            "name": "assistance",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "assistance",
+                        "beginOffset": 3066
+                    },
+                    "type": "COMMON",
+                    "probability": 0.863
+                }
+            ]
+        },
+        {
+            "name": "association",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "association",
+                        "beginOffset": 3961
+                    },
+                    "type": "COMMON",
+                    "probability": 0.882
+                }
+            ]
+        },
+        {
+            "name": "bank",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "bank",
+                        "beginOffset": 3049
+                    },
+                    "type": "COMMON",
+                    "probability": 0.789
+                }
+            ]
+        },
+        {
+            "name": "banks",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "banks",
+                        "beginOffset": 2560
+                    },
+                    "type": "COMMON",
+                    "probability": 0.835
+                }
+            ]
+        },
+        {
+            "name": "breakaway",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "breakaway",
+                        "beginOffset": 2178
+                    },
+                    "type": "COMMON",
+                    "probability": 0.527
+                }
+            ]
+        },
+        {
+            "name": "briefing",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "briefing",
+                        "beginOffset": 4448
+                    },
+                    "type": "COMMON",
+                    "probability": 0.761
+                }
+            ]
+        },
+        {
+            "name": "budget",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "budget",
+                        "beginOffset": 2534
+                    },
+                    "type": "COMMON",
+                    "probability": 0.839
+                }
+            ]
+        },
+        {
+            "name": "calculations",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "calculations",
+                        "beginOffset": 2402
+                    },
+                    "type": "COMMON",
+                    "probability": 0.875
+                }
+            ]
+        },
+        {
+            "name": "ceremony",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "ceremony",
+                        "beginOffset": 5241
+                    },
+                    "type": "COMMON",
+                    "probability": 0.492
+                }
+            ]
+        },
+        {
+            "name": "challenges",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "challenges",
+                        "beginOffset": 1475
+                    },
+                    "type": "COMMON",
+                    "probability": 0.898
+                }
+            ]
+        },
+        {
+            "name": "chaos",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "chaos",
+                        "beginOffset": 4943
+                    },
+                    "type": "COMMON",
+                    "probability": 0.863
+                }
+            ]
+        },
+        {
+            "name": "clubs",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "clubs",
+                        "beginOffset": 2020
+                    },
+                    "type": "COMMON",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "clubs",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "clubs",
+                        "beginOffset": 2227
+                    },
+                    "type": "COMMON",
+                    "probability": 0.875
+                }
+            ]
+        },
+        {
+            "name": "collision",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "collision",
+                        "beginOffset": 3322
+                    },
+                    "type": "COMMON",
+                    "probability": 0.519
+                }
+            ]
+        },
+        {
+            "name": "commander",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "commander",
+                        "beginOffset": 64
+                    },
+                    "type": "COMMON",
+                    "probability": 0.929
+                }
+            ]
+        },
+        {
+            "name": "common currency",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "common currency",
+                        "beginOffset": 3890
+                    },
+                    "type": "COMMON",
+                    "probability": 0.523
+                }
+            ]
+        },
+        {
+            "name": "concepts",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "concepts",
+                        "beginOffset": 1966
+                    },
+                    "type": "COMMON",
+                    "probability": 0.871
+                }
+            ]
+        },
+        {
+            "name": "conditions",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "conditions",
+                        "beginOffset": 3157
+                    },
+                    "type": "COMMON",
+                    "probability": 0.843
+                }
+            ]
+        },
+        {
+            "name": "constitution",
+            "type": "WORK_OF_ART",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "constitution",
+                        "beginOffset": 301
+                    },
+                    "type": "COMMON",
+                    "probability": 0.589
+                }
+            ]
+        },
+        {
+            "name": "constitution",
+            "type": "WORK_OF_ART",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "constitution",
+                        "beginOffset": 501
+                    },
+                    "type": "COMMON",
+                    "probability": 0.601
+                }
+            ]
+        },
+        {
+            "name": "countries",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "countries",
+                        "beginOffset": 670
+                    },
+                    "type": "COMMON",
+                    "probability": 0.859
+                }
+            ]
+        },
+        {
+            "name": "countries",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "countries",
+                        "beginOffset": 1137
+                    },
+                    "type": "COMMON",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "countries",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "countries",
+                        "beginOffset": 4396
+                    },
+                    "type": "COMMON",
+                    "probability": 0.519
+                }
+            ]
+        },
+        {
+            "name": "country",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "country",
+                        "beginOffset": 489
+                    },
+                    "type": "COMMON",
+                    "probability": 0.875
+                }
+            ]
+        },
+        {
+            "name": "country",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "country",
+                        "beginOffset": 568
+                    },
+                    "type": "COMMON",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "country",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "country",
+                        "beginOffset": 770
+                    },
+                    "type": "COMMON",
+                    "probability": 0.851
+                }
+            ]
+        },
+        {
+            "name": "creation",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "creation",
+                        "beginOffset": 3876
+                    },
+                    "type": "COMMON",
+                    "probability": 0.558
+                }
+            ]
+        },
+        {
+            "name": "creation",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "creation",
+                        "beginOffset": 4255
+                    },
+                    "type": "COMMON",
+                    "probability": 0.648
+                }
+            ]
+        },
+        {
+            "name": "creation",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "creation",
+                        "beginOffset": 4316
+                    },
+                    "type": "COMMON",
+                    "probability": 0.585
+                }
+            ]
+        },
+        {
+            "name": "currency",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "currency",
+                        "beginOffset": 4276
+                    },
+                    "type": "COMMON",
+                    "probability": 0.46
+                }
+            ]
+        },
+        {
+            "name": "customers",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "customers",
+                        "beginOffset": 3015
+                    },
+                    "type": "COMMON",
+                    "probability": 0.847
+                }
+            ]
+        },
+        {
+            "name": "customs duties",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "customs duties",
+                        "beginOffset": 4101
+                    },
+                    "type": "COMMON",
+                    "probability": 0.855
+                }
+            ]
+        },
+        {
+            "name": "cut",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "cut",
+                        "beginOffset": 2427
+                    },
+                    "type": "COMMON",
+                    "probability": 0.71
+                }
+            ]
+        },
+        {
+            "name": "cut",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "cut",
+                        "beginOffset": 2932
+                    },
+                    "type": "COMMON",
+                    "probability": 0.781
+                }
+            ]
+        },
+        {
+            "name": "data",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "data",
+                        "beginOffset": 947
+                    },
+                    "type": "COMMON",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "debt",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "debt",
+                        "beginOffset": 2466
+                    },
+                    "type": "COMMON",
+                    "probability": 0.871
+                }
+            ]
+        },
+        {
+            "name": "detail",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "detail",
+                        "beginOffset": 4609
+                    },
+                    "type": "COMMON",
+                    "probability": 0.875
+                }
+            ]
+        },
+        {
+            "name": "dollar",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "dollar",
+                        "beginOffset": 4189
+                    },
+                    "type": "COMMON",
+                    "probability": 0.781
+                }
+            ]
+        },
+        {
+            "name": "elections",
+            "type": "EVENT",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "elections",
+                        "beginOffset": 140
+                    },
+                    "type": "COMMON",
+                    "probability": 0.455
+                }
+            ]
+        },
+        {
+            "name": "evidence",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "evidence",
+                        "beginOffset": 2140
+                    },
+                    "type": "COMMON",
+                    "probability": 0.878
+                }
+            ]
+        },
+        {
+            "name": "expectations",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "expectations",
+                        "beginOffset": 2733
+                    },
+                    "type": "COMMON",
+                    "probability": 0.863
+                }
+            ]
+        },
+        {
+            "name": "experts",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "experts",
+                        "beginOffset": 4546
+                    },
+                    "type": "COMMON",
+                    "probability": 0.89
+                }
+            ]
+        },
+        {
+            "name": "exports",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "exports",
+                        "beginOffset": 650
+                    },
+                    "type": "COMMON",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "exports",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "exports",
+                        "beginOffset": 780
+                    },
+                    "type": "COMMON",
+                    "probability": 0.898
+                }
+            ]
+        },
+        {
+            "name": "exports",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "exports",
+                        "beginOffset": 1268
+                    },
+                    "type": "COMMON",
+                    "probability": 0.898
+                }
+            ]
+        },
+        {
+            "name": "exports",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "exports",
+                        "beginOffset": 1495
+                    },
+                    "type": "COMMON",
+                    "probability": 0.89
+                }
+            ]
+        },
+        {
+            "name": "fire officials",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "fire officials",
+                        "beginOffset": 3393
+                    },
+                    "type": "COMMON",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "football",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "football",
+                        "beginOffset": 1705
+                    },
+                    "type": "COMMON",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "foreign minister",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "foreign minister",
+                        "beginOffset": 5116
+                    },
+                    "type": "COMMON",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "formation",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "formation",
+                        "beginOffset": 3991
+                    },
+                    "type": "COMMON",
+                    "probability": 0.558
+                }
+            ]
+        },
+        {
+            "name": "four",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "four",
+                        "beginOffset": 2704
+                    },
+                    "type": "COMMON",
+                    "probability": 0.578
+                }
+            ]
+        },
+        {
+            "name": "full",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "full",
+                        "beginOffset": 2582
+                    },
+                    "type": "COMMON",
+                    "probability": 0.679
+                }
+            ]
+        },
+        {
+            "name": "goods",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "goods",
+                        "beginOffset": 4119
+                    },
+                    "type": "COMMON",
+                    "probability": 0.726
+                }
+            ]
+        },
+        {
+            "name": "government",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "government",
+                        "beginOffset": 5078
+                    },
+                    "type": "COMMON",
+                    "probability": 0.882
+                }
+            ]
+        },
+        {
+            "name": "group",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "group",
+                        "beginOffset": 4887
+                    },
+                    "type": "COMMON",
+                    "probability": 0.914
+                }
+            ]
+        },
+        {
+            "name": "growth",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "growth",
+                        "beginOffset": 696
+                    },
+                    "type": "COMMON",
+                    "probability": 0.734
+                }
+            ]
+        },
+        {
+            "name": "growth",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "growth",
+                        "beginOffset": 915
+                    },
+                    "type": "COMMON",
+                    "probability": 0.835
+                }
+            ]
+        },
+        {
+            "name": "helicopter",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "helicopter",
+                        "beginOffset": 3370
+                    },
+                    "type": "COMMON",
+                    "probability": 0.808
+                }
+            ]
+        },
+        {
+            "name": "helicopter",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "helicopter",
+                        "beginOffset": 3529
+                    },
+                    "type": "COMMON",
+                    "probability": 0.875
+                }
+            ]
+        },
+        {
+            "name": "helicopter",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "helicopter",
+                        "beginOffset": 3735
+                    },
+                    "type": "COMMON",
+                    "probability": 0.875
+                }
+            ]
+        },
+        {
+            "name": "home lending executive",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "home lending executive",
+                        "beginOffset": 2838
+                    },
+                    "type": "COMMON",
+                    "probability": 0.921
+                }
+            ]
+        },
+        {
+            "name": "idea",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "idea",
+                        "beginOffset": 2312
+                    },
+                    "type": "COMMON",
+                    "probability": 0.855
+                }
+            ]
+        },
+        {
+            "name": "inaugural ceremony",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "inaugural ceremony",
+                        "beginOffset": 5357
+                    },
+                    "type": "COMMON",
+                    "probability": 0.597
+                }
+            ]
+        },
+        {
+            "name": "inflation data",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "inflation data",
+                        "beginOffset": 2752
+                    },
+                    "type": "COMMON",
+                    "probability": 0.878
+                }
+            ]
+        },
+        {
+            "name": "investigators",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "investigators",
+                        "beginOffset": 3288
+                    },
+                    "type": "COMMON",
+                    "probability": 0.89
+                }
+            ]
+        },
+        {
+            "name": "investigators",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "investigators",
+                        "beginOffset": 3442
+                    },
+                    "type": "COMMON",
+                    "probability": 0.871
+                }
+            ]
+        },
+        {
+            "name": "investment platforms",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "investment platforms",
+                        "beginOffset": 4011
+                    },
+                    "type": "COMMON",
+                    "probability": 0.421
+                }
+            ]
+        },
+        {
+            "name": "investment platforms",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "investment platforms",
+                        "beginOffset": 4338
+                    },
+                    "type": "COMMON",
+                    "probability": 0.414
+                }
+            ]
+        },
+        {
+            "name": "investments",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "investments",
+                        "beginOffset": 4375
+                    },
+                    "type": "COMMON",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "investments",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "investments",
+                        "beginOffset": 4414
+                    },
+                    "type": "COMMON",
+                    "probability": 0.839
+                }
+            ]
+        },
+        {
+            "name": "invitation",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "invitation",
+                        "beginOffset": 5166
+                    },
+                    "type": "COMMON",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "labour market",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "labour market",
+                        "beginOffset": 3105
+                    },
+                    "type": "COMMON",
+                    "probability": 0.843
+                }
+            ]
+        },
+        {
+            "name": "lack",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "lack",
+                        "beginOffset": 2264
+                    },
+                    "type": "COMMON",
+                    "probability": 0.875
+                }
+            ]
+        },
+        {
+            "name": "leader",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "leader",
+                        "beginOffset": 4955
+                    },
+                    "type": "COMMON",
+                    "probability": 0.914
+                }
+            ]
+        },
+        {
+            "name": "leader",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "leader",
+                        "beginOffset": 5394
+                    },
+                    "type": "COMMON",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "legislative council",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "legislative council",
+                        "beginOffset": 211
+                    },
+                    "type": "COMMON",
+                    "probability": 0.55
+                }
+            ]
+        },
+        {
+            "name": "loan",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "loan",
+                        "beginOffset": 2503
+                    },
+                    "type": "COMMON",
+                    "probability": 0.812
+                }
+            ]
+        },
+        {
+            "name": "markets",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "markets",
+                        "beginOffset": 1291
+                    },
+                    "type": "COMMON",
+                    "probability": 0.455
+                }
+            ]
+        },
+        {
+            "name": "matter",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "matter",
+                        "beginOffset": 3668
+                    },
+                    "type": "COMMON",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "member states",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "member states",
+                        "beginOffset": 4136
+                    },
+                    "type": "COMMON",
+                    "probability": 0.781
+                }
+            ]
+        },
+        {
+            "name": "members",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "members",
+                        "beginOffset": 4833
+                    },
+                    "type": "COMMON",
+                    "probability": 0.539
+                }
+            ]
+        },
+        {
+            "name": "military factions",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "military factions",
+                        "beginOffset": 331
+                    },
+                    "type": "COMMON",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "move",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "move",
+                        "beginOffset": 2597
+                    },
+                    "type": "COMMON",
+                    "probability": 0.66
+                }
+            ]
+        },
+        {
+            "name": "nations",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "nations",
+                        "beginOffset": 1151
+                    },
+                    "type": "COMMON",
+                    "probability": 0.828
+                }
+            ]
+        },
+        {
+            "name": "number",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "number",
+                        "beginOffset": 2217
+                    },
+                    "type": "COMMON",
+                    "probability": 0.824
+                }
+            ]
+        },
+        {
+            "name": "official",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "official",
+                        "beginOffset": 1421
+                    },
+                    "type": "COMMON",
+                    "probability": 0.917
+                }
+            ]
+        },
+        {
+            "name": "opposition",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "opposition",
+                        "beginOffset": 4965
+                    },
+                    "type": "COMMON",
+                    "probability": 0.496
+                }
+            ]
+        },
+        {
+            "name": "opposition",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "opposition",
+                        "beginOffset": 5404
+                    },
+                    "type": "COMMON",
+                    "probability": 0.515
+                }
+            ]
+        },
+        {
+            "name": "option",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "option",
+                        "beginOffset": 1980
+                    },
+                    "type": "COMMON",
+                    "probability": 0.898
+                }
+            ]
+        },
+        {
+            "name": "overthrow",
+            "type": "EVENT",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "overthrow",
+                        "beginOffset": 621
+                    },
+                    "type": "COMMON",
+                    "probability": 0.777
+                }
+            ]
+        },
+        {
+            "name": "parliamentary affairs minister",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "parliamentary affairs minister",
+                        "beginOffset": 5258
+                    },
+                    "type": "COMMON",
+                    "probability": 0.431
+                }
+            ]
+        },
+        {
+            "name": "parts",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "parts",
+                        "beginOffset": 3246
+                    },
+                    "type": "COMMON",
+                    "probability": 0.832
+                }
+            ]
+        },
+        {
+            "name": "party",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "party",
+                        "beginOffset": 538
+                    },
+                    "type": "COMMON",
+                    "probability": 0.82
+                }
+            ]
+        },
+        {
+            "name": "passenger jet",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "passenger jet",
+                        "beginOffset": 3344
+                    },
+                    "type": "COMMON",
+                    "probability": 0.89
+                }
+            ]
+        },
+        {
+            "name": "path",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "path",
+                        "beginOffset": 3573
+                    },
+                    "type": "COMMON",
+                    "probability": 0.562
+                }
+            ]
+        },
+        {
+            "name": "people",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "people",
+                        "beginOffset": 3646
+                    },
+                    "type": "COMMON",
+                    "probability": 0.914
+                }
+            ]
+        },
+        {
+            "name": "phase",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "phase",
+                        "beginOffset": 252
+                    },
+                    "type": "COMMON",
+                    "probability": 0.554
+                }
+            ]
+        },
+        {
+            "name": "plan",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "plan",
+                        "beginOffset": 2007
+                    },
+                    "type": "COMMON",
+                    "probability": 0.886
+                }
+            ]
+        },
+        {
+            "name": "plans",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "plans",
+                        "beginOffset": 1906
+                    },
+                    "type": "COMMON",
+                    "probability": 0.878
+                }
+            ]
+        },
+        {
+            "name": "policies",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "policies",
+                        "beginOffset": 1640
+                    },
+                    "type": "COMMON",
+                    "probability": 0.898
+                }
+            ]
+        },
+        {
+            "name": "policies",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "policies",
+                        "beginOffset": 5049
+                    },
+                    "type": "COMMON",
+                    "probability": 0.503
+                }
+            ]
+        },
+        {
+            "name": "president",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "president",
+                        "beginOffset": 124
+                    },
+                    "type": "COMMON",
+                    "probability": 0.914
+                }
+            ]
+        },
+        {
+            "name": "president",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "president",
+                        "beginOffset": 1653
+                    },
+                    "type": "COMMON",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "products",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "products",
+                        "beginOffset": 1539
+                    },
+                    "type": "COMMON",
+                    "probability": 0.539
+                }
+            ]
+        },
+        {
+            "name": "proposal",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "proposal",
+                        "beginOffset": 1778
+                    },
+                    "type": "COMMON",
+                    "probability": 0.898
+                }
+            ]
+        },
+        {
+            "name": "questions",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "questions",
+                        "beginOffset": 3425
+                    },
+                    "type": "COMMON",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "range",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "range",
+                        "beginOffset": 1530
+                    },
+                    "type": "COMMON",
+                    "probability": 0.843
+                }
+            ]
+        },
+        {
+            "name": "rate cut",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "rate cut",
+                        "beginOffset": 2668
+                    },
+                    "type": "COMMON",
+                    "probability": 0.753
+                }
+            ]
+        },
+        {
+            "name": "regions",
+            "type": "LOCATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "regions",
+                        "beginOffset": 684
+                    },
+                    "type": "COMMON",
+                    "probability": 0.89
+                }
+            ]
+        },
+        {
+            "name": "remarks",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "remarks",
+                        "beginOffset": 5320
+                    },
+                    "type": "COMMON",
+                    "probability": 0.906
+                }
+            ]
+        },
+        {
+            "name": "security forces",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "security forces",
+                        "beginOffset": 388
+                    },
+                    "type": "COMMON",
+                    "probability": 0.832
+                }
+            ]
+        },
+        {
+            "name": "someone",
+            "type": "PERSON",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "someone",
+                        "beginOffset": 2442
+                    },
+                    "type": "COMMON",
+                    "probability": 0.867
+                }
+            ]
+        },
+        {
+            "name": "state news agency",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "state news agency",
+                        "beginOffset": 11
+                    },
+                    "type": "COMMON",
+                    "probability": 0.917
+                }
+            ]
+        },
+        {
+            "name": "statements",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "statements",
+                        "beginOffset": 5458
+                    },
+                    "type": "COMMON",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "swearing",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "swearing",
+                        "beginOffset": 5229
+                    },
+                    "type": "COMMON",
+                    "probability": 0.503
+                }
+            ]
+        },
+        {
+            "name": "talks",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "talks",
+                        "beginOffset": 2204
+                    },
+                    "type": "COMMON",
+                    "probability": 0.839
+                }
+            ]
+        },
+        {
+            "name": "task",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "task",
+                        "beginOffset": 284
+                    },
+                    "type": "COMMON",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "threat",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "threat",
+                        "beginOffset": 1744
+                    },
+                    "type": "COMMON",
+                    "probability": 0.902
+                }
+            ]
+        },
+        {
+            "name": "threats",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "threats",
+                        "beginOffset": 4083
+                    },
+                    "type": "COMMON",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "timing",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "timing",
+                        "beginOffset": 2648
+                    },
+                    "type": "COMMON",
+                    "probability": 0.839
+                }
+            ]
+        },
+        {
+            "name": "touch",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "touch",
+                        "beginOffset": 3033
+                    },
+                    "type": "COMMON",
+                    "probability": 0.804
+                }
+            ]
+        },
+        {
+            "name": "tournaments",
+            "type": "ORGANIZATION",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "tournaments",
+                        "beginOffset": 2111
+                    },
+                    "type": "COMMON",
+                    "probability": 0.376
+                }
+            ]
+        },
+        {
+            "name": "traction",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "traction",
+                        "beginOffset": 2322
+                    },
+                    "type": "COMMON",
+                    "probability": 0.863
+                }
+            ]
+        },
+        {
+            "name": "uncertainties",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "uncertainties",
+                        "beginOffset": 1457
+                    },
+                    "type": "COMMON",
+                    "probability": 0.894
+                }
+            ]
+        },
+        {
+            "name": "understanding",
+            "type": "OTHER",
+            "metadata": {},
+            "mentions": [
+                {
+                    "text": {
+                        "content": "understanding",
+                        "beginOffset": 2272
+                    },
+                    "type": "COMMON",
+                    "probability": 0.867
+                }
+            ]
+        }
+    ],
+    "languageCode": "en",
+    "languageSupported": true
+}
