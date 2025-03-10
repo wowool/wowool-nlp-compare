@@ -43,7 +43,9 @@ class NLPStanza(NLPEngine):
     def __call__(self, text):
         return self.engine(text)
 
-    def get_compare_data(self, other_, doc, concept_filter: ConceptFilter):
+    def get_compare_data(
+        self, other_, doc, concept_filter: ConceptFilter, input_provider
+    ):
         for entity in doc.entities:
             logger.debug(
                 f"STANZA: {entity.start_char} {entity.end_char} {entity.type} {entity.text}"

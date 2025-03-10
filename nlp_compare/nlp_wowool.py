@@ -101,7 +101,9 @@ class NLPWowool(NLPEngine):
     def __call__(self, text):
         return self.engine(text)
 
-    def get_compare_data(self, wowool_, doc, concept_filter: ConceptFilter):
+    def get_compare_data(
+        self, wowool_, doc, concept_filter: ConceptFilter, input_provider
+    ):
         for sentence in doc.analysis:
             for annotation in sentence:
                 if annotation.is_token:

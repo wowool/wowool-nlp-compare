@@ -473,9 +473,7 @@ class CompareContext:
                 if cmp_item.uri is None:
                     print(f"{cmp_item.source:<10}:{NONE:<10}")
                 else:
-                    print(
-                        f"{cmp_item.source:<10}:{cmp_item.uri:<10}:{cmp_item.text}"
-                    )
+                    print(f"{cmp_item.source:<10}:{cmp_item.uri:<10}:{cmp_item.text}")
 
                 if gi.uri is None and cmp_item.uri is not None:
                     precision_recall[cmp_item.source].false_positive += 1
@@ -525,7 +523,7 @@ class CompareContext:
             processing_time = end - start
             logger.info(f"{nlp.name} processing time: {processing_time:.3f}")
 
-            nlp.get_compare_data(other_, doc, concept_filter)
+            nlp.get_compare_data(other_, doc, concept_filter, input_provider)
             # print(*other_.data, sep="\n")
             offset_data.extend(other_.data)
             if self.sentence_tokens is None:

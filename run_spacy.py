@@ -2,6 +2,7 @@ import argparse
 import spacy
 from pathlib import Path
 from collections import Counter
+from profile_it import profile_it
 
 
 def parse_arguments():
@@ -28,6 +29,12 @@ def print_entities(doc):
         print(f"{ent.text} - {ent.label_}")
 
 
+@profile_it
+def run(engine, text: str, fn=""):
+    print(f"Processing: {fn}")
+    return engine(text)
+
+
 if __name__ == "__main__":
     kwargs = dict(parse_arguments()._get_kwargs())
     engine = spacy.load(kwargs["model"])
@@ -35,7 +42,7 @@ if __name__ == "__main__":
     show = kwargs.pop("no_show")
     if "input" in kwargs and kwargs["input"]:
         text = kwargs.pop("input")
-        doc = engine(text)
+        doc = run(engine, text)
         if show:
             print_entities(doc)
     else:
@@ -44,7 +51,7 @@ if __name__ == "__main__":
             fn = Path(filename)
             if fn.exists():
                 text = fn.read_text()
-                doc = engine(text)
+                doc = run(engine, text, fn)
                 if show:
                     print_entities(doc)
             else:

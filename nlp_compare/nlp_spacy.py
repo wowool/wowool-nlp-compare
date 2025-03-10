@@ -53,7 +53,9 @@ try:\npython -m spacy download {self.model_mame} """
     def __call__(self, text):
         return self.engine(text)
 
-    def get_compare_data(self, other_, doc, concept_filter: ConceptFilter):
+    def get_compare_data(
+        self, other_, doc, concept_filter: ConceptFilter, input_provider
+    ):
         for entity in doc.ents:
             logger.debug(
                 f"SPACY: {entity.start_char} {entity.end_char} {entity.label_} {entity.text}"
