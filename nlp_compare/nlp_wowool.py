@@ -68,7 +68,7 @@ entity_mapping_table = {
         "Date": "DATE",
         "Street": "LOC",
         "Facility": "LOC",
-        "WorldRegion": "LOC",
+        "WorldRegion": "GPE",
         "PlaceAdj": "NORP",
         "MoneyAmount": "MONEY",
         "Event": "EVENT",

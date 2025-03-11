@@ -51,13 +51,13 @@ CNR = 'could not run'
 
 ## Recall, precision and F-measure
 
-Wowool
+Averages of 2 runs:
 
-|           | Wowool   | Spacy   | Stanza   | Google   |
-|-----------|:--------:|:-------:|:--------:|:--------:|
-| Precision	| **0,92** | 0,75    | 0,86     |  0,90    |
-| Recall	|   0,90   | 0,69    | 0,80     | **0,94** |
-| F1 Score	|   0,91   | 0,72    | 0,83     | **0,92** |
+|           | Wowool    | Spacy   | Stanza   | Google   |
+|-----------|:---------:|:-------:|:--------:|:--------:|
+| Precision	| **0,93**  | 0,79    | 0,84     |  0,85    |
+| Recall	| **0,92**  | 0,67    | 0,71     |  0,87    |
+| F1 Score	| **0,93**  | 0,73    | 0,77     |  0,86    |
 
 
 
