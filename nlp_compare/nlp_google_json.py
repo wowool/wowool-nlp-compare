@@ -114,6 +114,8 @@ class NLPGoogle(NLPEngine):
             for mention in entity["mentions"]:
                 if original_uri == "PERSON" and mention["type"] == "COMMON":
                     continue
+                if original_uri == "LOCATION" and mention["type"] == "COMMON":
+                    continue
                 try:
                     begin_offset = mention["text"]["beginOffset"]
                 except AttributeError:

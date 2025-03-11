@@ -18,7 +18,7 @@ OFFSETS: Al(161,163) -(163,164) Sharaa(164,170) was(171,174) also(175,179) autho
 | T   |   beg |   end | literal   | uri   | wowool   | stanza     | spacy   |
 |-----|-------|-------|-----------|-------|----------|------------|---------|
 | C   |   161 |   170 | Al-Sharaa | PERSON| wow:NF   | sta:PERSON | spa:LOC |
-| C   |   223 |   230 | council   | ORG   | wow:ORG  | sta:NF     | spa:NF  |
+| C   |   211 |   230 | legislative council |  ORG     | wow:NF   | goo:ORG    |
 
 
 OFFSETS: All(327,330) military(331,339) factions(340,348) in(349,351) Syria(352,357) ,(357,358) including(359,368) Syria(369,374) 's(374,376) army(377,381) and(382,385) security(386,394) forces(395,401) ,(401,402) as(403,405) well(406,410) as(411,413) al(414,416) -(416,417) Sharaa(417,423) 's(423,425) own(426,429) Hayat(430,435) Tahrir(436,442) al(443,445) -(445,446) Sham(446,450) ((451,452) HTS(452,455) )(455,456) ,(456,457) were(458,462) dissolved(463,472) ,(472,473) as(474,476) was(477,480) the(481,484) country(485,492) 's(492,494) constitution(495,507) ,(507,508) and(509,512) al(513,515) -(515,516) Assad(516,521) 's(521,523) Baath(524,529) party(530,535) -(536,537) which(538,543) had(544,547) ruled(548,553) the(554,557) country(558,565) for(566,569) more(570,574) than(575,579) 60(580,582) years(583,588) prior(589,594) to(595,597) al(598,600) -(600,601) Assad(601,606) 's(606,608) overthrow(609,618) .(618,619)
@@ -27,9 +27,11 @@ OFFSETS: All(327,330) military(331,339) factions(340,348) in(349,351) Syria(352,
 
 | T   |   beg |   end | literal                | uri   | wowool                         | stanza                         | spacy                         |
 |-----|-------|-------|------------------------|-------|--------------------------------|--------------------------------|-------------------------------|
+| C   |   331 |   348 | military factions    |   ORG     | wow:NF                         | goo:ORG                        |
 | C   |   352 |   357 | Syria                  | GPE   | wow:GPE                        | sta:GPE                        | spa:GPE                       |
 | C   |   369 |   374 | Syria                  | GPE   | wow:GPE                        | sta:NF                         | spa:GPE                       |
 | C   |   377 |   381 | army                   | ORG   | wow:ORG                        | sta:NF                         | spa:NF                        |
+| C   |   386 |   401 | security forces      |     ORG   | wow:NF                         | goo:ORG                        |
 | C   |   414 |   423 | al-Sharaa              | PERSON| wow:NF                         | sta:NF                         | spa:PERSON                    |
 | C   |   430 |   450 | Hayat Tahrir al-Sham   | ORG   | wow:ORG:Hayat Tahrir al - Sham | sta:ORG:Hayat Tahrir al - Sham | spa:NF:Hayat Tahrir al - Sham |
 | C   |   452 |   455 | HTS                    | ORG   | wow:ORG:Hayat Tahrir al - Sham | sta:ORG:Hayat Tahrir al - Sham | spa:NF:Hayat Tahrir al - Sham |
@@ -111,7 +113,7 @@ OFFSETS: The(1637,1640) president(1641,1650) of(1651,1653) La(1654,1656) Liga(16
 | C   |  1654 |  1661 | La Liga                 | ORG    | wow:ORG                       | sta:GPE                       | spa:ORG                       |
 | C   |  1663 |  1675 | Javier Tebas            | PERSON | wow:PERSON                    | sta:PERSON                    | spa:PERSON                    |
 | C   |  1748 |  1751 | A22                     | ORG    | wow:ORG:A22 Sports Management | sta:ORG:A22 Sports Management | spa:ORG:A22 Sports Management |
-| C   |  1781 |  1802 | a European Super League | ORG    | wow:NF                        | sta:ORG                       | spa:ORG                       |
+| C   |  1781 |  1802 | European Super League |    ORG    | wow:NF                        | goo:ORG                       |
 
 
 OFFSETS: Uefa(1830,1834) is(1835,1837) currently(1838,1847) considering(1848,1859) how(1860,1863) to(1864,1866) respond(1867,1874) after(1875,1880) A22(1881,1884) launched(1885,1893) plans(1894,1899) for(1900,1903) a(1904,1905) Unify(1906,1911) League(1912,1918) ,(1918,1919) which(1920,1925) follows(1926,1933) two(1934,1937) previous(1938,1946) failed(1947,1953) concepts(1954,1962) .(1962,1963)
@@ -129,6 +131,10 @@ OFFSETS: One(1964,1967) option(1968,1974) is(1975,1977) to(1978,1980) authorise(
 
 `One option is to authorise the plan and let clubs decide whether to jump ship from the Champions League and other existing continental tournaments.`
 
+| T   |   beg |   end | literal          | uri   | wowool   | google   |
+|-----|-------|-------|------------------|-------|----------|----------|
+| C   |  2008 |  2013 | clubs            | ORG     | wow:NF   | goo:ORG  |
+
 OFFSETS: There(2112,2117) is(2118,2120) little(2121,2127) evidence(2128,2136) A22(2137,2140) could(2141,2146) spark(2147,2152) a(2153,2154) meaningful(2155,2165) breakaway(2166,2175) despite(2176,2183) holding(2184,2191) talks(2192,2197) with(2198,2202) a(2203,2204) number(2205,2211) of(2212,2214) clubs(2215,2220) ,(2220,2221) but(2222,2225) Tebas(2226,2231) is(2232,2234) concerned(2235,2244) that(2245,2249) a(2250,2251) lack(2252,2256) of(2257,2259) understanding(2260,2273) may(2274,2277) help(2278,2282) an(2283,2285) “(2286,2287) elitist(2287,2294) ”(2294,2295) idea(2296,2300) gain(2301,2305) traction(2306,2314) .(2314,2315)
 
 `There is little evidence A22 could spark a meaningful breakaway despite holding talks with a number of clubs, but Tebas is concerned that a lack of understanding may help an “elitist” idea gain traction.`
@@ -136,6 +142,7 @@ OFFSETS: There(2112,2117) is(2118,2120) little(2121,2127) evidence(2128,2136) A2
 | T   |   beg |   end | literal   | uri   | wowool                        | stanza                       | spacy                         |
 |-----|-------|-------|-----------|-------|-------------------------------|------------------------------|-------------------------------|
 | C   |  2137 |  2140 | A22       | ORG   | wow:ORG:A22 Sports Management | sta:NF:A22 Sports Management | spa:ORG:A22 Sports Management |
+| C   |  2215 |  2220 | clubs     |  ORG     | wow:NF                        | goo:ORG                       |
 | C   |  2226 |  2231 | Tebas     | PERSON| wow:PERSON:Javier Tebas       | sta:PERSON:Javier Tebas      | spa:ORG:Javier Tebas          |
 
 
@@ -230,6 +237,7 @@ OFFSETS: BRICS(3820,3825) is(3826,3828) not(3829,3832) discussing(3833,3843) the
 | C   |  3820 |  3825 | BRICS         | ORG    | wow:ORG    | sta:ORG    | spa:GPE                   |
 | C   |  3879 |  3886 | Kremlin       | ORG    | wow:ORG    | sta:ORG    | spa:ORG:Kremlin Spokesman |
 | C   |  3897 |  3910 | Dmitry Peskov | PERSON | wow:PERSON | sta:PERSON | spa:PERSON                |
+| C   |  3933 |  3944 | association   | ORG       | wow:NF     | goo:ORG    |
 
 
 OFFSETS: When(4006,4010) commenting(4011,4021) on(4022,4024) US(4025,4027) President(4028,4037) Donald(4038,4044) Trump(4045,4050) 's(4050,4052) threats(4053,4060) to(4061,4063) impose(4064,4070) customs(4071,4078) duties(4079,4085) on(4086,4088) goods(4089,4094) from(4095,4099) BRICS(4100,4105) member(4106,4112) states(4113,4119) should(4120,4126) the(4127,4130) alliance(4131,4139) move(4140,4144) away(4145,4149) from(4150,4154) the(4155,4158) dollar(4159,4165) ,(4165,4166) Peskov(4167,4173) said(4174,4178) that(4179,4183) "(4184,4185) BRICS(4185,4190) has(4191,4194) not(4195,4198) and(4199,4202) is(4203,4205) not(4206,4209) discussing(4210,4220) the(4221,4224) creation(4225,4233) of(4234,4236) a(4237,4238) common(4239,4245) currency(4246,4254) .(4254,4255) "(4255,4256)
@@ -241,6 +249,7 @@ OFFSETS: When(4006,4010) commenting(4011,4021) on(4022,4024) US(4025,4027) Presi
 | C   |  4025 |  4027 | US           | GPE    | wow:GPE:USA              | sta:GPE:USA               | spa:GPE:USA               |
 | C   |  4038 |  4050 | Donald Trump | PERSON | wow:PERSON               | sta:PERSON:Donald Trump’s | spa:PERSON:Donald Trump’s |
 | C   |  4100 |  4105 | BRICS        | ORG    | wow:ORG                  | sta:ORG                   | spa:GPE                   |
+| C   |  4131 |  4139 | alliance     | ORG       | wow:NF                   | goo:ORG                  |
 | C   |  4167 |  4173 | Peskov       | PERSON | wow:PERSON:Dmitry Peskov | sta:PERSON:Dmitry Peskov  | spa:PERSON:Dmitry Peskov  |
 | C   |  4185 |  4190 | BRICS        | ORG    | wow:ORG                  | sta:ORG                   | spa:NF                    |
 
@@ -310,6 +319,7 @@ OFFSETS: On(4812,4814) January(4815,4822) 6(4823,4824) ,(4824,4825) 2025(4826,48
 | T   |   beg |   end | literal   | uri   | wowool   | stanza   | spacy   |
 |-----|-------|-------|-----------|-------|----------|----------|---------|
 | C   |  4831 |  4840 | Indonesia | GPE   | wow:GPE  | sta:GPE  | spa:GPE |
+| C   |  4857 |  4862 | group     | ORG     | wow:NF   | goo:ORG  |
 
 
 OFFSETS: NEW(4865,4868) DELHI(4869,4874) :(4874,4875) The(4876,4879) Lok(4880,4883) Sabha(4884,4889) on(4890,4892) Monday(4893,4899) erupted(4900,4907) into(4908,4912) chaos(4913,4918) after(4919,4924) leader(4925,4931) of(4932,4934) opposition(4935,4945) Rahul(4946,4951) Gandhi(4952,4958) mocked(4959,4965) the(4966,4969) Centre(4970,4976) and(4977,4980) claimed(4981,4988) that(4989,4993) if(4994,4996) it(4997,4999) had(5000,5003) taken(5004,5009) economic(5010,5018) policies(5019,5027) seriously(5028,5037) ,(5037,5038) then(5039,5043) the(5044,5047) government(5048,5058) would(5059,5064) not(5065,5068) have(5069,5073) had(5074,5077) to(5078,5080) send(5081,5085) foreign(5086,5093) minister(5094,5102) S(5103,5104) Jaishankar(5105,5115) to(5116,5118) the(5119,5122) US(5123,5125) to(5126,5128) get(5129,5132) an(5133,5135) invitation(5136,5146) for(5147,5150) Prime(5151,5156) Minister(5157,5165) Narendra(5166,5174) Modi(5175,5179) for(5180,5183) Donald(5184,5190) Trump(5191,5196) 's(5196,5198) swearing(5199,5207) -(5207,5208) in(5208,5210) ceremony(5211,5219) .(5219,5220)
@@ -320,6 +330,7 @@ OFFSETS: NEW(4865,4868) DELHI(4869,4874) :(4874,4875) The(4876,4879) Lok(4880,48
 |-----|-------|-------|---------------|--------|-------------|---------------------------|---------------------------|
 | C   |  4865 |  4874 | NEW DELHI     | GPE    | wow:GPE     | sta:GPE                   | spa:NF                    |
 | C   |  4880 |  4889 | Lok Sabha     | ORG    | wow:NF      | sta:GPE                   | spa:NF                    |
+| C   |  4935 |  4945 | opposition    | ORG       | wow:NF      | goo:ORG     |
 | C   |  4946 |  4958 | Rahul Gandhi  | PERSON | wow:PERSON  | sta:PERSON                | spa:PERSON                |
 | C   |  5048 |  5058 | government    | ORG    | wow:ORG     | sta:NF                    | spa:NF                    |
 | C   |  5103 |  5115 | S Jaishankar  | PERSON | wow:PERSON  | sta:PERSON                | spa:PERSON                |
@@ -334,7 +345,9 @@ OFFSETS: Union(5222,5227) parliamentary(5228,5241) affairs(5242,5249) minister(5
 
 | T   |   beg |   end | literal      | uri    | wowool                   | stanza                   | spacy                |
 |-----|-------|-------|--------------|--------|--------------------------|--------------------------|----------------------|
+| C   |  5222 |  5227 | Union        | ORG    | wow:NF                   | goo:ORG                  |
 | C   |  5259 |  5271 | Kiren Rijiju | PERSON | wow:PERSON               | sta:PERSON               | spa:PERSON           |
 | C   |  5282 |  5287 | Rahul        | PERSON | wow:PERSON:Rahul Gandhi  | sta:PERSON:Rahul's       | spa:PERSON:Rahul's   |
 | C   |  5309 |  5313 | Modi         | PERSON | wow:PERSON:Narendra Modi | sta:PERSON:Narendra Modi | spa:NF:Narendra Modi |
 | C   |  5319 |  5324 | Trump        | PERSON | wow:PERSON:Donald Trump  | sta:PERSON:Trump's       | spa:ORG:Trump's      |
+| C   |  5374 |  5384 | opposition   | ORG    | wow:NF                   | goo:ORG                  |
