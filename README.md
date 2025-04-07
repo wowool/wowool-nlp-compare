@@ -1,4 +1,5 @@
 <img src="img/wowool-logo.png"></img>
+
 # NLP Compare
 
 This tool allows you to compare different NLP engines with Wowool's NLP engine. Specifically, we compare Wowool vs Spacy, Stanza and Google.
@@ -25,7 +26,7 @@ This tool allows you to compare different NLP engines with Wowool's NLP engine. 
 | Sub Annotations     | Yes    | No    | No     | No      | Wowool supports subannotations like Triples that have Subject, Object, and Verb                                                        |
 | Custom Domains      | Yes    | No    | No     | No      | Does not require training data, Wowool is a rule-based language                                                                        |
 | Categorization      | Yes    | Yes   | No     | Yes     |                                                                                                                                        |
-| Max Memory Fp (10k) | 54M    | 224M  | 816MB  | NA      | using Scalene running a 10k english file (note: could not run on 100k , stanza was taking to long and finally crashed)                 |
+| Max Memory Fp (10k) | 54M    | 224M  | 816MB  | NA      | Using Scalene to run a 10k English file (note: could not run 100k as Stanza crashes)                                                   |
 
 ## Performance
 
