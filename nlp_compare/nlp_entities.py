@@ -1,6 +1,6 @@
 from pathlib import Path
 from wowool.error import Error
-from wowool.io.provider import Factory
+from wowool.document import Document
 from collections import Counter
 import time
 from functools import cmp_to_key
@@ -507,7 +507,7 @@ class CompareContext:
         precision_recall: bool = False,
     ):
 
-        text = input_provider.text
+        text = input_provider.data
         for nlp in nlp_engines:
             if nlp.name not in compare_data:
                 compare_data[nlp.name] = NlpData(nlp.name, nlp.cmp_idx)
@@ -710,7 +710,7 @@ def compare(
     concept_filter = get_wowool_annotation_filter(annotations)
     files = []
     for fn in file:
-        files.extend([fn for fn in Factory.glob(Path(fn))])
+        files.extend([fn for fn in Document.glob(Path(fn))])
     if files:
         compare_data = {"wowool": NlpData("wowool", 0)}
         for ip in files:
