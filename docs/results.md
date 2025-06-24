@@ -2,9 +2,9 @@
 
 ##  Usage
 
-To run the tool simply call:
+To run the tool simply call with the list of engine you want to compare, To simplify, we have remove 'google' as you may not have a key.
 
-    python3 -m nlp_compare -e spacy,stanza,googel -l english -p "english,entity" -f tests/data/hyphenation.txt
+    python3 -m nlp_compare -e spacy,stanza -l english -p "english,entity" -f tests/data/hyphenation.txt
 
 * -e, --engines  : The engine you want to compare , currently support for spacy,stanza,google
 * -l, --language : The language to run
@@ -75,7 +75,7 @@ The first instance is correct, but in the second sentence *Georgia* is tagged as
 | PERSON       | Georgia Smith | ~~GPE~~     | Georgia      | ~~GPE~~      | Georgia       | ~~GPE~~      | Georgia       |
 | PERSON       | Georgia Smith | **Missing** | *she*        | **Missing**  | *she*         | **Missing**  | *she*         |
 
-***Test:***  python3 -m nlp_compare -e Spacy,stanza,google -l english -p "english,entity" -f tests/data/person_wrong_tagging.txt -a "Sentence,PERSON,ORG,POS,GPE,LOC"
+***Test:***  python3 -m nlp_compare -e spacy,stanza -l english -p "english,entity" -f tests/data/person_wrong_tagging.txt -a "Sentence,PERSON,ORG,POS,GPE,LOC"
 
 
 ### Conjecture
@@ -111,7 +111,7 @@ The first instance is correct, but in the second sentence *Georgia* is tagged as
 
 But it is clear from the first sentence that it is a Person.
 
-***Test:***  python3 -m nlp_compare -e spacy,stanza,google -l english -p "english,entity" -f tests/data/person_conjecture.txt -a "Sentence,PERSON,ORG,POS,GPE,LOC"
+***Test:***  python3 -m nlp_compare -e spacy,stanza -l english -p "english,entity" -f tests/data/person_conjecture.txt -a "Sentence,PERSON,ORG,POS,GPE,LOC"
 
 
 ### Normalization
@@ -132,7 +132,7 @@ While performing NER it is very important to apply text normalization so that yo
 
 Testing a text that contains hyphenations. This happens a lot with pdf documents that use columns
 
-    python3 -m nlp_compare -e Spacy,stanza,google -l english -p "english,entity" -f tests/data/hyphenation.txt
+    python3 -m nlp_compare -e Spacy,stanza -l english -p "english,entity" -f tests/data/hyphenation.txt
 
     I've worked in Ant-
     werp in the Rene-
@@ -268,7 +268,7 @@ There are many more !
 
 ### Date's are random in Spacy and Stanza
 
-Depending on the date it's a cardinal or a date ! not very usefull if you have to figure it yourself.
+Depending on the date it's a cardinal or a date ! not very useful if you have to figure it yourself.
 
     ╰─❯ python run_spacy.py -m "en_core_web_sm" -i " I read 1363 books."
     1363 - CARDINAL

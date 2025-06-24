@@ -1,3 +1,3 @@
-wowool-lxware-domain-english-entity
-wowool_sdk
+wowool-english
+wowool-sdk
 tabulate

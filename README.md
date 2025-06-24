@@ -63,8 +63,10 @@ where `CNR` stands for 'could not run'.
 
 ### Details
 
-* [See memory.md](docs/memory.md)
+Here are the detail on how to run tests.
+
 * [See results.md](docs/results.md)
+* [See memory.md](docs/memory.md)
 
 ## Reproduction
 
@@ -72,18 +74,22 @@ To reproduce the results, you must install the different NLP engines.
 
 ### Wowool
 
-* To test it yourself you will need to [acquire a license file](mailto:philippe@wowool.com).
+* To test it yourself you will need to [acquire a license key](mailto:philippe@wowool.com).
 * At this stage we only support Linux and macOS. On Windows you can use WLS
 * These packages are currently hosted on a private repo so we will give you temporary access to it:
 
 ```
-pip install wowool-sdk wowool-lxware-domain-english-entity wowool-community-license
+pip install wowool-sdk wowool-english
+
+export WOWOOL_SDK_KEY="..."
+export WOWOOL_SDK_PRIVATE_KEY="..."
 ```
 
 ### Spacy
 
 ```
 pip install spacy
+spacy download en_core_web_sm
 ```
 
 ### Stanza
