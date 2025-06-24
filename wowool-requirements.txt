@@ -1,3 +1,3 @@
 wowool-english
 wowool-sdk
-tabulate
+
