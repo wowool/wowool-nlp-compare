@@ -76,7 +76,6 @@ To reproduce the results, you must install the different NLP engines.
 
 * To test it yourself you will need to [acquire a license key](mailto:philippe@wowool.com).
 * At this stage we only support Linux and macOS. On Windows you can use WLS
-* These packages are currently hosted on a private repo so we will give you temporary access to it:
 
 ```
 pip install wowool-sdk wowool-english
