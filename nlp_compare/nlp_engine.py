@@ -29,6 +29,11 @@ def get_nlp_engine(cmp_idx, nlp_engine, language, **kwargs):
 
         return NLPGoogle(cmp_idx, short_form, **kwargs)
 
+    elif nlp_engine == "transformers":
+        from nlp_compare.nlp_transformers import NLPTransformers
+
+        return NLPTransformers(cmp_idx, short_form, **kwargs)
+
     elif nlp_engine == "google_json":
         from nlp_compare.nlp_google_json import NLPGoogle
 

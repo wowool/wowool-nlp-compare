@@ -363,10 +363,12 @@ class CompareContext:
         prev_sentence = None
         for cmp_line in cmp_lines:
             first = None
+            # print(cmp_line)
             for cmp_item in cmp_line:
                 if cmp_item is not None:
                     first = cmp_item
                     break
+
             if first and first.uri == "Sentence":
                 self.print_tabulate(prev_sentence_text, compare_data)
                 self.print_golden_corpus(
@@ -540,6 +542,7 @@ class CompareContext:
         if self.golden_data:
             self.calculate_precision_recall(cmp_lines, len(compare_data))
         elif show:
+            print("Compare data:")
             self.print_md_table(text, compare_data, cmp_lines)
 
         # print_diff(offset_data, nlp.name)

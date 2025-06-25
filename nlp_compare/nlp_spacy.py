@@ -26,8 +26,8 @@ class NLPSpacy(NLPEngine):
         super().__init__(cmp_idx)
         self.language_short_form = language_short_form
         model_part = "core_web" if self.language_short_form == "en" else "core_news"
-        if "model" in kwargs and kwargs["model"]:
-            self.model_mame = kwargs["model"]
+        if "spacy_model" in kwargs and kwargs["spacy_model"]:
+            self.model_mame = kwargs["spacy_model"]
         else:
             model_size = (
                 kwargs["model_size"]

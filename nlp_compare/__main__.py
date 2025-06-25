@@ -14,7 +14,8 @@ def parse_arguments():
     parser.add_argument("-l", "--language", help="input language", required=True)
     parser.add_argument("-p", "--pipeline", help="input pipeline", required=True)
     parser.add_argument("--json_results", help="result input file.(only google_json)")
-    parser.add_argument("-m", "--model", help="input model")
+    parser.add_argument("-tm", "--transformers_model", help="input model")
+    parser.add_argument("-sm", "--spacy_model", help="input model")
     parser.add_argument(
         "-g",
         "--golden_corpus_filename",
@@ -43,7 +44,6 @@ if __name__ == "__main__":
     kwargs = dict(parse_arguments()._get_kwargs())
     print(kwargs)
     show = kwargs.pop("no_show")
-    diff_files = ["wowool.diff"]
     if kwargs["nlp_engine"] == "all":
         from nlp_compare.nlp_engine import all_nlp_engines
 
@@ -53,8 +53,3 @@ if __name__ == "__main__":
 
     else:
         compare(**kwargs, show=show)
-        diff_files.append(f"{kwargs.pop('nlp_engine')}.diff")
-    if show:
-        print("All done: you can run the following command to see the results")
-        diff_tool = environ.get("DIFF_TOOL", "meld")
-        print(f"{diff_tool} {' '.join(diff_files)}")

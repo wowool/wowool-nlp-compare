@@ -120,6 +120,17 @@ class NLPWowool(NLPEngine):
         self, wowool_, doc, concept_filter: ConceptFilter, input_provider
     ):
         for sentence in doc.analysis:
+            wowool_.data.append(
+                CmpItem(
+                    self.cmp_idx,
+                    sentence.begin_offset,
+                    sentence.end_offset,
+                    "wowool",
+                    "Sentence",
+                    sentence.text,
+                    original_uri="Sentence",
+                )
+            )
             for annotation in sentence:
                 if annotation.is_token:
                     token = annotation
