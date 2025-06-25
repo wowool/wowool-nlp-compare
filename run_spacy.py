@@ -4,6 +4,7 @@ import spacy
 from pathlib import Path
 from collections import Counter
 from profile_it import profile_it
+from spacy.pipeline import Sentencizer
 
 
 def parse_arguments():
@@ -24,6 +25,13 @@ def print_entities(doc):
     """
     Display entities.
     """
+    sentencizer = Sentencizer()
+    doc = sentencizer(doc)
+    print(f"Document: {doc.text}")
+    print(f"Number of sentences: {len(list(doc.sents))}")
+    for sent in doc.sents:
+        print(f"Sentence: {sent.text}")
+
     print("Entities:\n==========")
     for ent in doc.ents:
         uris[ent.label_] += 1

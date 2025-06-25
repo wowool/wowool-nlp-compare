@@ -109,7 +109,7 @@ en-5k.txt, 2.387 sec, 851.0MiB
 en-10k.txt, 4.458 sec, 911.6MiB
 en-50k.txt, 24.833 sec, 977.5MiB
 en-100k.txt, 45.788 sec, 1030.9MiB
-en-500k.txt, 232.425 sec, 486.8MiB
+en-500k.txt, 232.425 sec, 986.8MiB
 
 ## Wowool
 en-1k.txt, 0.059 sec, 133.8MiB
